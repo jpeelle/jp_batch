@@ -68,7 +68,7 @@ for i=1:length(subjects)
       S.subjects(n) = []; % wipe out old info
     else
       runsub = 0; % don't run
-      fprintf('Subject %s previously added, skipping. To replace use the FORCE argument of JP_SPM_ADDSUBJECT.\n', thissub);
+      fprintf('Subject %s previously added, skipping. To replace use the FORCE argument of JP_ADDSUBJECT.\n', thissub);
     end
   end
 

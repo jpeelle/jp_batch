@@ -26,7 +26,7 @@ function S = jp_spm5_segment(S, subnum)
 % $Id$
 
 
-% get any values not specified (if JP_SPM_INIT not run previously)
+% get any values not specified (if JP_INIT not run previously)
 S.cfg = jp_setcfg(S.cfg, mfilename);
 cfg = S.cfg.(mfilename);
 

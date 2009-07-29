@@ -50,7 +50,7 @@ function S = jp_spm5_contrasts(S, subnum)
 % confirmation dialogs since you are overwriting previous files.
 % Just be careful.
 %
-%  See also JP_SPM_BATCH and JP_SPM5_MODEL.
+%  See also JP_BATCH and JP_SPM5_MODEL.
 %
 %  $Id$
 
