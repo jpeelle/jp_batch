@@ -1,15 +1,19 @@
-function cfg = jp_setcfg(cfg, fn, defs_function)
+function cfg = jp_setcfg(cfg, fn, defs_functions)
 %JP_SETCFG Set default values for cfg.
 %
-% CFG = JP_SETCFG(CFG, [FNAME], [DEFS_FUNCTION]) Sets all CFG
+% CFG = JP_SETCFG(CFG, [FNAME], [{DEFS_FUNCTIONS}]) Sets all CFG
 % values, or, optionally, only for a particular field FNAME.
 %
-% DEFS_FUNCTION allows you to specify the name of the function
-% where the defaults come from (default 'jp_defaults').
+% DEFS_FUNCTIONS allows you to specify the name of the function(s)
+% where the defaults come from.
+%
+% If not specified, DEFS_FUNCTIONS is set to 'jp_defaults'.
+%
+% These functions can be anywhere in your matlab path.
 
 
 if nargin < 3 || isempty(defs_function)
-  defs_function = 'jp_defaults';
+  defs_functions = 'jp_defaults';
 end
 
 if nargin < 2
@@ -20,13 +24,19 @@ if nargin < 1
   cfg = struct();
 end
 
-% Get the default values from the defs_function
-defs = eval([defs_function '();']);
+
+% make sure defs_function is a cell array
+if ischar(defs_functions)
+  defs_functions = cellstr(defs_functions);
+end
 
 
-%fprintf('Using default values found in %s\n', which(defs_function))
-
-cfg = fillit(cfg, defs, fn);
+% for each function listed, fill cfg
+for f = 1:length(defs_functions)
+  % Get the default values from the defs_function
+  defs = eval([defs_functions{f} '();']);
+  cfg = fillit(cfg, defs, fn);
+end
 
 end % main function
 

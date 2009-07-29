@@ -109,7 +109,7 @@ end
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% For each analysis, loop through subjects and run  
+% For each subject, loop through analysis stages and run
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -125,18 +125,14 @@ if ~isempty(aa)
 end
 
 
+% See if we want to run this as AA or normal
 if strcmp(aa, 'aa')
   jp_log(logfile,'Running using AA.');
-  aa_doprocessing(aap);
-  
+  aa_doprocessing(aap);  
 elseif strcmp(aa, 'aa_parallel')
   jp_log(logfile,'Running using AA Parallel.');
-  aa_doprocessing_parallel(aap);
-   
+  aa_doprocessing_parallel(aap);   
 else
-  % don't run using aa
-  
-
   
   % if requested start SPM,which initializes graphics windows (unless
   % we are not actually running stages)
@@ -154,20 +150,15 @@ else
     jp_log(logfile, sprintf('Running %s (%i/%i)\n', upper(nm), a, length(stages)), 1);
     fprintf('---------------------------------------------------------\n');
     
-    for s=1:length(subjects)    
-      
-      ss = subjects(s); % the subject we want to run
-      
+    for s=1:length(subjects)          
+      ss = subjects(s); % the subject we want to run      
       subjname = S.subjects(ss).name;
       
       
       % clear error file
-      S.subjects(ss).error = 0;
-      
-      jp_log(logfile, sprintf('Subject %s (%i/%i)\n', subjname, s, length(subjects)), 1);
-      
-      donefile = fullfile(S.subjdir, subjname, sprintf('jpdone%s-%s-%s', analysisname, subjname, nm));
-      
+      S.subjects(ss).error = 0;      
+      jp_log(logfile, sprintf('Subject %s (%i/%i)\n', subjname, s, length(subjects)));      
+      donefile = fullfile(S.subjdir, subjname, sprintf('jpdone%s-%s-%s', analysisname, subjname, nm));      
       errorfile = fullfile(S.subjdir, subjname, 'jplog-error');
       
       % check for existing error file
@@ -200,7 +191,7 @@ else
             if S.cfg.options.saveS
               save(sfile, 'S');
             end
-
+            
             % if it worked (i.e. no error by here)  make a done file
             system(sprintf('touch %s', donefile));
             

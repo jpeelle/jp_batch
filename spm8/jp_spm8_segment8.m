@@ -159,6 +159,12 @@ job.warp.vox = cfg.vox;
 jp_log(seg8log, 'done.\n');
 
 
+% be nice and remind user this might take a while
+if cfg.samp < 2
+  fprintf('Note that cfg.samp is relatively small, which may take quite a while to run.\n');
+end
+
+
 % save job in case we want to inspect later
 S.subjects(subnum).(mfilename).job = job;
 
