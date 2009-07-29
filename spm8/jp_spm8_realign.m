@@ -1,0 +1,70 @@
+function S = jp_spm8_realign(S, subnum)
+%JP_SPM8_REALIGN Realign images using SPM8.
+%
+% S = JP_SPM8_REALIGN(S ,SUBNUM)
+%
+% Options available in S.cfg.jp_spm8_realign include:
+%   which_images  for reslicing (default 0 = meanonly)
+%
+% See JP_SPM_DEFAULTS for a full list and defaults.
+%
+% $Id$
+
+
+% get any values not specified (if JP_SPM_INIT not run previously)
+S.cfg = jp_setcfg(S.cfg, mfilename);
+cfg = S.cfg.(mfilename);
+
+
+subname = S.subjects(subnum).name;
+subdir = fullfile(S.subjdir, subname);
+
+try
+  funprefix = S.subjects(subnum).funprefix;
+catch
+  funprefix = jp_getinfo('funprefix', S.subjdir, subname);
+end
+
+try
+  fundirs = S.subjects(subnum).fundirs;
+catch
+  fundirs = jp_getinfo('fundirs', S.subjdir, subname);
+end
+
+
+% log files
+[alllog, errorlog, realignlog] = jp_createlogs(subname, S.subjdir, mfilename);
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Get files
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+P = cell(1,length(fundirs));
+
+for d=1:length(fundirs)
+  P{d} = jp_getfunimages([cfg.prefix funprefix], S.subjdir, subname, fundirs{d});
+  jp_log(realignlog, sprintf('Directory %s: %i images found.\n', fundirs{d}, size(P{d},1)), 1);
+end
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Realign
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% Get the realignment parameters
+jp_log(realignlog, 'Starting spm_realign...', 1);
+spm_realign(P, cfg.estimate);
+jp_log(realignlog, 'Finished spm_realign.\n', 1);
+
+% Reslice and create a mean image
+jp_log(realignlog, 'Starting spm_reslice...', 1);
+cfg.write.which = cfg.which_images;
+spm_reslice(P, cfg.write)
+jp_log(realignlog, 'Finished spm_reslice.\n', 1);
+
