@@ -6,8 +6,6 @@ function images = jp_getstructimages(prefix, subjdir, subname, structdirs)
 % [Note: now most functions are set up to normally just deal with
 % one structural directory and one image per directory, but that
 % might change someday.]
-%
-% $Id$
 
 
 if nargin < 4

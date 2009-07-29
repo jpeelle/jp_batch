@@ -12,8 +12,6 @@ function S = jp_spm5_normalize(S, subnum, sessionnum)
 % The assumption is that segmentation (JP_SPM5_SEGMENT) has been
 % done, resulting in a *seg_sn.mat file, the parameters of which
 % will then be applied to all functional images.
-%
-% $Id$
 
 
 % get any values not specified (if JP_INIT not run previously)

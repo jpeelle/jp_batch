@@ -7,9 +7,6 @@ function S = jp_spm8_realign(S, subnum)
 %   which_images  for reslicing (default 0 = meanonly)
 %
 % See JP_DEFAULTS for a full list and defaults.
-%
-% $Id$
-
 
 % get any values not specified (if JP_INIT not run previously)
 S.cfg = jp_setcfg(S.cfg, mfilename);

@@ -42,9 +42,6 @@ function S = jp_spm5_model(S, subnum)
 %
 % See SPM_FMRI_DESIGN and SPM_SPM for the structure of the SPM
 % struct.
-%
-%
-% $Id$
 
 
 subname = S.subjects(subnum).name;

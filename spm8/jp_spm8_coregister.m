@@ -12,9 +12,6 @@ function S = jp_spm8_coregister(S, subnum)
 % image.
 %
 % See JP_DEFAULTS for a full list and defaults.
-%
-% $Id$
-
 
 
 % get any values not specified (if JP_INIT not run previously)

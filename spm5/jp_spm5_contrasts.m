@@ -51,10 +51,6 @@ function S = jp_spm5_contrasts(S, subnum)
 % Just be careful.
 %
 %  See also JP_BATCH and JP_SPM5_MODEL.
-%
-%  $Id$
-
-
 
 subname = S.subjects(subnum).name;
 statsdir = S.cfg.jp_spm5_contrasts.statsdir;

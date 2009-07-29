@@ -15,8 +15,6 @@ function S = jp_init(S);
 % Use JP_ADDSUBJECT to add subjects to S.
 %
 % See also JP_BATCH, JP_DEFAULTS, JP_RUN.
-%
-% $Id$
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

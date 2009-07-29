@@ -2,8 +2,7 @@ function sess = jp_getsessions(S, subnum)
 %JP_GETSESSIONS Get sessions in cell array
 %
 % SESS = JP_GETSESSIONS(S, SUBNUM)
-%
-% $Id$
+
 
 sess = {};
 

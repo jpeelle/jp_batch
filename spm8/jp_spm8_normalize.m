@@ -12,9 +12,6 @@ function S = jp_spm8_normalize(S, subnum, sessionnum)
 % The assumption is that segmentation (JP_SPM8_SEGMENT) has been
 % done, resulting in a *seg_sn.mat file, the parameters of which
 % will then be applied to all functional images.
-%
-% $Id$
-
 
 % get any values not specified (if JP_INIT not run previously)
 S.cfg = jp_setcfg(S.cfg, mfilename);

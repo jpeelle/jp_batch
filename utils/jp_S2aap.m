@@ -4,8 +4,7 @@ function aap = jp_S2aap(S, aap, subjects, stages)
 % JP_S2AAP(S, [AAP]) changes S into appropriate AAP structure. AAP
 % is an exisiting AAP structure passed from S.aap which allows the
 % setting of any AAP-specific options for various functions.
-%
-% $Id$
+
 
 if nargin < 2
   aap = struct();

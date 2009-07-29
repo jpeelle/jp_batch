@@ -2,8 +2,6 @@ function images = jp_getfunimages(prefix, subjdir, subname, sessions)
 %JP_GETFUNIMAGES Get functional images for a subject.
 %
 % JP_GETFUNIMAGES(PREFIX, SUBJDIR, SUBNAME, [SESSION])
-%
-% $Id$
 
 
 % If a session 

@@ -8,9 +8,6 @@ function S = jp_spm8_realignunwarp(S, subnum, sessionnum)
 %
 %
 % See JP_DEFAULTS for a full list and defaults.
-%
-% $Id$
-
 
 if nargin < 3 || isempty(sessionnum)
   sessionnum = 1:length(S.subjects(subnum).sessions);

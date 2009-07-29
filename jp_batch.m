@@ -101,8 +101,7 @@ function jp_batch(task)
 % --------------------------------------------------------------
 % 
 % Adds subdirectories (if you don't do it yourself).
-%
-% $Id$
+
 
 if nargin==0
     help('jp_batch')

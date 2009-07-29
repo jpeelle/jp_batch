@@ -5,8 +5,7 @@ function jp_log(logfile, msg, verbose)
 %
 % VERBOSE = 1 prints to screen
 % VERBOSE = 2 indicates error
-%
-% $Id$
+
 
 
 if nargin < 3

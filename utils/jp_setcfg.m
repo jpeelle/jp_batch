@@ -5,9 +5,8 @@ function cfg = jp_setcfg(cfg, fn, defs_function)
 % values, or, optionally, only for a particular field FNAME.
 %
 % DEFS_FUNCTION allows you to specify the name of the function
-% where the defaults come from (default 'jp_spm_defaults').
-%
-% $Id$
+% where the defaults come from (default 'jp_defaults').
+
 
 if nargin < 3 || isempty(defs_function)
   defs_function = 'jp_defaults';

@@ -10,8 +10,6 @@ function S = jp_spm5_smooth(S, subnum, sessionnum)
 %  prefix   prefix to images being smoothed (default 'w')
 %
 % See JP_DEFAULTS for a full list of defaults.
-%
-% $Id$
 
 subname = S.subjects(subnum).name;
 subdir = fullfile(S.subjdir, subname);

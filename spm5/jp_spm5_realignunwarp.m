@@ -8,8 +8,6 @@ function S = jp_spm5_realignunwarp(S, subnum, sessionnum)
 %
 %
 % See JP_DEFAULTS for a full list and defaults.
-%
-% $Id$
 
 
 if nargin < 3 || isempty(sessionnum)

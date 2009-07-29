@@ -3,9 +3,6 @@ function jp_spm_setup()
 %
 %  JP_SPM_SETUP saves info files needed by scripts for
 %  preprocessing or statistics.
-%
-% $Rev: 28 $
-% $Date: 2008-09-19 17:08:41 +0100 (Fri, 19 Sep 2008) $
 
 clc
 

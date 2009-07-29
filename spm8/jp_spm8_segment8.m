@@ -6,9 +6,6 @@ function S = jp_spm8_segment8(S, subnum)
 % S structure (see JP_INIT).
 %
 % See JP_DEFAULTS for a full list of options.
-%
-% $Id$
-
 
 %- first make sure spm_preproc8 is in the path, as a toolbox it
 %might not be

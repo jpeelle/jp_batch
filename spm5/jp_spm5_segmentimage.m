@@ -4,11 +4,6 @@ function S = jp_spm5_segmentimage(images, cfg);
 % JP_SPM5_SEGMENTIMAGE(IMAGES,CFG)
 %
 % Options for CFG are in JP_SPM5_SEGMENT and JP_DEFAULTS.
-%
-% $Id$
-
-
-
 
 if nargin < 1 || isempty(images)
   images = spm_select(Inf, 'image', 'Select images to segment');

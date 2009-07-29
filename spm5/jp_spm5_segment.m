@@ -22,8 +22,6 @@ function S = jp_spm5_segment(S, subnum)
 %
 %
 % See JP_DEFAULTS for a full list and defaults.
-%
-% $Id$
 
 
 % get any values not specified (if JP_INIT not run previously)

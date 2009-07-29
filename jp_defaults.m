@@ -1,7 +1,6 @@
 function cfg = jp_defaults()
 %JP_DEFAULTS Default values for all JP_BATCH functions.
-%
-% $Id$
+
 
 
 

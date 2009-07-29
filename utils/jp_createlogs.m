@@ -3,8 +3,6 @@ function [alllog, errorlog, thislog] = jp_createlogs(thisSub, subjDir, logname, 
 %
 %  [alllog, errorlog, thislog] = JP_CREATELOGS(thisSub,
 %  subjDir, logname)
-%
-% $Id$
 
 
 if nargin < 4

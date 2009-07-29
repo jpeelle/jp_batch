@@ -24,8 +24,6 @@ function S = jp_run(S, subjects, stages, aa)
 %
 %
 % See JP_BATCH and JP_INIT for more information.
-%
-% $Id$
 
 % undocumented option: aa: 0 = no | 'aa' | 'aa_parallel'
 
@@ -72,7 +70,7 @@ jp_log(logfile, sprintf('SPM version: %s\n', S.spmver));
 
 fprintf('\n')
 fprintf('*********************************************************\n');
-jp_log(logfile, '               JP_RUN r$Rev$ - $Date$\n', 1)
+jp_log(logfile, '                 JP_RUN v1.0\n')
 fprintf('*********************************************************\n\n');
 S.runtime = datestr(now);
 fprintf('Started %s\n', S.runtime);

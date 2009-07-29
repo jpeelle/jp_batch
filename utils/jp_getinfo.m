@@ -25,8 +25,6 @@ function A = jp_getinfo(name, baseDir, subject, session)
 %  4) subjects/info.XX
 %
 %  See JP_BATCH for a list of acceptable parameters to use.
-%
-% $Id$
 
 
 p = {}; % path for keeping track of where we looked

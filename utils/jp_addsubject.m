@@ -18,9 +18,6 @@ function S = jp_addsubject(S, subjects, force);
 %
 % If a subject exists in S already, nothing is changed. To replace
 % information from a subject, set FORCE to 1.
-%
-%
-% $Id$
 
 
 if ischar(subjects)

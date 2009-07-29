@@ -1,13 +1,13 @@
 function [onsets, durations, weightings] = jp_spm_getev(filename)
 %JP_SPM_GETEV Get onset times for explanatory variable.
 %
-%  ONSETS = JP_GETEV(EVDIR, SUBJECT, CONDITION) returns the onset
-%  times for the specified condition.  This will be in units of
-%  scans or seconds, and should correspond to info.event_units in
-%  the stats directory.
+%  ONSETS = JP_SPM_GETEV(EVDIR, SUBJECT, CONDITION) returns the
+%  onset times for the specified condition.  This will be in units
+%  of scans or seconds, and should correspond to info.event_units
+%  in the stats directory.
 %
-%  ONSETS = JP_GETEV(EVDIR, SUBJECT, CONDITION, SESSION) uses the
-%  SESSION in the file name.
+%  ONSETS = JP_SPM_GETEV(EVDIR, SUBJECT, CONDITION, SESSION) uses
+%  the SESSION in the file name.
 %
 %  [ONSETS, DURATIONS, WEIGHTING] = JP_SPM_GETEV(...) also returns
 %  the event durations and weightings, if provided in the EV files.
@@ -28,9 +28,6 @@ function [onsets, durations, weightings] = jp_spm_getev(filename)
 %  this is almost never what you want, so be careful.
 %
 %  See also JP_SPM?_MODEL and JP_BATCH.
-%
-%  $Id$
-
 
 
 if ~exist(filename)
