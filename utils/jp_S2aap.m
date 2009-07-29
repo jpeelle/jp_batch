@@ -15,8 +15,8 @@ end
 % Initialize AA
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-addpath(S.cfg.options.aapath);
-eval(S.cfg.options.aacmd);
+addpath(S.cfg.options.aapath); % the base AA directory
+eval(S.cfg.options.aacmd);     % e.g. aa_ver3
 
 
 
@@ -29,6 +29,7 @@ aap.acq_details.root = S.subjdir;
 
 % (note: make sure all subjects have the same sessions?)
 
+% assumes all subjects have same sessions!
 for s=1:length(S.subjects(subjects(1)).sessions.names)
   aap.acq_details.sessions{s} = S.subjects(subjects(1)).sessions(s).name;
 end
@@ -57,7 +58,7 @@ end
 % Other options (not all will be needed)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-aap.options.autoidentifyfieldmaps = 1;
-aap.options.deletestructuralaftercopyingtocentralstore = 0;
-aap.options.fieldmapundistortversion = 'fieldmap_undistort_v403';
+aap.options = S.cfg.aap.options;
+
+
 

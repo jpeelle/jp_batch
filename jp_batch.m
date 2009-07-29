@@ -29,6 +29,10 @@ function jp_batch(task)
 % using ADDPATH or File > Set Path, or by running
 % JP_BATCH('addpaths').
 %
+% Once you have added the appropriate paths, you can find the
+% location of any function by typing 'which [function_name]' at the
+% command line (i.e. which jp_spm_setup).
+%
 %
 % --------------------------------------------------------------
 % Setting study parameters (including any that differ by subject)
@@ -90,9 +94,9 @@ function jp_batch(task)
 % If the functions are run outside of JP_RUN, default values
 % are set at run-time.
 %
-% Default values are stored in JP_SPM_DEFAULTS; it is possible to
+% Default values are stored in JP_DEFAULTS; it is possible to
 % create a copy of this for each study with tweaked defaults,
-% See JP_SPM_DEFAULTS and JP_INIT for more, and example scripts in
+% See JP_DEFAULTS and JP_INIT for more, and example scripts in
 % the 'examples' directory.
 %
 %
