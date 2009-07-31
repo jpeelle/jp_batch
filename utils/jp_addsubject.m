@@ -19,6 +19,10 @@ function S = jp_addsubject(S, subjects, force);
 % If a subject exists in S already, nothing is changed. To replace
 % information from a subject, set FORCE to 1.
 
+% Jonathan Peelle
+% MRC Cognition and Brain Sciences Unit
+
+
 
 if ischar(subjects)
   subjects = cellstr(subjects);

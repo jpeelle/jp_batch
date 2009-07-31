@@ -25,6 +25,10 @@ function S = jp_run(S, subjects, stages, aa)
 %
 % See JP_BATCH and JP_INIT for more information.
 
+% Jonathan Peelle
+% MRC Cognition and Brain Sciences Unit
+
+
 % undocumented option: aa: 0 = no | 'aa' | 'aa_parallel'
 
 % get the analysis name for adding to done flag and log

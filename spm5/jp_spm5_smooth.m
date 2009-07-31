@@ -11,6 +11,10 @@ function S = jp_spm5_smooth(S, subnum, sessionnum)
 %
 % See JP_DEFAULTS for a full list of defaults.
 
+% Jonathan Peelle
+% MRC Cognition and Brain Sciences Unit
+
+
 subname = S.subjects(subnum).name;
 subdir = fullfile(S.subjdir, subname);
 

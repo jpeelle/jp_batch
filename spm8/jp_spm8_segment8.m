@@ -7,6 +7,10 @@ function S = jp_spm8_segment8(S, subnum)
 %
 % See JP_DEFAULTS for a full list of options.
 
+% Jonathan Peelle
+% MRC Cognition and Brain Sciences Unit
+
+
 %- first make sure spm_preproc8 is in the path, as a toolbox it
 %might not be
 

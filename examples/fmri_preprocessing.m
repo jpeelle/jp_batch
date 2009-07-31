@@ -23,6 +23,10 @@
 % directories, etc. based on info.* text files; see JP_BATCH and
 % JP_SPM_SETUP for more.
 
+% Jonathan Peelle
+% MRC Cognition and Brain Sciences Unit
+
+
 
 %% add necessary paths (unless you add these somehwere else)
 %  Because the various functions live in subfolders, you need to either (a)

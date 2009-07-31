@@ -5,6 +5,10 @@ function aap = jp_S2aap(S, aap, subjects, stages)
 % is an exisiting AAP structure passed from S.aap which allows the
 % setting of any AAP-specific options for various functions.
 
+% Jonathan Peelle
+% MRC Cognition and Brain Sciences Unit
+
+
 
 if nargin < 2
   aap = struct();

@@ -3,6 +3,10 @@ function images = jp_getfunimages(prefix, subjdir, subname, sessions)
 %
 % JP_GETFUNIMAGES(PREFIX, SUBJDIR, SUBNAME, [SESSION])
 
+% Jonathan Peelle
+% MRC Cognition and Brain Sciences Unit
+
+
 
 % If a session 
 if nargin < 4

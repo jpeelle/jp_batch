@@ -1,8 +1,12 @@
 function jp_spm_setup()
 %JP_SPM_SETUP Set up the info files needed by JP_BATCH SPM scripts.
 %
-%  JP_SPM_SETUP saves info files needed by scripts for
-%  preprocessing or statistics.
+% JP_SPM_SETUP saves info files needed by scripts for
+% preprocessing or statistics.
+
+% Jonathan Peelle
+% MRC Cognition and Brain Sciences Unit
+
 
 clc
 

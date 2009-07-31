@@ -11,6 +11,10 @@ function cfg = jp_setcfg(cfg, fn, defs_functions)
 %
 % These functions can be anywhere in your matlab path.
 
+% Jonathan Peelle
+% MRC Cognition and Brain Sciences Unit
+
+
 
 if nargin < 3 || isempty(defs_function)
   defs_functions = 'jp_defaults';

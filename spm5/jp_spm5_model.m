@@ -43,6 +43,10 @@ function S = jp_spm5_model(S, subnum)
 % See SPM_FMRI_DESIGN and SPM_SPM for the structure of the SPM
 % struct.
 
+% Jonathan Peelle
+% MRC Cognition and Brain Sciences Unit
+
+
 
 subname = S.subjects(subnum).name;
 subdir = fullfile(S.subjdir, subname);

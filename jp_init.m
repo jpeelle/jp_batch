@@ -16,6 +16,10 @@ function S = jp_init(S);
 %
 % See also JP_BATCH, JP_DEFAULTS, JP_RUN.
 
+% Jonathan Peelle
+% MRC Cognition and Brain Sciences Unit
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % make sure basic required fields exist

@@ -1,30 +1,34 @@
 function A = jp_getinfo(name, baseDir, subject, session)
 %JP_GETINFO Get info used in JP batch scripts from a text file.
 %
-%  JP_GETINFO(NAME, BASEDIR, [SUBJECT], [SESSION]) gets the value from
-%  a text file.  
+% JP_GETINFO(NAME, BASEDIR, [SUBJECT], [SESSION]) gets the value from
+% a text file.  
 %
-%  Files at the top level are info.NAME and within the subject
-%  directory, SUBJECT.info.NAME.  For example, the default TR would
-%  be set by this file
+% Files at the top level are info.NAME and within the subject
+% directory, SUBJECT.info.NAME.  For example, the default TR would
+% be set by this file
 %
-%      BASEDIR/info.tr
+%     BASEDIR/info.tr
 %
-%  and this can be overridden for subject JP503 by creating
+% and this can be overridden for subject JP503 by creating
 %
-%      BASEDIR/JP503/JP503.info.tr
+%     BASEDIR/JP503/JP503.info.tr
 %
-%  or BASEDIR/JP503/session1/session1.JP503.info.tr
+% or BASEDIR/JP503/session1/session1.JP503.info.tr
 %
 %
-%  The order of checking for property XX is:
+% The order of checking for property XX is:
 %
-%  1) subjects/thissubject/subject.info.XX.session
-%  2) subjects/thissubject/subject.info.XX
-%  3) subjects/info.XX.session
-%  4) subjects/info.XX
+% 1) subjects/thissubject/subject.info.XX.session
+% 2) subjects/thissubject/subject.info.XX
+% 3) subjects/info.XX.session
+% 4) subjects/info.XX
 %
-%  See JP_BATCH for a list of acceptable parameters to use.
+% See JP_BATCH for a list of acceptable parameters to use.
+
+% Jonathan Peelle
+% MRC Cognition and Brain Sciences Unit
+
 
 
 p = {}; % path for keeping track of where we looked

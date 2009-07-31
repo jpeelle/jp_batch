@@ -4,7 +4,8 @@ function S = jp_spm5_segment(S, subnum)
 % JP_SPM5_SEGMENT(S, subnum)
 %
 % S.cfg.jp_spm5_segment contains options including:
-%  biascorrectfirst  0 to turn off additional bias-correction (see below) (default 1)
+%  biascorrectfirst
+%    0 to turn off additional bias-correction (see below) (default 1)
 %
 % Sometimes the normal SPM segmentation fails due to image
 % inhomogeneity (for example, using a multi-channel head coil).
@@ -22,6 +23,10 @@ function S = jp_spm5_segment(S, subnum)
 %
 %
 % See JP_DEFAULTS for a full list and defaults.
+
+% Jonathan Peelle
+% MRC Cognition and Brain Sciences Unit
+
 
 
 % get any values not specified (if JP_INIT not run previously)

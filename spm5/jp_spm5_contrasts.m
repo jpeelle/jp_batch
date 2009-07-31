@@ -50,7 +50,11 @@ function S = jp_spm5_contrasts(S, subnum)
 % confirmation dialogs since you are overwriting previous files.
 % Just be careful.
 %
-%  See also JP_BATCH and JP_SPM5_MODEL.
+% See also JP_BATCH and JP_SPM5_MODEL.
+
+% Jonathan Peelle
+% MRC Cognition and Brain Sciences Unit
+
 
 subname = S.subjects(subnum).name;
 statsdir = S.cfg.jp_spm5_contrasts.statsdir;

@@ -7,6 +7,10 @@ function images = jp_getstructimages(prefix, subjdir, subname, structdirs)
 % one structural directory and one image per directory, but that
 % might change someday.]
 
+% Jonathan Peelle
+% MRC Cognition and Brain Sciences Unit
+
+
 
 if nargin < 4
   structdirs = jp_getinfo('structdirs', subjdir, subname);

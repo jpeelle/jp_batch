@@ -13,6 +13,10 @@ function S = jp_spm5_normalize(S, subnum, sessionnum)
 % done, resulting in a *seg_sn.mat file, the parameters of which
 % will then be applied to all functional images.
 
+% Jonathan Peelle
+% MRC Cognition and Brain Sciences Unit
+
+
 
 % get any values not specified (if JP_INIT not run previously)
 S.cfg = jp_setcfg(S.cfg, mfilename);

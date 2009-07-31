@@ -11,6 +11,10 @@ function cfg = jp_defaults()
 % The built-in defaults functions live in the defaults folder, or
 % you can make your own.
 
+% Jonathan Peelle
+% MRC Cognition and Brain Sciences Unit
+
+
 cfg = struct();
 cfg = jp_defaults_general(cfg);
 cfg = jp_defaults_spmfmri(cfg);

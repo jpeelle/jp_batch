@@ -5,6 +5,10 @@ function S = jp_spm8_segmentimage(images, cfg);
 %
 % Options for CFG are in JP_SPM8_SEGMENT and JP_DEFAULTS.
 
+% Jonathan Peelle
+% MRC Cognition and Brain Sciences Unit
+
+
 if nargin < 1 || isempty(images)
   images = spm_select(Inf, 'image', 'Select images to segment');
   if isempty(images)
