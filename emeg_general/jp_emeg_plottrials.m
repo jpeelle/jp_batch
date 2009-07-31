@@ -1,8 +1,8 @@
-function jp_meg_plottrials(y,trl,cfg);
-%JP_MEG_PLOTTRIALS Plot trials overlaid on trigger channel.
+function jp_emeg_plottrials(y,trl,cfg);
+%JP_EMEG_PLOTTRIALS Plot trials overlaid on trigger channel.
 %
-% JP_MEG_PLOTTRIALS(Y,TRIALS,CFG) plots events over a trigger channel Y.
-% TRIALS are in the format returned by JP_MEG_GETTRIALS (which matches
+% JP_EMEG_PLOTTRIALS(Y,TRIALS,CFG) plots events over a trigger channel Y.
+% TRIALS are in the format returned by JP_EMEG_GETTRIALS (which matches
 % FieldTrip).
 %
 % CFG has one required field:

@@ -1,8 +1,8 @@
-function jp_meg_plotevents(y, events, cfg)
-%JP_MEG_PLOTEVENTS Plot events overlaid on a trigger channel.
+function jp_emeg_plotevents(y, events, cfg)
+%JP_EMEG_PLOTEVENTS Plot events overlaid on a trigger channel.
 %
-% JP_MEG_PLOTEVENTS(Y,EVENTS,CFG) plots events over a trigger channel Y.
-% EVENTS are in the format returned by JP_MEG_GETTRIALS.
+% JP_EMEG_PLOTEVENTS(Y,EVENTS,CFG) plots events over a trigger channel Y.
+% EVENTS are in the format returned by JP_EMEG_GETTRIALS.
 %
 % CFG has two required fields:
 %   fs        the sampling frequency of the data
