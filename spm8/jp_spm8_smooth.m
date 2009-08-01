@@ -81,7 +81,7 @@ fprintf(str,0,total_images)
 for thisp=1:size(P,1)
   thisFile = deblank(P(thisp,:));
   [pathstr,name,ext,versn] = fileparts(thisFile);
-  spm_smooth(thisFile,fullfile(pathstr,sprintf('s%s.nii',name)),cfg.fwhm);
+  spm_smooth(thisFile,fullfile(pathstr,sprintf('s%i%s.nii',cfg.fwhm,name)),cfg.fwhm);
   
   % Print out how far along we are
   str = sprintf('%%s%s/%s',sprintf('%%%ii',ndigits),sprintf('%%%ii',ndigits));
