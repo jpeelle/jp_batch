@@ -37,9 +37,7 @@ if ~isempty(analysisname) && ~strcmp(analysisname(1),'-')
   analysisname = ['-' analysisname];
 end
 
-
 logfile = fullfile(S.subjdir, sprintf('jp_run%s.log',analysisname));
-
 
 if nargin < 4
   aa = '';
@@ -131,6 +129,12 @@ if ~isempty(aa)
 end
 
 
+% clear error files
+for s=1:length(subjects)
+    ss = subjects(s);
+    S.subjects(ss).error = 0;
+end
+    
 % See if we want to run this as AA or normal
 if strcmp(aa, 'aa')
   jp_log(logfile,'Running using AA.');
@@ -158,10 +162,7 @@ else
     for s=1:length(subjects)          
       ss = subjects(s); % the subject we want to run      
       subjname = S.subjects(ss).name;
-      
-      
-      % clear error file
-      S.subjects(ss).error = 0;      
+                  
       jp_log(logfile, sprintf('Subject %s (%i/%i)\n', subjname, s, length(subjects)));      
       donefile = fullfile(S.subjdir, subjname, sprintf('jpdone%s-%s-%s', analysisname, subjname, nm));      
       errorfile = fullfile(S.subjdir, subjname, 'jplog-error');
@@ -169,6 +170,7 @@ else
       % check for existing error file
       if S.cfg.options.checkforerrors==1 && exist(errorfile)
         jp_log(logfile, sprintf('Error log exists for subject %s; skipping.\n', subjname), 1);
+        S.subjects(ss).error = 1;
         
         % check to see if this stage has been completed already (per subject, not per session)
       elseif S.cfg.options.checkfordone==1 && exist(donefile)                                                      
