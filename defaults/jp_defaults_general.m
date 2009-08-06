@@ -13,9 +13,9 @@ end
 
 cfg.options.checkforerrors = 1;         % don't run a stage if errors happened before
 cfg.options.checkfordone   = 1;         % don't run a stage if previously completed
-cfg.options.startspm       = 1;         % avoid GUI errors by starting SPM at outset (SPM8)
+cfg.options.startspm       = 0;         % avoid GUI errors by starting SPM at outset (SPM8)
 cfg.options.analysisname   = '';        % appended to 'done' flags to allow multiple analyses
-
+cfg.options.chmodgrw       = 1;         % at the end try to make everything group read/writeable
 
 % (these ones are less used)
 cfg.options.modality       = {'fMRI'};  % possibly used in the future

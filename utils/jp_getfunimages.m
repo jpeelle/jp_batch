@@ -21,6 +21,6 @@ images = [];
   
 for i=1:length(sessions)
   thisdir = sessions{i};
-  images = strvcat(images, spm_select('extfplist', fullfile(subjdir, subname, thisdir), sprintf('^%s.*\\.nii$',prefix)),1:5000);
+  images = strvcat(images, spm_select('fplist', fullfile(subjdir, subname, thisdir), sprintf('^%s.*\\.nii$',prefix)));
 end  
 

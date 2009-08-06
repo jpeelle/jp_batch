@@ -8,4 +8,7 @@ prevent conflicts with any existing installations.
 
 SOFTWARE/SCRIPTS INCLUDED:
 
-
+# For timeseries image analysis from the CBU
+timediff.m
+tsdiffana.m
+tsdiffplot.m

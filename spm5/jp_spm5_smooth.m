@@ -1,8 +1,8 @@
 function S = jp_spm5_smooth(S, subnum, sessionnum)
 %JP_SPM5_SMOOTH Smooth images using SPM5.
 %
-% JP_SPM5_SMOOTH(S, SUBNUM, [SESSIONNUM]) will smooth images for
-% subject number SUBNUM from an S structure (see JP_INIT).
+% S = JP_SPM5_SMOOTH(S, SUBNUM, [SESSIONNUM]) will smooth images
+% for subject number SUBNUM from an S structure (see JP_INIT).
 %
 % Required option in S.cfg.jp_spm5_smooth is the fwhm field.  Other
 % options:

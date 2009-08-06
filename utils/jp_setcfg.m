@@ -16,7 +16,7 @@ function cfg = jp_setcfg(cfg, fn, defs_functions)
 
 
 
-if nargin < 3 || isempty(defs_function)
+if nargin < 3 || isempty(defs_functions)
   defs_functions = 'jp_defaults';
 end
 

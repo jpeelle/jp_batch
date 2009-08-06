@@ -15,7 +15,7 @@ function S = jp_spm8_segment8(S, subnum)
 %might not be
 
 if ~strcmp(spm('ver'),'SPM8')
-    error('%s requires SPM8.', mfilename);
+  error('%s requires SPM8.', mfilename);
 end
 
 if ~exist('spm_preproc_run')
@@ -32,13 +32,13 @@ end
 
 % make sure optimNn is in the path, usually with DARTEL
 if ~exist('optimNn')
-    try
-        addpath(fullfile(spm('dir'),'toolbox','DARTEL'))
-    catch
-    end
+  try
+    addpath(fullfile(spm('dir'),'toolbox','DARTEL'))
+  catch
+  end
 end
 if ~exist('optimNn')
-    error('optimNn is not in your Matlab path but needs to be.');
+  error('optimNn is not in your Matlab path but needs to be.');
 end
 
 
@@ -69,12 +69,14 @@ catch
 end
 
 
+structdir = structdirs{1};
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Get structural image
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-jp_log(seg8log, sprintf('Looking for structural image in %s...\n', structdirs{1}));
-img = jp_getstructimages(structprefix, S.subjdir, subname, structdirs{1});
+jp_log(seg8log, sprintf('Looking for structural image in %s...\n', structdir));
+img = jp_getstructimages(structprefix, S.subjdir, subname, structdir);
 
 if isempty(img) || strcmp(img, '/')
   jp_log(seg8log, 'Did not find any images.', 2);
@@ -84,6 +86,26 @@ end
 
 jp_log(seg8log, sprintf('Found %s.\n', img));
   
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% If cfg.segment8dir specified, create, and specify for output
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+if ~isempty(cfg.segment8dir)
+  jp_log(seg8log, sprintf('Saving output to %s.', cfg.segment8dir));
+  
+  if ~isdir(fullfile(structdir,cfg.segment8dir))
+    mkdir(fullfile(structdir,cfg.segment8dir));
+  end
+  
+  % and make a link to the structural image
+  [pth, nm, ext] = fileparts(img);
+  
+  oldimg = img;
+  img = fullfile(pth, cfg.segment8dir, [nm ext]);
+  system('ln -s %s %s', oldimg, img);
+end
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -123,23 +145,17 @@ jp_log(seg8log, 'Configuring segmentation job...');
 % tissue argument
 % (complicated but seems the best way...copied from the tbx_cfg_preproc8 script)
 
-
-%tissue(1).tpm = cfg.tpm;
-%tissue(1).ngaus = cfg.ngaus;
-%tissue(1).native = cfg.native;
-%tissue(1).warped = cfg.warped;
-
 % Every tissuce class needs a map name, number of gaussians, and nval?
 
 tpm_nam = cfg.tpm;
 ngaus   = cfg.ngaus;
 nval    = {[1 0],[1 0],[1 0],[1 0],[1 0],[0 0]};
 for k=1:length(ngaus)
-    tissue(k).tpm = [tpm_nam ',' num2str(k)]; % assign the tpm map
-    tissue(k).ngaus = ngaus(k);  % and the number of gaussians
-    tissue(k).native = cfg.native;
-    tissue(k).warped = cfg.warped;
-   % tissue.val{3}.val    = {nval{k}};   % and whatever this is
+  tissue(k).tpm = [tpm_nam ',' num2str(k)]; % assign the tpm map
+  tissue(k).ngaus = ngaus(k);  % and the number of gaussians
+  tissue(k).native = cfg.native;
+  tissue(k).warped = cfg.warped;
+  % tissue.val{3}.val    = {nval{k}};   % and whatever this is
 end
 
 job.channel(1).vols{1} = img;
@@ -165,16 +181,17 @@ jp_log(seg8log, 'done.\n');
 
 % be nice and remind user this might take a while
 if cfg.samp < 2
-  fprintf('Note that cfg.samp is relatively small, which may take quite a while to run.\n');
+  fprintf('Note that cfg.samp is relatively small, which may take *quite* a while to run.\n');
 end
 
 
 % save job in case we want to inspect later
 S.subjects(subnum).(mfilename).job = job;
 
-jp_log(seg8log, 'Starting segmentation8...\n');
+tic
+jp_log(seg8log, 'Starting segmentation8...');
 spm_preproc_run(job);
-jp_log(seg8log, 'Done with segmentation8.\n');
+jp_log(seg8log, sprintf('done in %.1f hours.\n', toc/60/60));
 
 
 

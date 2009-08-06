@@ -86,7 +86,7 @@ jp_log(logfile, sprintf('SPM version: %s\n', S.spmver));
 % save S
 if S.cfg.options.saveS
   [savdir, nm, ext] = fileparts(S.subjdir); % save one level up from subj
-  sfile = fullfile(savdir, sprintf('S%s.mat',analysisname));
+  sfile = fullfile(savdir, sprintf('S-%s.mat',analysisname));
   save(sfile, 'S');
 end
 
@@ -104,10 +104,12 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 if ismember('fMRI', S.cfg.options.modality)
+  fprintf('Loading SPM defaults from %s...', S.cfg.options.spmdefaultsfunction);
   eval(S.cfg.options.spmdefaultsfunction);
   global defaults  
   defaults.modality = 'FMRI';
   defaults.stats.maxmem = 2^26;
+  fprintf('done.\n');
 end
 
 
@@ -143,7 +145,6 @@ else
   if S.cfg.options.startspm && S.cfg.options.runstages>0
     spm('fmri');
   end
-  
   
   for a=1:length(stages)
     
@@ -252,8 +253,7 @@ if S.cfg.options.runstages > 0
     if S.subjects(ss).error==0
       jp_log(logfile, sprintf('\t%s\n', S.subjects(ss).name));
     end
-  end
-  
+  end  
   
   jp_log(logfile, sprintf('\n%i subjects had errors:\n', sum([S.subjects(subjects).error])));
   for s=1:length(subjects)
@@ -268,3 +268,10 @@ else
 end
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Try to make everything you just did group read/writeable
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+if S.cfg.options.chmodgrw
+    system(sprintf('chmod -R g+rw %s', S.subjdir));
+end

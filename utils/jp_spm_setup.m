@@ -77,6 +77,7 @@ if ~isempty(struct_dirs)
   for i=1:length(struct_dirs)
     fprintf(fid, '%s\n', struct_dirs{i});
   end
+  fprintf('Saved to info.structdirs.\n');
 end
 
 
@@ -94,6 +95,7 @@ if ~isempty(fun_dirs)
   for i=1:length(fun_dirs)
     fprintf(fid, '%s\n', fun_dirs{i});
   end
+  fprintf('Saved to info.fundirs.\n');
 end
 
 
@@ -102,19 +104,20 @@ end
 fprintf('\nThe structural prefix refers to the letter(s) that start\nstructural filenames (often ''s'').\n');
 structprefix = input('Enter your structural prefix: ', 's');
 writestr(fullfile(base_dir, 'info.structprefix'), structprefix);
-
+fprintf('Saved to info.structprefix.\n');
 
 % Functional prefix
 fprintf('\nThe functional prefix refers to the letter(s) that start\nfunctional filenames (often ''f'').\n');
 funprefix = input('Enter your functional prefix: ', 's');
 writestr(fullfile(base_dir, 'info.funprefix'), funprefix);
-
+fprintf('Saved to info.funprefix.\n');
 
 % TA
 fprintf('\nYour TA is how long it actually took to acquire a full volume.\n');
 ta = input('Enter your TA (seconds): ');
 if ~isempty(ta)
   dlmwrite(fullfile(base_dir, 'info.ta'), ta, 'delimiter', '\n');
+  fprintf('Saved to info.ta.\n');
 end
 
 
@@ -124,6 +127,7 @@ fprintf('It is often the same as your TA, but not always.\n');
 tr = input('Enter your TR (seconds): ');
 if ~isempty(tr)
   dlmwrite(fullfile(base_dir, 'info.tr'), tr, 'delimiter', '\n');
+  fprintf('Saved to info.tr.\n');
 end
 
 
@@ -138,6 +142,7 @@ if ~isempty(sliceorder)
   sliceorder = eval(sliceorder);
   dlmwrite(fullfile(base_dir, 'info.sliceorder'), sliceorder, 'delimiter', '\n');
   suggested_ref = sliceorder(round(length(sliceorder)/2));
+  fprintf('Saved to info.sliceorder.\n');
 else
   suggested_ref = 1;
 end
@@ -150,6 +155,7 @@ fprintf('data to. Often people choose the middle slice acquired in time.\n');
 ref_slice = input(sprintf('Enter your reference slice (suggested %i): ', suggested_ref));
 if ~isempty(ref_slice)
   dlmwrite(fullfile(base_dir, 'info.refslice'), ref_slice, 'delimiter', '\n');
+    fprintf('Saved to info.refslice.\n');
 end
 
 end % setup_subj

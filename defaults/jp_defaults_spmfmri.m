@@ -12,6 +12,8 @@ end
 
 cfg.options.max4d = 2000; % i.e. spm_select('ExtFpList', 'dir','^f', 1:cfg.options.max4d)
 
+cfg.options.spmdefaultsfunction = 'spm_defaults';
+
 
 
 
@@ -23,6 +25,11 @@ cfg.options.max4d = 2000; % i.e. spm_select('ExtFpList', 'dir','^f', 1:cfg.optio
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SPM 8
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% SPM8 tsdiffana
+%-----------------------------------------------------------------------
+
+cfg.jp_spm8_tsdiffana = [];
 
 
 % SPM8 Realignment
@@ -117,6 +124,7 @@ cfg.jp_spm8_segment8.writedeffields = [1 1]; % why not write them out
 
 cfg.jp_spm8_segment8.biascorrectfirst = 1; % write out bias corrected, then segment that
 
+cfg.jp_spm8_segment8.segment8dir = '';   % if not empty, created within structural directory and output saved here
 
 
 
@@ -192,6 +200,7 @@ cfg.jp_spm8_contrasts.tandffiledirname = '@tandf_files';
 % SPM 5 (same as SPM8 unless changes required)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+cfg.jp_spm5_tsdiffana = cfg.jp_spm8_tsdiffana;
 cfg.jp_spm5_realign = cfg.jp_spm8_realign;
 cfg.jp_spm5_realignunwarp = cfg.jp_spm8_realignunwarp;
 cfg.jp_spm5_coregister = cfg.jp_spm8_coregister;
