@@ -70,3 +70,18 @@ cfg.write.which = cfg.which_images;
 spm_reslice(P, cfg.write)
 jp_log(realignlog, 'Finished spm_reslice.\n', 1);
 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Save
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+jp_log(realignlog, 'Saving output images...');
+
+for d=1:length(fundirs)
+  cfg2.savename = sprintf('%s_%s_motionparameters', subname, fundirs{d});
+  cfg2.closefig = 1;
+  jp_spm_viewmotion(fullfile(S.subjdir, subname, fundirs{d}), cfg2);
+end
+
+jp_log(realignlog, 'done.\n');

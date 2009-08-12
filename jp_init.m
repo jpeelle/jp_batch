@@ -12,7 +12,8 @@ function S = jp_init(S);
 %  S.cfg.options.defsfunction = 'my_defaults';
 %
 %
-% Use JP_ADDSUBJECT to add subjects to S.
+% Use JP_ADDSUBJECT to add subjects to S, and JP_ADDANALYSIS to add
+% analysis stages.
 %
 % See also JP_BATCH, JP_DEFAULTS, JP_RUN.
 

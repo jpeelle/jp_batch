@@ -1,7 +1,7 @@
-function S = jp_spm8_tsdiffana(S, subnum, sessionnum)
-%JP_SPM8_TSDIFFANA Timeseries difference analysis on fMRI data.
+function S = jp_spm5_tsdiffana(S, subnum, sessionnum)
+%JP_SPM5_TSDIFFANA Timeseries difference analysis on fMRI data.
 %
-% S = JP_SPM8_TSDIFFANA(S, SUBNUM, [SESSIONNUM]) will perform
+% S = JP_SPM5_TSDIFFANA(S, SUBNUM, [SESSIONNUM]) will perform
 % timeseries difference analysis on sessions using the TSDIFFANA
 % script (contained in externals/ folder), saving the ouput within
 % each directory as subjectname_sessionname_tsdiffana.png.
