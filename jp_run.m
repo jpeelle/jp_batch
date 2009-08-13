@@ -70,10 +70,10 @@ jp_log(logfile, sprintf('SPM location: %s\n', S.whichspm));
 jp_log(logfile, sprintf('SPM version: %s\n', S.spmver));
 
 
-fprintf('\n')
-fprintf('*********************************************************\n');
-jp_log(logfile, '                 JP_RUN v1.0\n')
-fprintf('*********************************************************\n\n');
+jp_log(logfile, '\n\n*********************************************************\n');
+jp_log(logfile, '                     JP_RUN v1.0\n')
+jp_log(logfile, '*********************************************************\n\n');
+
 S.runtime = datestr(now);
 fprintf('Started %s\n', S.runtime);
 
