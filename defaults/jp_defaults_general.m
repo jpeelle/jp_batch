@@ -30,3 +30,7 @@ cfg.options.defsfunction = 'jp_defaults';
 cfg.options.aapath         = '/imaging/jp01/software/aa/versions/release-3.0';
 cfg.options.aacmd          = 'aa_ver3_devel';
 cfg.options.aadoneflags    = 0;         % make done flags aa will respect
+
+
+% makereport
+cfg.jp_makereport = [];

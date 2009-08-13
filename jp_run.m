@@ -169,12 +169,12 @@ else
       
       % check for existing error file
       if S.cfg.options.checkforerrors==1 && exist(errorfile)
-        jp_log(logfile, sprintf('Error log exists for subject %s; skipping.\n', subjname), 1);
+        jp_log(logfile, sprintf('Error log exists for subject %s; skipping.\n\n', subjname), 1);
         S.subjects(ss).error = 1;
         
         % check to see if this stage has been completed already (per subject, not per session)
       elseif S.cfg.options.checkfordone==1 && exist(donefile)                                                      
-        jp_log(logfile, sprintf('Stage %s already completed for subject %s; skipping.\n', upper(nm), subjname), 1);
+        jp_log(logfile, sprintf('Stage %s already completed for subject %s; skipping.\n\n', upper(nm), subjname), 1);
         
       else
         % if no error or file, or not checking, try to run this stage

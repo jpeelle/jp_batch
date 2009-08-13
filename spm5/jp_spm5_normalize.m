@@ -126,5 +126,6 @@ for thisv=1:length(V)
   fprintf(str,sprintf(repmat('\b',1,nback)),thisv,total_images); 
 end
 
+fprintf('\n');
 jp_log(normalizelog, 'Done writing images.\n');
 
