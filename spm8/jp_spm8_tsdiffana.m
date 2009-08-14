@@ -48,6 +48,10 @@ for s=1:length(sessionnum)
   
   imgs = jp_getfunimages(funprefix, S.subjdir, subname, fundirs{ss});
   
+  if isempty(imgs)
+    error('No images found.');
+  end
+  
   jp_log(tsdifflog, sprintf('Session %s: %d images selected.\n', fundirs{ss}, size(imgs,1)));
   
   f1 = figure('position', [360 39 663 884], 'color', 'w');
