@@ -107,7 +107,7 @@ for i=1:length(subjects)
         fprintf('\t%s\n', fundirs{j});
         
         if ~isdir(fullfile(S.subjdir, thissub, fundirs{j}))
-          fprintf('WARNING: %s specified but does not exist.\n', fundirs{j});
+          error('%s specified (in info.fundirs file) but does not exist.', fundirs{j});
         end
       end    
     catch
