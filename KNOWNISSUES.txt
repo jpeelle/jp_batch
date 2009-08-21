@@ -11,4 +11,7 @@ work around by creating a copy of JP_DEFAULTS in Matlab path that gets
 called before the built-in defaults (test by typing 'which
 jp_defaults' from the command line).
 
-For 4d NIfti files, max number of volumes is 5000 (hard coded into jp_getfunimages). 
+4d file support doesn't work yet...when it does, for 4d NIfti files, max number of volumes is 5000 (hard coded into jp_getfunimages). 
+
+Still not confident realignunwarp is working well.
+

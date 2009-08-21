@@ -2,10 +2,8 @@ function S = jp_spm8_realignunwarp(S, subnum, sessionnum)
 %JP_SPM8_REALIGNUNWARP Realign images using SPM8 realign.
 %
 % S = JP_SPM8_REALIGNUNWARP(S,SUBNUM,[SESSIONNUM]) uses the realigment
-% parameters from realignment (JP_SPM8_REALIGN) to correct for
-% magnetic field inhomogeneities. Unwarped images are written out
-% with a u.
-%
+% parameters from realignment to correct for % magnetic field
+% inhomogeneities. Unwarped images are written out with a u.
 %
 % See JP_DEFAULTS for a full list and defaults.
 

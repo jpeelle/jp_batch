@@ -62,17 +62,25 @@ end
 
 for i=1:length(fnames)
   fn = fnames{i};
-   
-  if isstruct(defs.(fn))
-    if isfield(X, fn)
-          X.(fn) =  fillit(X.(fn), defs.(fn), fieldnames(defs.(fn)));
-    else 
-          X.(fn) = defs.(fn);
-    end          
-  else  
-    if ~isfield(X, fn) || isempty(X.(fn)) 
-      X.(fn) = defs.(fn);  
+
+  if isfield(defs,fn)
+    if isstruct(defs.(fn))
+      if isfield(X, fn)
+        X.(fn) =  fillit(X.(fn), defs.(fn), fieldnames(defs.(fn)));
+      else 
+        X.(fn) = defs.(fn);
+      end          
+    else
+      % Set the field if specified in defaults; if there is no
+      % default specified, set it to be blank.
+      if ~isfield(X, fn) || isempty(X.(fn)) 
+        X.(fn) = defs.(fn);
+      end
     end
+  else
+    % If the function isn't in the defaults, just set it to be
+    % empty
+    X.(fn) = [];
   end
 end % going through names
 

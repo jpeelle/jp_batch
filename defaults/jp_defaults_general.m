@@ -27,7 +27,7 @@ cfg.options.defsfunction = 'jp_defaults';
 
 
 % only if you use AA (don't do it)
-cfg.options.aapath         = '/imaging/jp01/software/aa/versions/release-3.0';
+cfg.options.aapath         = '/imaging/jp01/software/aa/devel';
 cfg.options.aacmd          = 'aa_ver3_devel';
 cfg.options.aadoneflags    = 0;         % make done flags aa will respect
 

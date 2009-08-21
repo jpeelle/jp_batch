@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<aap>    
+   <directory_conventions>
+      <fieldmapsdirname desc='Subdirectory in subject dir for fieldmaps' ui='text'>fieldmaps</fieldmapsdirname>
+      <structdirname desc='Subdirectory in subject dir for MRI structurals' ui='text'>structural</structdirname>
+      <tmapsdirname desc='Subdirectory in subject dir for real-time T maps' ui='text'>realtime_tmaps</tmapsdirname>
+      <specialseriesdirname desc='Subdirectory in subject dir for special series' ui='text'>specialseries</specialseriesdirname>
+      <eventsdirname  desc='Subdirectory in study, subject and/or session for event files' ui='text'>events</eventsdirname>
+      <rawdatadir desc='Subdirectory to find raw MRI data' ui='dir'>/mridata/cbu/</rawdatadir>
+      <rawmegdatadir desc='Directory to find raw MEG data' ui='dir'>/megdata/cbu/</rawmegdatadir>
+      <centralstore_structurals desc='Location of central store for structruals' ui='dir'>/imaging/local/structurals/cbu</centralstore_structurals>
+      <T1template desc='Location of T1 template' ui='dir'>/imaging/local/spm/spm5/templates/T1.nii</T1template>
+      <centralstore_ssstructurals desc='Location of central store for skull stripped structurals' ui='dir'>/imaging/local/structurals/cbu/skull_stripped</centralstore_ssstructurals>
+      <T1sstemplate desc='Location of skull-stripped T1 template' ui='dir'>/imaging/local/spm/spm99/templates/sbrain_avg152T1.img</T1sstemplate>
+      <rawdataafterconversionprefix desc='Prefix of raw data after conversion from DICOM to NIFTI' ui='text'>fCBU</rawdataafterconversionprefix>
+      <subject_directory_format desc='Format of subject directory' ui='optionlist' options='manual|CBU060500|S01'>3
+      </subject_directory_format>
+      <subject_filenames_format desc='Format of filenames within session directory' ui='optionlist' options='manual|CBU060500|S01'>1
+      </subject_filenames_format>
+      <subject_directory_names/>
+      <subject_filenames/>
+      <rawseries_usefileorder desc='In raw data, use number in file listing not filtering by series number'>0</rawseries_usefileorder>
+      <selectechonumbers desc='Which echo numbers?' ui='vector_array' range='[1 Inf]'>0</selectechonumbers>
+      <reportname desc='Name of output from aa_report' ui='file' ext='.htm'>fullreport.htm</reportname>
+      <stats_singlesubj desc='Directory for single subject statistics' ui='dir'></stats_singlesubj>
+      <rfx desc='Directory for random effects statistics' ui='dir'></rfx>
+      <dartelsubjdirname desc='Name of DARTEL subject directory' ui='dir'>dartel</dartelsubjdirname>
+      <outputformat desc='Determnes format of output - currently empt, or splitbymodule'></outputformat>
+      <analysisid desc='Analysis ID'/>
+   </directory_conventions>
+   <options>
+      <verbose desc='How verbose to be' ui='yesno'>1</verbose>
+      <copystructuraltocentralstore desc='Copy structurals to central store?' ui='yesno'>0</copystructuraltocentralstore>
+      <deletestructuralaftercopyingtocentralstore desc='Delete local copy of structurals ' ui='yesno'>0</deletestructuralaftercopyingtocentralstore>
+      <autoidentifystructural desc='Automatically identify structurals?' ui='yesno'>1</autoidentifystructural>
+      <autoidentifystructural_chooselast desc='Automatically select last of structurals when there is more than one?' ui='yesno'>1</autoidentifystructural_chooselast>
+      <autoidentifystructural_average desc='Average across structurals when there is more than one?' ui='yesno'>0</autoidentifystructural_average>
+      <autoidentifyfieldmaps desc='Automatically identify field maps?' ui='yesno'>1</autoidentifyfieldmaps>
+      <autoidentifytmaps desc='Automatically identify t maps?' ui='yesno'>0</autoidentifytmaps>
+      <aa_minver desc='Minimum allowed aa version' ui='double'>3</aa_minver>
+      <aa_maxver desc='Maximum allowed aa version' ui='double'>Inf</aa_maxver>
+      <userinterface desc='User interface for checking and specifying task parameters' ui='yesno'>0</userinterface>
+      <processinglocation desc='Where processing should happend - local vs. aws'>local</processinglocation>
+    </options>
+    
+   <acq_details>
+      <root desc='Root path for processed data' ui='dir'>/imaging/rhodri/vstmandattention/main</root>
+      <numdummies desc='Number of dummy scans' ui='int'>3</numdummies>
+      <topscannumber desc='Ignore EPI scans after this one' ui='int'/>
+
+      <subjects desc='Subject details'>
+          <mriname desc='Subject MRI filename' ui='text'/>
+          <megname desc='Subject MRI filename' ui='text'/>
+          <structural desc='Structural session number in raw data' ui='int'/>
+          <tmaps desc='Real time t maps session number in raw data' ui='int'/>
+          <specialseries desc='special series session number in raw data' ui='int'/>
+	  <ignoreseries desc='series to be ignored when automatically scanning raw data' ui='int'/>
+	  <fieldmaps/>
+      	  <newfieldmap/>
+          <structuralfn/>
+          <siemensfieldmap/>
+	  <seriesnumbers desc='Session numbers for EPI' />
+       </subjects>
+       <sessions desc='Functional sessions'>
+         <name desc='Session name'/>
+       </sessions>
+   </acq_details>
+   
+   <timeouts>
+      <starting desc='timeout period for spm startup (mins)'>2</starting>
+      <joballocated desc='timeout period for worker prepare (mins)'>2</joballocated> 
+      <busy desc='timeout period for worker job (mins)'>600</busy>
+      <bored desc='timeout period for bored worker (mins)'>10</bored>
+   </timeouts>      
+
+</aap>

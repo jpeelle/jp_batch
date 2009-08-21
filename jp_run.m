@@ -37,7 +37,7 @@ if ~isempty(analysisname) && ~strcmp(analysisname(1),'-')
   analysisname = ['-' analysisname];
 end
 
-logfile = fullfile(S.subjdir, sprintf('jp_run%s.log',analysisname));
+logfile = fullfile(S.subjdir, sprintf('jplog-jp_run%s',analysisname));
 
 if nargin < 4
   aa = '';
@@ -82,9 +82,9 @@ jp_log(logfile, sprintf('SPM version: %s\n', S.spmver));
 
 
 % save S
-if S.cfg.options.saveS
+if S.cfg.options.saveS || ~isempty(aa)
   [savdir, nm, ext] = fileparts(S.subjdir); % save one level up from subj
-  sfile = fullfile(savdir, sprintf('S-%s.mat',analysisname));
+  sfile = fullfile(savdir, sprintf('S%s.mat',analysisname));
   save(sfile, 'S');
 end
 
@@ -122,10 +122,11 @@ if ~isempty(aa)
     S.aap = struct();
   end
   
-  aap = jp_S2aap(S, S.aap, subjects, stages);
-  S.aap = aap;
-  save(sfile, 'S');
+  S.aap = jp_S2aap(S, S.aap, sfile, subjects, stages);
 
+  if S.cfg.options.saveS
+    save(sfile, 'S');
+  end
 end
 
 
@@ -138,10 +139,10 @@ end
 % See if we want to run this as AA or normal
 if strcmp(aa, 'aa')
   jp_log(logfile,'Running using AA.');
-  aa_doprocessing(aap);  
+  S.aap = aa_doprocessing(S.aap);  
 elseif strcmp(aa, 'aa_parallel')
   jp_log(logfile,'Running using AA Parallel.');
-  aa_doprocessing_parallel(aap);   
+  S.aap = aa_doprocessing_parallel(S.aap);   
 else
   
   % if requested start SPM,which initializes graphics windows (unless

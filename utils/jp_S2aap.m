@@ -1,4 +1,4 @@
-function aap = jp_S2aap(S, aap, subjects, stages)
+function aap = jp_S2aap(S, aap, sfile, subjects, stages)
 %JP_S2AAP Changes S structure into AA-compatabile aap.
 %
 % JP_S2AAP(S, [AAP]) changes S into appropriate AAP structure. AAP
@@ -9,6 +9,13 @@ function aap = jp_S2aap(S, aap, subjects, stages)
 % MRC Cognition and Brain Sciences Unit
 
 
+if nargin < 5
+  stages = 1:length(S.analysis);
+end
+
+if nargin < 4
+  subjects = 1:length(S.subjects);
+end
 
 if nargin < 2
   aap = struct();
@@ -20,8 +27,19 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 addpath(S.cfg.options.aapath); % the base AA directory
-eval(S.cfg.options.aacmd);     % e.g. aa_ver3
+eval(S.cfg.options.aacmd);     % e.g. aa_ver30
 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% add the stages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% for now, just run everything through one aa module
+
+aap = aarecipe('aap_parameters_jpdefaults.xml', 'aap_tasklist_jprun.xml');
+aap.tasksettings.aamod_jprun.stages = stages;
+aap.tasksettings.aamod_jprun.sfile = sfile;
 
 
 
@@ -30,39 +48,13 @@ eval(S.cfg.options.aacmd);     % e.g. aa_ver3
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 aap.acq_details.root = S.subjdir;
-
-% (note: make sure all subjects have the same sessions?)
-
-% assumes all subjects have same sessions!
-for s=1:length(S.subjects(subjects(1)).sessions.names)
-  aap.acq_details.sessions{s} = S.subjects(subjects(1)).sessions(s).name;
-end
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% add the stages
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
-
-
+aap.directory_conventions.outputformat = [];
+aap.directory_conventions.subject_directory_format = 3;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % add the subjects
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Other options (not all will be needed)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-aap.options = S.cfg.aap.options;
-
-
-
+for i=1:length(subjects)
+  aap.acq_details.subjects(i).mriname = S.subjects(subjects(i)).name;
+end

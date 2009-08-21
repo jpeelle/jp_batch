@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<aap>
+  <tasksettings>
+   <aamod_jprun domain='subject' desc='Run JP_RUN one subject at a time' modality='MRI'>
+   </aamod_jprun>
+  </tasksettings>
+</aap>
