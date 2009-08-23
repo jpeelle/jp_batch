@@ -13,7 +13,7 @@ end
 cfg.options.max4d = 2000; % i.e. spm_select('ExtFpList', 'dir','^f', 1:cfg.options.max4d)
 
 cfg.options.spmdefaultsfunction = 'spm_defaults';
-
+cfg.options.dartelname = 'dartel';
 
 
 
@@ -89,7 +89,7 @@ cfg.jp_spm8_segment.estimate.biasreg  = 0.0001;
 cfg.jp_spm8_segment.estimate.biasfwhm = 75;
 cfg.jp_spm8_segment.estimate.regtype  = 'mni';
 cfg.jp_spm8_segment.estimate.fudge    = 5;
-cfg.jp_spm8_segment.estimate.samp     = 3;
+cfg.jp_spm8_segment.estimate.samp     = 2;
 cfg.jp_spm8_segment.estimate.msk      = '';
 
 cfg.jp_spm8_segment.write.biascor = 1;       % whether to biascorrect (turned off if biascorrectfirst)
@@ -184,6 +184,33 @@ cfg.jp_spm8_model.volterra = 1;
 cfg.jp_spm8_model.fixemptyconditions = 1;      % if condition doesn't exist, add onset corresponding to last scan to keep # columns consistent
 
 cfg.jp_spm8_model.evdir = 'ev_files';          % which directory to look in for EV files (event times), in each subject dir
+
+
+% SPM8 DARTEL Create Template
+%-----------------------------------------------------------------------
+
+cfg.jp_spm8_dartelcreatetemplate.numtissues = 6;  % Generally 2 for 'standard'segmentation, 6 for segment8
+cfg.jp_spm8_dartelcreatetemplate.rform = 0;    
+
+
+
+% SPM8 DARTEL Write MNI-normalized (structural)
+%-----------------------------------------------------------------------
+
+cfg.jp_spm8_dartelnormmnistruct.vox = 1.5;
+cfg.jp_spm8_dartelnormmnistruct.fwhm = 8; 
+cfg.jp_spm8_dartelnormmnistruct.preserve = 1;
+
+
+% SPM8 DARTEL Write MNI-normalized (functional)
+%-----------------------------------------------------------------------
+
+cfg.jp_spm8_dartelnormmnifun.vox = 2;
+cfg.jp_spm8_dartelnormmnifun.fwhm = 10; 
+cfg.jp_spm8_dartelnormmnifun.preserve = 1;
+cfg.jp_spm8_dartelnormmnifun.prefix = '';         % might be u if
+                                                  % you've unwarped
+
 
 
 % SPM8 Contrasts

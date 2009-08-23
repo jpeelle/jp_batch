@@ -12,13 +12,13 @@ function [alllog, errorlog, thislog] = jp_createlogs(thisSub, subjDir, logname, 
 if nargin < 4
   analysisname = '';
 end
-
-if ~isdir(subjDir)
-    error('%s not found.', subjDir);
+   
+if ~isempty(subjDir)    
+    subjDir = fullfile(subjDir, thisSub);    
+    if ~isdir(subjDir)
+        error('%s not found.', subjDir);
+    end
 end
-
-subjDir = fullfile(subjDir, thisSub);
-
 
 % Get the names of the logs
 alllog = fullfile(subjDir,'jplog-all');

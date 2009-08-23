@@ -22,12 +22,11 @@ function S = jp_run(S, subjects, stages, aa)
 %
 %    JP_RUN(S)
 %
-%
-% See JP_BATCH and JP_INIT for more information.
+% See JP_BATCH, JP_ADDSUBJECT, JP_ADDANALYSIS, and JP_INIT for more
+% information on setting up an S structure.
 
 % Jonathan Peelle
 % MRC Cognition and Brain Sciences Unit
-
 
 % undocumented option: aa: 0 = no | 'aa' | 'aa_parallel'
 
@@ -54,20 +53,20 @@ catch
 end
 
 try
-  S.spmver = spm('Ver');
+  S.spmversion = spm('Ver');
 catch
-  S.spmver = 'NO VERSION FOUND';
+  S.spmversion = 'NO VERSION FOUND';
 end
 
 % make sure correct SPM version is being run
 if ~isempty(S.cfg.options.spmver)
-  if ~strcmp(S.spmver, upper(S.cfg.options.spmver))
-    error('Requested SPM version %s but %s is in path.', S.cfg.options.spmver, S.spmver);
+  if ~strcmp(S.spmversion, upper(S.cfg.options.spmversion))
+    error('Requested SPM version %s but %s is in path.', S.cfg.options.spmversion, S.spmversion);
   end
 end
 
 jp_log(logfile, sprintf('SPM location: %s\n', S.whichspm));
-jp_log(logfile, sprintf('SPM version: %s\n', S.spmver));
+jp_log(logfile, sprintf('SPM version: %s\n', S.spmversion));
 
 
 jp_log(logfile, '\n\n*********************************************************\n');
@@ -78,7 +77,7 @@ S.runtime = datestr(now);
 fprintf('Started %s\n', S.runtime);
 
 jp_log(logfile, sprintf('SPM location: %s\n', S.whichspm));
-jp_log(logfile, sprintf('SPM version: %s\n', S.spmver));
+jp_log(logfile, sprintf('SPM version: %s\n', S.spmversion));
 
 
 % save S
@@ -111,11 +110,9 @@ if ismember('fMRI', S.cfg.options.modality)
 end
 
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % For each subject, loop through analysis stages and run
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 if ~isempty(aa)
   if ~isfield(S, 'aap')
@@ -128,7 +125,6 @@ if ~isempty(aa)
     save(sfile, 'S');
   end
 end
-
 
 % clear error files
 for s=1:length(subjects)
@@ -160,87 +156,164 @@ else
     jp_log(logfile, sprintf('Running %s (%i/%i)\n', upper(nm), a, length(stages)), 1);
     fprintf('---------------------------------------------------------\n');
     
-    for s=1:length(subjects)          
-      ss = subjects(s); % the subject we want to run      
-      subjname = S.subjects(ss).name;
-                  
-      jp_log(logfile, sprintf('Subject %s (%i/%i)\n', subjname, s, length(subjects)));      
-      donefile = fullfile(S.subjdir, subjname, sprintf('jpdone%s-%s-%s', analysisname, subjname, nm));      
-      errorfile = fullfile(S.subjdir, subjname, 'jplog-error');
+    % If we run this at the study level, just run it; otherwise,
+    % loop through subjects.
+
+    if isfield(S.analysis, 'domain') && strcmp(S.analysis(a).domain, 'study')
+      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      
+      % Run at the study level
+      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
       
-      % check for existing error file
-      if S.cfg.options.checkforerrors==1 && exist(errorfile)
-        jp_log(logfile, sprintf('Error log exists for subject %s; skipping.\n\n', subjname), 1);
-        S.subjects(ss).error = 1;
-        
-        % check to see if this stage has been completed already (per subject, not per session)
-      elseif S.cfg.options.checkfordone==1 && exist(donefile)                                                      
-        jp_log(logfile, sprintf('Stage %s already completed for subject %s; skipping.\n\n', upper(nm), subjname), 1);
-        
+      donefile = fullfile(S.subjdir, sprintf('jpdone%s-%s', analysisname, nm));
+      errorlog = fullfile(S.subjdir, 'jplog-error');
+      if S.cfg.options.checkforerrors==1 && sum([S.subjects.error]) > 0
+        jp_log(logfile, 'Errors exist for at least one subject; skipping.\n\n');
+      elseif S.cfg.options.checkfordone==1 && exist(donefile)
+        jp_log(logfile, sprintf('Stage %s already completed; skipping.\n\n', upper(nm)));
       else
-        % if no error or file, or not checking, try to run this stage
-        
-        cmd = sprintf('S = %s(S, %i);', S.analysis(aa).name, ss);
-        
         if S.cfg.options.runstages==0
-          fprintf('Would run %s for %s.\n', upper(S.analysis(aa).name), subjname);
+          fprintf('Would run %s for all %d subjects.\n', upper(nm), length(subjects));
         else
-          try
-            % logs for this stage for this subject
-            [alllog, errorlog, thislog] = jp_createlogs(subjname, S.subjdir, S.analysis(aa).name);
+          % Actually run it!
+          try 
+            jp_log(logfile, sprintf('Starting %s...\n', upper(S.analysis(aa).name)));
+                              
+            cmd = sprintf('S = %s(S);', S.analysis(aa).name);
             
-            jp_log(thislog, sprintf('Starting %s for subject %s...\n', upper(S.analysis(aa).name), subjname));
-            S.subjects(ss).(nm).starttime = datestr(now);
+            starttime = datestr(now);
+            for s=1:length(subjects)
+              ss = subjects(s);
+              S.subjects(ss).(nm).starttime = starttime;
+            end
+            
             eval(cmd);
-            S.subjects(ss).(nm).endtime = datestr(now);
             
-            % save S every time if requested, just in case
-            % something crashes before everything has been run
+            endtime = datestr(now);
+            for s=1:length(subjects)
+              ss = subjects(s);
+              S.subjects(ss).(nm).endtime = endtime;
+            end
+              
+            % save S if requested
             if S.cfg.options.saveS
               save(sfile, 'S');
             end
             
             % if it worked (i.e. no error by here)  make a done file
             system(sprintf('touch %s', donefile));
-            
-            % make an aa-compatible subject-level flag
-            if S.cfg.options.aadoneflags
-              system(sprintf('touch %s', fullfile(S.subjdir, subjname, sprintf('done_aamod_%s', nm))));
-            end
-            
-            jp_log(thislog, sprintf('Finished %s for subject %s.\n', upper(S.analysis(aa).name), subjname));
-            
+
           catch
-            % If there was a problem, make note of the error, and log it
-            S.subjects(ss).error = 1;
-            S.subjects(ss).errmessage = '';
-            S.subjects(ss).errstack = '';
+            % If there was a problem, make note of the error, and
+            % log it
+            for s=1:length(subjects)
+              ss = subjects(s);
+              S.subjects(ss).error = 1;
+              errorlog = fullfile(S.subjdir, S.subjects(ss).name, sprintf('jplog-error'))
+            end
             
             err = lasterror;
             
             for em=1:size(err.message,1)
-              S.subjects(ss).errmessage = [S.subjects(ss).errmessage err.message(em,:)];
+              %S.subjects(ss).errmessage = [S.subjects(ss).errmessage err.message(em,:)];
               jp_log(logfile, sprintf('%s\n', err.message(em,:)), 0);
               jp_log(errorlog, sprintf('%s\n', err.message(em,:)));
             end
             
             for es=1:length(err.stack)
-              S.subjects(ss).errstack = [S.subjects(ss).errstack sprintf('In %s line %i\n',err.stack(es).file,err.stack(es).line)];
+              %S.subjects(ss).errstack = [S.subjects(ss).errstack sprintf('In %s line %i\n',err.stack(es).file,err.stack(es).line)];
               jp_log(errorlog, sprintf('In %s line %i\n', err.stack(es).file, err.stack(es).line), 0);
               jp_log(logfile, sprintf('In %s line %i\n', err.stack(es).file, err.stack(es).line));
-            end
-          end % try/catch
-        end % checking to see if we actually run
-      end % checking for errors
+              end
+          end % try/catch          
+        end
+      end
+  
+    else
+      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      
+      % Run through subjects
+      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
       
-    end % going through subject
+      for s=1:length(subjects)          
+        ss = subjects(s); % the subject we want to run      
+        subjname = S.subjects(ss).name;
+        
+        jp_log(logfile, sprintf('Subject %s (%i/%i)\n', subjname, s, length(subjects)));      
+        donefile = fullfile(S.subjdir, subjname, sprintf('jpdone%s-%s-%s', analysisname, subjname, nm));      
+        errorlog = fullfile(S.subjdir, subjname, 'jplog-error');
+        
+        % check for existing error file
+        if S.cfg.options.checkforerrors==1 && exist(errorlog)
+          jp_log(logfile, sprintf('Error log exists for subject %s; skipping.\n\n', subjname), 1);
+          S.subjects(ss).error = 1;
+          
+          % check to see if this stage has been completed already (per subject, not per session)
+        elseif S.cfg.options.checkfordone==1 && exist(donefile)                                                      
+          jp_log(logfile, sprintf('Stage %s already completed for subject %s; skipping.\n\n', upper(nm), subjname), 1);
+          
+        else
+          % if no error or file, or not checking, try to run this stage
+          
+          cmd = sprintf('S = %s(S, %i);', S.analysis(aa).name, ss);
+          
+          if S.cfg.options.runstages==0
+            fprintf('Would run %s for %s.\n', upper(nm), subjname);
+          else
+            try
+              % logs for this stage for this subject
+              [alllog, errorlog, thislog] = jp_createlogs(subjname, S.subjdir, S.analysis(aa).name);
+              
+              jp_log(thislog, sprintf('Starting %s for subject %s...\n', upper(S.analysis(aa).name), subjname));
+              S.subjects(ss).(nm).starttime = datestr(now);
+              eval(cmd);
+              S.subjects(ss).(nm).endtime = datestr(now);
+              
+              % save S every time if requested, just in case
+              % something crashes before everything has been run
+              if S.cfg.options.saveS
+                save(sfile, 'S');
+              end
+              
+              % if it worked (i.e. no error by here)  make a done file
+              system(sprintf('touch %s', donefile));
+              
+              % make an aa-compatible subject-level flag
+              if S.cfg.options.aadoneflags
+                system(sprintf('touch %s', fullfile(S.subjdir, subjname, sprintf('done_aamod_%s', nm))));
+              end
+              
+              jp_log(thislog, sprintf('Finished %s for subject %s.\n', upper(S.analysis(aa).name), subjname));
+              
+            catch
+              % If there was a problem, make note of the error, and log it
+              S.subjects(ss).error = 1;
+              S.subjects(ss).errmessage = '';
+              S.subjects(ss).errstack = '';
+              
+              err = lasterror;
+              
+              for em=1:size(err.message,1)
+                S.subjects(ss).errmessage = [S.subjects(ss).errmessage err.message(em,:)];
+                jp_log(logfile, sprintf('%s\n', err.message(em,:)), 0);
+                jp_log(errorlog, sprintf('%s\n', err.message(em,:)));
+              end
+              
+              for es=1:length(err.stack)
+                S.subjects(ss).errstack = [S.subjects(ss).errstack sprintf('In %s line %i\n',err.stack(es).file,err.stack(es).line)];
+                jp_log(errorlog, sprintf('In %s line %i\n', err.stack(es).file, err.stack(es).line), 0);
+                jp_log(logfile, sprintf('In %s line %i\n', err.stack(es).file, err.stack(es).line));
+              end
+            end % try/catch
+          end % checking to see if we actually run
+        end % checking for errors        
+      end % going through subject      
+    end % checking to see if the script runs on subjects or study level   
   end % going through analysis stages  
 end % checking for AA
-
 
 % save S (again, since things were added during analysis)
 if S.cfg.options.saveS
   save(sfile, 'S');
+  fprintf('\n\n');
   jp_log(logfile, sprintf('S structure saved to %s.\n', sfile));
 end
 
@@ -276,5 +349,5 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 if S.cfg.options.chmodgrw
-    system(sprintf('chmod -R g+rw %s', S.subjdir));
+  system(sprintf('chmod -R g+rw %s', S.subjdir));
 end

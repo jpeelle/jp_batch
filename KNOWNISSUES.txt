@@ -15,3 +15,4 @@ jp_defaults' from the command line).
 
 Still not confident realignunwarp is working well.
 
+Tested on linux; most things would probably work on Windows, but some will probably fail (those requiring system commands to make softlinks or move/copy files).
