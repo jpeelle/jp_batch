@@ -100,14 +100,14 @@ for i=1:length(subjects)
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
     try
-      fundirs = jp_getinfo('fundirs', S.subjdir, thissub);
+      fundirs = jp_getinfo('sessions', S.subjdir, thissub);
       fprintf('Added functional directories:\n');
       for j=1:length(fundirs)
         S.subjects(n).sessions(j).name = fundirs{j};
         fprintf('\t%s\n', fundirs{j});
         
         if ~isdir(fullfile(S.subjdir, thissub, fundirs{j}))
-          error('%s specified (in info.fundirs file) but does not exist.', fundirs{j});
+          error('%s specified (in info.sessions file) but does not exist.', fundirs{j});
         end
       end    
     catch

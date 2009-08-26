@@ -26,7 +26,7 @@ jp_log(templatelog, sprintf('Using %s.\n', which('spm_dartel_template')));
 for s = 1:length(S.subjects)
   subname = S.subjects(s).name;
   subdir = fullfile(S.subjdir, subname);
-  darteldir = fullfile(subdir, S.subjects(s).structdirs{1}, S.darteldir);
+  darteldir = fullfile(subdir, S.subjects(s).structdirs{1}, S.cfg.options.dartelname);
   
   jp_log(templatelog, sprintf('Getting images for subject %s...\n', subname));
   
@@ -70,7 +70,7 @@ settings = struct('template','Template','rform',cfg.rform,...
 
 job = struct('images',{allimages}, 'settings',settings);
 
-jp_log('done.\n');
+jp_log(templatelog, 'done.\n');
 
 % run the script
 jp_log(templatelog, 'Starting job (this can take a while)...\n');
@@ -79,7 +79,7 @@ jp_log(templatelog, 'done.\n');
 
 
 % Make a folder in the main study directory to hold templates
-templatedir = fullfile(S.subjdir, sprintf('templates_%s', S.darteldir));
+templatedir = fullfile(S.subjdir, sprintf('templates_%s', S.cfg.options.dartelname));
 if ~isdir(templatedir)
   jp_log(templatelog, sprintf('Creating %s...', templatedir));
   mkdir(templatedir);
@@ -87,7 +87,7 @@ if ~isdir(templatedir)
 end
 
 
-firstdir = fullfile(S.subjdir, S.subjects(1).name, S.subjects(1).structdirs{1}, S.darteldir);
+firstdir = fullfile(S.subjdir, S.subjects(1).name, S.subjects(1).structdirs{1}, S.cfg.options.dartelname);
 
 try
   jp_log(templatelog, sprintf('Moving templates from %s to %s...', firstdir, templatedir));

@@ -159,7 +159,7 @@ else
     % If we run this at the study level, just run it; otherwise,
     % loop through subjects.
 
-    if isfield(S.analysis, 'domain') && strcmp(S.analysis(a).domain, 'study')
+    if isfield(S.analysis, 'domain') && strcmp(S.analysis(aa).domain, 'study')
       %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      
       % Run at the study level
       %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -208,7 +208,7 @@ else
             for s=1:length(subjects)
               ss = subjects(s);
               S.subjects(ss).error = 1;
-              errorlog = fullfile(S.subjdir, S.subjects(ss).name, sprintf('jplog-error'))
+              errorlog = fullfile(S.subjdir, S.subjects(ss).name, sprintf('jplog-error'));
             end
             
             err = lasterror;
@@ -281,7 +281,7 @@ else
                 system(sprintf('touch %s', fullfile(S.subjdir, subjname, sprintf('done_aamod_%s', nm))));
               end
               
-              jp_log(thislog, sprintf('Finished %s for subject %s.\n', upper(S.analysis(aa).name), subjname));
+              jp_log(thislog, sprintf('Finished %s for subject %s.\n\n', upper(S.analysis(aa).name), subjname));
               
             catch
               % If there was a problem, make note of the error, and log it
@@ -317,10 +317,17 @@ if S.cfg.options.saveS
   jp_log(logfile, sprintf('S structure saved to %s.\n', sfile));
 end
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report how many subjects were successfully processed
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 if S.cfg.options.runstages > 0
+  
+  % Try to make everything you just did group read/writeable
+  if S.cfg.options.chmodgrw
+    system(sprintf('chmod -R g+rw %s', S.subjdir));
+  end
+
   fprintf('\n\n')
   jp_log(logfile, '*********************************************************\n');
   jp_log(logfile, sprintf('%i subjects were processed successfully:\n', sum([S.subjects(subjects).error]==0)));
@@ -344,10 +351,3 @@ else
 end
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Try to make everything you just did group read/writeable
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-if S.cfg.options.chmodgrw
-  system(sprintf('chmod -R g+rw %s', S.subjdir));
-end

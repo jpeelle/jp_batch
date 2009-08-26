@@ -47,9 +47,9 @@ if analysis_type==1
   fprintf('\nRemember, these are used as defaults for all subjects. If you\n')
   fprintf('want to override one of these values, save another file in that\n')
   fprintf('subject''s directory. For example, if most subjects have two\n')
-  fprintf('functional directories, the info.fundirs file might influde two\n')
+  fprintf('functional directories, the info.sessions file might influde two\n')
   fprintf('lines: functional01 and functional01. However, if subject JR1234\n')
-  fprintf('only has one functional directory, you would create JR1234.info.fundirs\n')
+  fprintf('only has one functional directory, you would create JR1234.info.sessions\n')
   fprintf('in that subject''s folder. This file would only contain a single\n')
   fprintf('line: functional01.\n');
 end
@@ -91,11 +91,11 @@ while ~isempty(this_fun)
 end
 
 if ~isempty(fun_dirs)
-  fid = fopen(fullfile(base_dir, 'info.fundirs'), 'w');
+  fid = fopen(fullfile(base_dir, 'info.sessions'), 'w');
   for i=1:length(fun_dirs)
     fprintf(fid, '%s\n', fun_dirs{i});
   end
-  fprintf('Saved to info.fundirs.\n');
+  fprintf('Saved to info.sessions.\n');
 end
 
 
@@ -242,6 +242,23 @@ if ~isempty(conditions)
   end
 end
 
+% Contrasts
+cfile = fullfile(base_dir, 'contrasts.m');
+if ~exist(cfile)
+  fid = fopen(cfile, 'w');
+  fprintf(fid, 'function c = contrasts()\n')
+  fprintf(fid, '% This file is needed for any first-level model analysis and contains\n');
+  fprintf(fid, '% information for every contrast you want to run. Each contrast needs\n');
+  fprintf(fid, '% to have a name and a contrast vector. If the STAT is not specified\n');
+  fprintf(fid, '% it is assumed to be ''T'' (the other option is ''F''). The contrast\n');
+  fprintf(fid, '% vector should have as many numbers as there are columns in your design\n');
+  fprintf(fid, '% matrix. See JP_SPM?_CONTRASTS for more information.\n\n\n\n');
+  fprintf(fid, '% ------- edit these to match your design -------\n\n');
+  fprintf(fid, 'c(1).name = ''Name of my contrast''\n');
+  fprintf(fid, 'c(1).con = [1 0 0 0]; % if you had 4 columns in your design matrix\n\n');  
+  fclose(fid);
+  fprintf('You will need to set up contrasts in %s (which has just been created).\n', cfile);
+end
 
 
 end % setup_stats

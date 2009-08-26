@@ -48,9 +48,10 @@ function jp_batch(task)
 % Required info files in the top-level subject directory are:
 %  info.tr
 %  info.ta
+%  info.sessions
 %
 % These can be overwritten within each subject's directory by with:
-%  subjectname.info.fundirs
+%  subjectname.info.sessions
 %
 % And in some cases at the session level with
 %  sessionname.subjectname.info.tr

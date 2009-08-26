@@ -24,7 +24,7 @@ cfg = S.cfg.(mfilename);
 jp_log(normlog, sprintf('Using %s.\n', which('spm_dartel_norm_fun')));
 
 % Where are the templates?
-templatedir = fullfile(S.subjdir, sprintf('templates_%s', S.darteldir));
+templatedir = fullfile(S.subjdir, sprintf('templates_%s', S.cfg.options.dartelname));
 template = spm_select('fplist', templatedir, '^Template_6\.nii$');
 
 if isempty(template) || strcmp(template, '/')
@@ -37,7 +37,7 @@ allimages = {};
 for s=1:length(S.subjects)
   jp_log(normlog, sprintf('Getting flowfields and images for subject %s...', S.subjects(s).name));
   
-  darteldir = fullfile(S.subjdir, S.subjects(s).name, S.subjects(s).structdirs{1}, S.darteldir);
+  darteldir = fullfile(S.subjdir, S.subjects(s).name, S.subjects(s).structdirs{1}, S.cfg.options.dartelname);
   
   % flow fields
   job.data.subj(s).flowfield{1} = spm_select('fplist', darteldir, '^u.*nii');
