@@ -6,7 +6,11 @@ function S = jp_spm8_dartelcreatetemplate(S);
 % in an S structure (see JP_INIT).
 %
 % The default values are geared towards assuming you've segmented
-% images using JP_SPM8_SEGMENT8.
+% images using JP_SPM8_SEGMENT8, and prepped for DARTEL using
+% JP_SPM8_COPYSEG8TODARTEL. Flow fields will be saved in the dartel
+% directory within the first structural directory for each
+% subject.  The name of this directory is set via
+% S.cfg.options.dartel.name.
 %
 % See JP_DEFAULTS for a full list of options.
 
