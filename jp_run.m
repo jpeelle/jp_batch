@@ -346,6 +346,11 @@ if S.cfg.options.runstages > 0
     end
   end
   fprintf('\n')
+  
+  if ~isempty(aa)
+    fprintf('* * * * The above not reliable with AA (which you used!). Check for error logs to be sure * * * *\n\n');
+  end
+  
 else
   fprintf('\nDone.\n');
 end

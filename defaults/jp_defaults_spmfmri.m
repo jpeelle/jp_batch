@@ -89,7 +89,7 @@ cfg.jp_spm8_segment.estimate.biasreg  = 0.0001;
 cfg.jp_spm8_segment.estimate.biasfwhm = 75;
 cfg.jp_spm8_segment.estimate.regtype  = 'mni';
 cfg.jp_spm8_segment.estimate.fudge    = 5;
-cfg.jp_spm8_segment.estimate.samp     = 2;
+cfg.jp_spm8_segment.estimate.samp     = 2;  % smaller should be more accurate
 cfg.jp_spm8_segment.estimate.msk      = '';
 
 cfg.jp_spm8_segment.write.biascor = 1;       % whether to biascorrect (turned off if biascorrectfirst)
@@ -207,7 +207,7 @@ cfg.jp_spm8_dartelnormmnistruct.preserve = 1;
 
 cfg.jp_spm8_dartelnormmnifun.vox = 2;
 cfg.jp_spm8_dartelnormmnifun.fwhm = 10; 
-cfg.jp_spm8_dartelnormmnifun.preserve = 1;
+cfg.jp_spm8_dartelnormmnifun.preserve = 0;
 cfg.jp_spm8_dartelnormmnifun.prefix = '';         % might be u if
                                                   % you've unwarped
 

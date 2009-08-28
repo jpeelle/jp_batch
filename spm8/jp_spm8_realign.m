@@ -27,9 +27,9 @@ catch
 end
 
 try
-  fundirs = S.subjects(subnum).fundirs;
+  fundirs = jp_getsessions(S, subnum);
 catch
-  fundirs = jp_getinfo('fundirs', S.subjdir, subname);
+  fundirs = jp_getinfo('sessions', S.subjdir, subname);
 end
 
 
