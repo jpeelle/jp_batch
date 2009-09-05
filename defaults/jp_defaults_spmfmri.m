@@ -7,13 +7,21 @@ if nargin < 1
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% General
+% General and misc functions
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 cfg.options.max4d = 2000; % i.e. spm_select('ExtFpList', 'dir','^f', 1:cfg.options.max4d)
 
 cfg.options.spmdefaultsfunction = 'spm_defaults';
 cfg.options.dartelname = 'dartel';
+
+
+% SPM view_bad_scans
+%-----------------------------------------------------------------------
+
+cfg.jp_spm_viewbadscans.trans_thresh = .3; % mm
+cfg.jp_spm_viewbadscans.rots_thresh = .01; % rads
+cfg.jp_spm_viewbadscans.tsdiff_thresh = 5; % a.u.
 
 
 
@@ -162,12 +170,12 @@ cfg.jp_spm8_smooth.prefix = 'w';
 %-----------------------------------------------------------------------
 
 cfg.jp_spm8_model.conditions = [];             % <-- needs to be set!
-cfg.jp_spm8_model.imageprefix = '';            % <-- needs to be set!
+cfg.jp_spm8_model.prefix = '';            % <-- needs to be set!
 cfg.jp_spm8_model.statsdir = '';               % <-- needs to be set!
 
 cfg.jp_spm8_model.xM.TH = [];                  % these all set after spm_fmri_spm_ui is run
 cfg.jp_spm8_model.xM.I = 0;
-cfg.jp_spm8_model.xM.VM = {[]};
+cfg.jp_spm8_model.xM.VM = [];
 
 cfg.jp_spm8_model.separatesessions = 0;        % if 1, separate GLM for each session (rare)
 cfg.jp_spm8_model.T = 16;                      % (can be a vector, different for each session)
@@ -221,7 +229,7 @@ cfg.jp_spm8_contrasts.which_contrasts = [];    % [] runs all
 
 cfg.jp_spm8_contrasts.confiledirname = '@con_files';       % the @ puts it at the top of SPM search path
 cfg.jp_spm8_contrasts.tandffiledirname = '@tandf_files';
-
+cfg.jp_spm8_contrasts.separatesessions = 0;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SPM 5 (same as SPM8 unless changes required)

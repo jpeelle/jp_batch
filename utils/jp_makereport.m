@@ -4,7 +4,7 @@ function S = jp_makereport(S, subnum)
 
 subname = S.subjects(subnum).name;
 subdir = fullfile(S.subjdir, subname);
-fname = fullfile(subdir, 'jp_report.html');
+fname = fullfile(subdir, sprintf('jp_report%s.html', S.cfg.options.analysisname));
 f = fopen(fname, 'w');
 
 sessions = {};

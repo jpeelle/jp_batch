@@ -164,96 +164,99 @@ end % setup_subj
 
 function setup_stats(base_dir)
 
-
-% Event units
-fprintf('\nWhen you enter the times for your events, they can be in scans or seconds.\n');
-event_units = input('Enter 1 to measure in scans, 2 to measure in seconds: ');
-
-if event_units==1
-  event_units = 'scans';
-elseif event_units==2
-  event_units = 'secs';
-else
-  event_units = [];
-  fprintf('Did not recognize your response.  Skipping info.event_units.\n');
-end
-  
-writestr(fullfile(base_dir, 'info.event_units'), event_units);
-  
- 
-
-% HRF name
-fprintf('\nSPM uses a set of one or more basis functions to estimate neural activity\n');
-fprintf('based on the events you give it.  Three common sets of basis functions are listed\n');
-fprintf('below (if you need another option, you will have to make the file manually):\n');
-fprintf('\t1) hrf\n');
-fprintf('\t2) hrf (with time derivative)\n');
-fprintf('\t3) hrf (with time and dispersion derivatives)\n');
-fprintf('\t4) other (you will create info.bf_name on your own later)\n\n');
-
-bf_name = input('Please indicate which basis function to use: ');
-
-if bf_name==1
-  bf_name = 'hrf';
-elseif bf_name==2
-  bf_name = 'hrf (with time derivative)';
-elseif bf_name==3
-  bf_name = 'hrf (with time and dispersion derivatives)';
-else
-  bf_name = [];
-end
-
-writestr(fullfile(base_dir, 'info.bf_name'), bf_name);
+fprintf('\nOptions related to the first-level model are now set in S.cfg.jp_spm?_model \n');
+fprintf('rather than in info.* files.  See JP_DEFAULTS_SPMFMRI for the default values.\n\n');
 
 
-% BF length
-fprintf('\nSPM will model the basis set for a certain period of time. The default\n');
-fprintf('is 32 seconds, which is probably fine if you''re not sure.\n');
-bf_length = input('Enter the length to model the basis function for (in seconds): ');
-if ~isempty(bf_length)
-  dlmwrite(fullfile(base_dir, 'info.bf_length'), bf_length, 'delimiter', '\n');
-end
-
-
-% (HRF order - shouldn't need for these easy ones)
-fprintf('\n(You don''t need info.bf_order for canonical HRFs, so it will automatically be set to 1.)\n');
-dlmwrite(fullfile(base_dir, 'info.bf_order'), [1], 'delimiter', '\n');
-
-
-
-% Conditions
-fprintf('\n\nThe info.conditions file determines which conditions are included in your model.\n');
-fprintf('Enter all the conditions you want included, one at a time. Capitalization matters.\n');
-fprintf('Avoid spaces in your condition names.\n');
-
-
-conditions = {};
-this_condition = input('\nEnter the name of the first condition: ', 's');
-
-while ~isempty(this_condition)
-  conditions = {conditions{:} this_condition};  
-  this_condition = input('Enter the name of another condition, or just enter if done: ', 's');
-end
-
-if ~isempty(conditions)
-  fid = fopen(fullfile(base_dir, 'info.conditions'), 'w');
-  for i=1:length(conditions)
-    fprintf(fid, '%s\n', conditions{i});
-  end
-end
+% % Event units
+% fprintf('\nWhen you enter the times for your events, they can be in scans or seconds.\n');
+% event_units = input('Enter 1 to measure in scans, 2 to measure in seconds: ');
+% 
+% if event_units==1
+%   event_units = 'scans';
+% elseif event_units==2
+%   event_units = 'secs';
+% else
+%   event_units = [];
+%   fprintf('Did not recognize your response.  Skipping info.event_units.\n');
+% end
+%   
+% writestr(fullfile(base_dir, 'info.event_units'), event_units);
+%   
+%  
+% 
+% % HRF name
+% fprintf('\nSPM uses a set of one or more basis functions to estimate neural activity\n');
+% fprintf('based on the events you give it.  Three common sets of basis functions are listed\n');
+% fprintf('below (if you need another option, you will have to make the file manually):\n');
+% fprintf('\t1) hrf\n');
+% fprintf('\t2) hrf (with time derivative)\n');
+% fprintf('\t3) hrf (with time and dispersion derivatives)\n');
+% fprintf('\t4) other (you will create info.bf_name on your own later)\n\n');
+% 
+% bf_name = input('Please indicate which basis function to use: ');
+% 
+% if bf_name==1
+%   bf_name = 'hrf';
+% elseif bf_name==2
+%   bf_name = 'hrf (with time derivative)';
+% elseif bf_name==3
+%   bf_name = 'hrf (with time and dispersion derivatives)';
+% else
+%   bf_name = [];
+% end
+% 
+% writestr(fullfile(base_dir, 'info.bf_name'), bf_name);
+% 
+% 
+% % BF length
+% fprintf('\nSPM will model the basis set for a certain period of time. The default\n');
+% fprintf('is 32 seconds, which is probably fine if you''re not sure.\n');
+% bf_length = input('Enter the length to model the basis function for (in seconds): ');
+% if ~isempty(bf_length)
+%   dlmwrite(fullfile(base_dir, 'info.bf_length'), bf_length, 'delimiter', '\n');
+% end
+% 
+% 
+% % (HRF order - shouldn't need for these easy ones)
+% fprintf('\n(You don''t need info.bf_order for canonical HRFs, so it will automatically be set to 1.)\n');
+% dlmwrite(fullfile(base_dir, 'info.bf_order'), [1], 'delimiter', '\n');
+% 
+% 
+% 
+% % Conditions
+% fprintf('\n\nThe info.conditions file determines which conditions are included in your model.\n');
+% fprintf('Enter all the conditions you want included, one at a time. Capitalization matters.\n');
+% fprintf('Avoid spaces in your condition names.\n');
+% 
+% 
+% conditions = {};
+% this_condition = input('\nEnter the name of the first condition: ', 's');
+% 
+% while ~isempty(this_condition)
+%   conditions = {conditions{:} this_condition};  
+%   this_condition = input('Enter the name of another condition, or just enter if done: ', 's');
+% end
+% 
+% if ~isempty(conditions)
+%   fid = fopen(fullfile(base_dir, 'info.conditions'), 'w');
+%   for i=1:length(conditions)
+%     fprintf(fid, '%s\n', conditions{i});
+%   end
+% end
 
 % Contrasts
 cfile = fullfile(base_dir, 'contrasts.m');
 if ~exist(cfile)
   fid = fopen(cfile, 'w');
-  fprintf(fid, 'function c = contrasts()\n')
-  fprintf(fid, '% This file is needed for any first-level model analysis and contains\n');
-  fprintf(fid, '% information for every contrast you want to run. Each contrast needs\n');
-  fprintf(fid, '% to have a name and a contrast vector. If the STAT is not specified\n');
-  fprintf(fid, '% it is assumed to be ''T'' (the other option is ''F''). The contrast\n');
-  fprintf(fid, '% vector should have as many numbers as there are columns in your design\n');
-  fprintf(fid, '% matrix. See JP_SPM?_CONTRASTS for more information.\n\n\n\n');
-  fprintf(fid, '% ------- edit these to match your design -------\n\n');
+  fprintf(fid, 'function c = contrasts()\n');
+  fprintf(fid, '%% This file is needed for any first-level model analysis and contains\n');
+  fprintf(fid, '%% information for every contrast you want to run. Each contrast needs\n');
+  fprintf(fid, '%% to have a name and a contrast vector. If the STAT is not specified\n');
+  fprintf(fid, '%% it is assumed to be ''T'' (the other option is ''F''). The contrast\n');
+  fprintf(fid, '%% vector should have as many numbers as there are columns in your design\n');
+  fprintf(fid, '%% matrix. See JP_SPM?_CONTRASTS for more information.\n\n\n\n');
+  fprintf(fid, '%% ------- edit these to match your design -------\n\n');
   fprintf(fid, 'c(1).name = ''Name of my contrast''\n');
   fprintf(fid, 'c(1).con = [1 0 0 0]; % if you had 4 columns in your design matrix\n\n');  
   fclose(fid);

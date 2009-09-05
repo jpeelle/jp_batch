@@ -1,13 +1,14 @@
-function S = jp_spm5_model(S, subnum)
-%JP_SPM5_MODEL Run first-level model with SPM5.
+function S = jp_spm8_model(S, subnum)
+%JP_SPM8_MODEL Run first-level model with SPM5.
 %
-% S = JP_SPM5_MODEL(S, SUBNUM) runs a first level analysis on the
+% S = JP_SPM8_MODEL(S, SUBNUM) runs a first level analysis on the
 % specified subject number SUBNUM from an S structure (see
 % JP_INIT).
 %
-% The analysis options are set in S.cfg.jp_spm5_model and include:
-%  conditions    names of your conditions
-%  imageprefix   prefix of images that are selected
+% The analysis options are set in S.cfg.jp_spm8_model and include:
+%  conditions        names of your conditions
+%  prefix            prefix of images that are selected (maybe 'sw')
+%  separatesessions  analyze each session in a different model (see below)
 %
 %  event_units   default 'secs'
 %  bf_name       default 'hrf'
@@ -32,9 +33,18 @@ function S = jp_spm5_model(S, subnum)
 % onset time (s), second column is event duration (s), and the third
 % column is the weighting of the event.  This corresponds with the
 % FSL custom file format. The EV files are in a subdirectory of the
-% main subject data directory called 'ev_files.'
+% main subject data directory called 'ev_files' and named:
 %
-% Remember that the first scan in any series is scan 0, as well
+% SUBJECT.ev.CONDITION.SESSION
+%
+%
+% Sometimes you might want to analyze your sessions separately, for
+% example, if they have different scanning parameters, etc. In this case
+% set the separatesessions option to 1.  The TR for each session will be
+% picked up appropriately from the info* files you created to set up the
+% analysis (see JP_SPM_SETUP).
+%
+% Remember that the first scan in any session is scan 0, as well
 % as time = 0 seconds.
 %
 % You should make sure to review your design at some point to make sure it
@@ -59,7 +69,7 @@ subdir = fullfile(S.subjdir, subname);
 % get any values not specified (if JP_INIT not run previously)
 S.cfg = jp_setcfg(S.cfg, mfilename);
 
-if isempty(S.cfg.jp_spm5_model.statsdir)
+if isempty(S.cfg.jp_spm8_model.statsdir)
   jp_log(modellog, 'Must specify stats directory!', 2);
 end
 
@@ -68,21 +78,21 @@ end
 % options T and T0 can be set differently for each session; if just
 % specified once, copy that for all sessions
 
-if length(S.cfg.jp_spm5_model.T)==1
-  S.cfg.jp_spm5_model.T = ones(1,length(S.subjects(subnum).sessions)) * S.cfg.jp_spm5_model.T;
+if length(S.cfg.jp_spm8_model.T)==1
+  S.cfg.jp_spm8_model.T = ones(1,length(S.subjects(subnum).sessions)) * S.cfg.jp_spm8_model.T;
 end
 
-if length(S.cfg.jp_spm5_model.T0)==1
-  S.cfg.jp_spm5_model.T0 = ones(1,length(S.subjects(subnum).sessions)) * S.cfg.jp_spm5_model.T0;
+if length(S.cfg.jp_spm8_model.T0)==1
+  S.cfg.jp_spm8_model.T0 = ones(1,length(S.subjects(subnum).sessions)) * S.cfg.jp_spm8_model.T0;
 end
 
 
-% Make sure explicit masks are present
-if ~isempty(S.cfg.jp_spm5_model.xM.VM)
-  if ischar(S.cfg.jp_spm5_model.xM.VM)
-    S.cfg.jp_spm5_model.xM.VM = cellstr(S.cfg.jp_spm5_model.xM.VM);
+% Make sure explicit masks exist (if specified)
+if ~isempty(S.cfg.jp_spm8_model.xM.VM)
+  if ischar(S.cfg.jp_spm8_model.xM.VM)
+    S.cfg.jp_spm8_model.xM.VM = cellstr(S.cfg.jp_spm8_model.xM.VM);
   end
-  VM = S.cfg.jp_spm5_model.xM.VM;
+  VM = S.cfg.jp_spm8_model.xM.VM;
   for v=1:length(VM)
     if ~exist(VM{v})
       error('Mask %s not found.', VM{v});
@@ -96,17 +106,17 @@ end
 originalDir = pwd;
 
 
-jp_log(modellog, 'Running JP_SPM5_MODEL...\n');
+jp_log(modellog, 'Running JP_SPM8_MODEL...\n');
 
 
 % Make sure stats directory exists.
-if ~exist(S.cfg.jp_spm5_model.statsdir)
-  mkdir(S.cfg.jp_spm5_model.statsdir);
+if ~exist(S.cfg.jp_spm8_model.statsdir)
+  mkdir(S.cfg.jp_spm8_model.statsdir);
 end
 
 % Run the model for all sessions (normal) or for one session at a
 % time (rare)
-if S.cfg.jp_spm5_model.separatesessions==0
+if S.cfg.jp_spm8_model.separatesessions==0
   runmodel(S, subnum, 1:length(S.subjects(subnum).sessions));  
 else
   for s=1:length(S.subjects(subnum).sessions)
@@ -135,7 +145,7 @@ SPM = struct();
 [alllog, errorlog, modellog] = jp_createlogs(S.subjects(subnum).name, S.subjdir, mfilename);
 
 
-cfg = S.cfg.jp_spm5_model;
+cfg = S.cfg.jp_spm8_model;
 
 subjdir = S.subjdir;
 thissub = S.subjects(subnum).name;
@@ -190,7 +200,7 @@ SPM.nscan = [];
 SPM.xY.P = [];
 P = [];
 
-imgfilter = sprintf('^%s%s.*\\.nii$', cfg.imageprefix, S.subjects(subnum).funprefix);
+imgfilter = sprintf('^%s%s.*\\.nii$', cfg.prefix, S.subjects(subnum).funprefix);
 
 for s=1:length(sessionnum)
   ss = sessionnum(s);
@@ -296,7 +306,7 @@ SPM.xY.P = P;
 
 % make sure we actually found some images
 if size(P,1)==1 && strcmp('/', P(1,:))
-  jp_log(modellog, 'Did not find any images. Check to make sure your cfg.imageprefix is correct.', 2);
+  jp_log(modellog, 'Did not find any images. Check to make sure your cfg.jp_spm8_model.prefix is correct.', 2);
 else
   jp_log(modellog, sprintf('%i total files found across all sessions.\n', size(P,1)));
 end

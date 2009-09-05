@@ -1,4 +1,4 @@
-function S = jp_run(S, subjects, stages, aa)
+function S = jp_run(S, subjects, stages, aa_type)
 %JP_RUN Runs processing for a study.
 %
 % S = JP_RUN(S, [SUBJECTS], [STAGES]) uses the information stored in S
@@ -28,7 +28,7 @@ function S = jp_run(S, subjects, stages, aa)
 % Jonathan Peelle
 % MRC Cognition and Brain Sciences Unit
 
-% undocumented option: aa: 0 = no | 'aa' | 'aa_parallel'
+% undocumented option: aa_type: '' = no | 'aa' | 'aa_parallel'
 
 % get the analysis name for adding to done flag and log
 analysisname = S.cfg.options.analysisname;
@@ -39,7 +39,7 @@ end
 logfile = fullfile(S.subjdir, sprintf('jplog-jp_run%s',analysisname));
 
 if nargin < 4
-  aa = '';
+  aa_type = '';
 end
 
 
@@ -81,7 +81,7 @@ jp_log(logfile, sprintf('SPM version: %s\n', S.spmversion));
 
 
 % save S
-if S.cfg.options.saveS || ~isempty(aa)
+if S.cfg.options.saveS || ~isempty(aa_type)
   [savdir, nm, ext] = fileparts(S.subjdir); % save one level up from subj
   sfile = fullfile(savdir, sprintf('S%s.mat',analysisname));
   save(sfile, 'S');
@@ -114,7 +114,7 @@ end
 % For each subject, loop through analysis stages and run
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-if ~isempty(aa)
+if ~isempty(aa_type)
   if ~isfield(S, 'aap')
     S.aap = struct();
   end
@@ -133,10 +133,10 @@ for s=1:length(subjects)
 end
     
 % See if we want to run this as AA or normal
-if strcmp(aa, 'aa')
+if strcmp(aa_type, 'aa')
   jp_log(logfile,'Running using AA.');
   S.aap = aa_doprocessing(S.aap);  
-elseif strcmp(aa, 'aa_parallel')
+elseif strcmp(aa_type, 'aa_parallel')
   jp_log(logfile,'Running using AA Parallel.');
   S.aap = aa_doprocessing_parallel(S.aap);   
 else
@@ -238,7 +238,7 @@ else
         subjname = S.subjects(ss).name;
         
         jp_log(logfile, sprintf('Subject %s (%i/%i)\n', subjname, s, length(subjects)));      
-        donefile = fullfile(S.subjdir, subjname, sprintf('jpdone%s-%s-%s', analysisname, subjname, nm));      
+        donefile = fullfile(S.subjdir, subjname, sprintf('jpdone%s-%s', analysisname, nm));      
         errorlog = fullfile(S.subjdir, subjname, 'jplog-error');
         
         % check for existing error file
@@ -347,7 +347,7 @@ if S.cfg.options.runstages > 0
   end
   fprintf('\n')
   
-  if ~isempty(aa)
+  if ~isempty(aa_type)
     fprintf('* * * * The above not reliable with AA (which you used!). Check for error logs to be sure * * * *\n\n');
   end
   
