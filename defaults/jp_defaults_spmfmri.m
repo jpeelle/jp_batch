@@ -60,6 +60,19 @@ cfg.jp_spm8_realign.which_images     = 0;    % 0 = mean only, 2 = all
 
 
 
+% SPM8 get bad scans
+%-----------------------------------------------------------------------
+
+cfg.jp_spm8_getbadscans.trans_x = .24;
+cfg.jp_spm8_getbadscans.trans_y = .24;
+cfg.jp_spm8_getbadscans.trans_z = .24;
+cfg.jp_spm8_getbadscans.rot_x = .0035;
+cfg.jp_spm8_getbadscans.rot_y = .0035;
+cfg.jp_spm8_getbadscans.rot_z = .0035;
+cfg.jp_spm8_getbadscans.timediff = 6.0;
+
+
+
 % SPM8 Realign & Unwarp
 %-----------------------------------------------------------------------
 
