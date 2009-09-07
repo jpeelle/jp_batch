@@ -16,12 +16,7 @@ cfg.options.spmdefaultsfunction = 'spm_defaults';
 cfg.options.dartelname = 'dartel';
 
 
-% SPM view_bad_scans
-%-----------------------------------------------------------------------
 
-cfg.jp_spm_viewbadscans.trans_thresh = .3; % mm
-cfg.jp_spm_viewbadscans.rots_thresh = .01; % rads
-cfg.jp_spm_viewbadscans.tsdiff_thresh = 5; % a.u.
 
 
 
@@ -43,7 +38,7 @@ cfg.jp_spm8_tsdiffana = [];
 % SPM8 Realignment
 %-----------------------------------------------------------------------
 
-cfg.jp_spm8_realign.estimate.quality = 0.93; 
+cfg.jp_spm8_realign.estimate.quality = 0.95; 
 cfg.jp_spm8_realign.estimate.weight  = 0;
 cfg.jp_spm8_realign.estimate.interp  = 2;
 cfg.jp_spm8_realign.estimate.wrap    = [0 0 0];
@@ -63,13 +58,25 @@ cfg.jp_spm8_realign.which_images     = 0;    % 0 = mean only, 2 = all
 % SPM8 get bad scans
 %-----------------------------------------------------------------------
 
-cfg.jp_spm8_getbadscans.trans_x = .24;
-cfg.jp_spm8_getbadscans.trans_y = .24;
-cfg.jp_spm8_getbadscans.trans_z = .24;
-cfg.jp_spm8_getbadscans.rot_x = .0035;
-cfg.jp_spm8_getbadscans.rot_y = .0035;
-cfg.jp_spm8_getbadscans.rot_z = .0035;
-cfg.jp_spm8_getbadscans.timediff = 6.0;
+% (these values 4 standard deviations from the mean for ~160
+% subjects, so they seem like a good starting point)
+
+cfg.jp_spm8_getbadscans.trans_x = .096;
+cfg.jp_spm8_getbadscans.trans_y = .314;
+cfg.jp_spm8_getbadscans.trans_z = .438;
+cfg.jp_spm8_getbadscans.rot_x = .00751;
+cfg.jp_spm8_getbadscans.rot_y = .00269;
+cfg.jp_spm8_getbadscans.rot_z = .00223;
+cfg.jp_spm8_getbadscans.timediff = 7.804;
+
+
+
+% SPM8 view_bad_scans
+%-----------------------------------------------------------------------
+
+% (use the same values as above)
+cfg.jp_spm8_viewbadscans = cfg.jp_spm8_getbadscans;
+cfg.jp_spm8_viewbadscans.ploteachsubject = 1;       % different plot for each subject
 
 
 
@@ -110,7 +117,7 @@ cfg.jp_spm8_segment.estimate.biasreg  = 0.0001;
 cfg.jp_spm8_segment.estimate.biasfwhm = 75;
 cfg.jp_spm8_segment.estimate.regtype  = 'mni';
 cfg.jp_spm8_segment.estimate.fudge    = 5;
-cfg.jp_spm8_segment.estimate.samp     = 2;  % smaller should be more accurate
+cfg.jp_spm8_segment.estimate.samp     = 2;  % smaller should be more accurate (but take longer)
 cfg.jp_spm8_segment.estimate.msk      = '';
 
 cfg.jp_spm8_segment.write.biascor = 1;       % whether to biascorrect (turned off if biascorrectfirst)
@@ -132,20 +139,19 @@ cfg.jp_spm8_segment8.biasreg = .0001;
 cfg.jp_spm8_segment8.tpm = fullfile(spm('dir'), 'toolbox', 'Seg', 'TPM.nii');
 cfg.jp_spm8_segment8.lkp = [1,1,2,2,3,3,4,4,4,5,5,5,5,6,6];
 cfg.jp_spm8_segment8.reg = .001;
-cfg.jp_spm8_segment8.samp = 2; % sampling distance; default is 3, assuming 2 is a little more accurate
+cfg.jp_spm8_segment8.samp = 2;                   % smaller should be more accurate (but take longer)
 cfg.jp_spm8_segment8.writebiascorrected = [1 1]; % save bias corrected and field
 cfg.jp_spm8_segment8.ngaus = [2 2 2 3 4 2];
-cfg.jp_spm8_segment8.native = [1 1]; % native and DARTEL imported
-cfg.jp_spm8_segment8.warped = [1 1]; % normalised modulated and unmodulated
+cfg.jp_spm8_segment8.native = [1 1];             % native and DARTEL imported
+cfg.jp_spm8_segment8.warped = [1 1];             % normalised modulated and unmodulated
 cfg.jp_spm8_segment8.warpreg = 4;
 cfg.jp_spm8_segment8.affreg = 'mni';
 cfg.jp_spm8_segment8.bb = {ones(2,3)*NaN};
 cfg.jp_spm8_segment8.vox = 1.5;
-cfg.jp_spm8_segment8.writedeffields = [1 1]; % why not write them out
+cfg.jp_spm8_segment8.writedeffields = [1 1];     % why not write them out
 
-cfg.jp_spm8_segment8.biascorrectfirst = 1; % write out bias corrected, then segment that
-
-cfg.jp_spm8_segment8.segment8dir = '';   % if not empty, created within structural directory and output saved here
+cfg.jp_spm8_segment8.biascorrectfirst = 1;       % write out bias corrected, then segment that
+cfg.jp_spm8_segment8.segment8dir = '';           % if not empty, created within structural directory and output saved here
 
 
 
@@ -183,7 +189,7 @@ cfg.jp_spm8_smooth.prefix = 'w';
 %-----------------------------------------------------------------------
 
 cfg.jp_spm8_model.conditions = [];             % <-- needs to be set!
-cfg.jp_spm8_model.prefix = '';            % <-- needs to be set!
+cfg.jp_spm8_model.prefix = '';                 % <-- needs to be set!
 cfg.jp_spm8_model.statsdir = '';               % <-- needs to be set!
 
 cfg.jp_spm8_model.xM.TH = [];                  % these all set after spm_fmri_spm_ui is run
@@ -213,21 +219,22 @@ cfg.jp_spm8_model.evdir = 'ev_files';          % which directory to look in for 
 cfg.jp_spm8_dartelcreatetemplate.numtissues = 6;  % Generally 2 for 'standard'segmentation, 6 for segment8
 cfg.jp_spm8_dartelcreatetemplate.rform = 0;    
 
-
+  
 
 % SPM8 DARTEL Write MNI-normalized (structural)
 %-----------------------------------------------------------------------
 
 cfg.jp_spm8_dartelnormmnistruct.vox = 1.5;
-cfg.jp_spm8_dartelnormmnistruct.fwhm = 8; 
+cfg.jp_spm8_dartelnormmnistruct.fwhm = 8;         % smoothing (automatically done)
 cfg.jp_spm8_dartelnormmnistruct.preserve = 1;
+
 
 
 % SPM8 DARTEL Write MNI-normalized (functional)
 %-----------------------------------------------------------------------
 
 cfg.jp_spm8_dartelnormmnifun.vox = 2;
-cfg.jp_spm8_dartelnormmnifun.fwhm = 10; 
+cfg.jp_spm8_dartelnormmnifun.fwhm = 10;           % smoothing (automatically done)
 cfg.jp_spm8_dartelnormmnifun.preserve = 0;
 cfg.jp_spm8_dartelnormmnifun.prefix = '';         % might be u if
                                                   % you've unwarped

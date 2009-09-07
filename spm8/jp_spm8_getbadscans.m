@@ -1,31 +1,40 @@
 function S = jp_spm8_getbadscans(S, subnum, sessionnum)
 %JP_SPM8_GETBADSCANS Produce a list of bad scans for each session.
 %
-% S = JP_SPM8_GETBADSCANS(S, SUBNUM, [SESSIONNUM]) will get bad
-% scans for subject number SUBNUM from an S structure (see
-% JP_INIT).
+% S = JP_SPM8_GETBADSCANS(S, SUBNUM, [SESSIONNUM]) will get bad scans for
+% subject number SUBNUM from an S structure (see JP_INIT).
 %
-% "Bad scans" are defined as any scan where the scan-to-scan
-% absolute difference in  movement parameters or TSDIFFANA
-% parameters (if present) exceed pre-specified values, set as
-% fields in S.cfg.jp_spm8_getbadscans:
+% "Bad scans" are defined as any scan where the scan-to-scan absolute
+% difference in  movement parameters or TSDIFFANA parameters (if present)
+% exceed pre-specified values, set as fields in S.cfg.jp_spm8_getbadscans:
 %
-%    trans_x  (mm)  default .24
-%    trans_y  (mm)  default .24
-%    trans_z  (mm)  default .24
-%    rot_x    (rad) default .0035
-%    rot_y    (rad) default .0035
-%    rot_z    (rad) default .0035
-%    timediff   (au)  default 6.0  
+%    trans_x  (mm)  default .096
+%    trans_y  (mm)  default .314
+%    trans_z  (mm)  default .438
+%    rot_x    (rad) default .00751
+%    rot_y    (rad) default .00269
+%    rot_z    (rad) default .00223
+%    timediff (au)  default 7.804
 %
-% The default values are taken from examining values over ~160
-% subjects; the defaults are approximately 3 standard deviations
-% away form the mean in all cases (collapsing across translations
-% in all directions and rotations in all directions). It's probably worth
-% checking on each specific scanner however...
+% The default values are taken from examining values over ~160 subjects;
+% the defaults are 4 standard deviations away form the mean in all cases
+% (collapsing across translations in all directions and rotations in all
+% directions). It's probably worth checking on each specific scanner
+% however...
 %
-% Any scan exceeding any value gets added to the jp_badscans.txt
-% file in each session directory.
+% Any scan exceeding any value gets added to the jp_badscans.txt file in
+% each session directory.
+%
+% If you want to ignore any movement paremeter or timediff value, just set
+% the threshold to Inf.
+%
+% To get an idea what the variability is like for a particular study, you
+% can use JP_SPM8_VIEWBADSCANS, which plots distributions for each subject
+% and tells you in total how many scans you will be throwing away for a
+% given threshold. So, it's probably wise to run that on all subjects
+% first, and then once you find a threshold that you are satisfied with run
+% JP_SPM8_GETBADSCANS. If there is a subject with a lot of bad scans, you
+% might want to consider dropping them.
 %
 % See also JP_SPM8_TSDIFFANA.
 
@@ -63,6 +72,7 @@ end
 totalscans = 0;
 totalbad = 0;
 rpthresh = [cfg.trans_x cfg.trans_y cfg.trans_z cfg.rot_x cfg.rot_y cfg.rot_z];
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Go through each session and identify bad scans, and write out 
