@@ -1,4 +1,4 @@
-function S = jp_spm8_viewbadscans(S, subnum);
+function S = jp_spm8_viewbadscans(S, subnum)
 %JP_SPM8_VIEWBADSCANS Look at distribution of bad scans over a study.
 %
 % JP_SPM8_VIEWBADSCANS will let you know, for a specified threshold, how
@@ -75,19 +75,20 @@ end
 fprintf('done.\n\n');
 
 
-% only look at subjects that have both rp and tsdiff
-% badsubs = [];
-% for s=1:length(S.subjects)
-%     if isempty(D(s).rp) || isempty(D(s).td_scaled)
-%         badsubs = [badsubs s];
-%     end
-% end
-% 
-% goodsubs = setdiff(1:length(S.subjects), badsubs);
-% 
-% fprintf('Using %i subjects (ignoring %i).\n', length(goodsubs), length(badsubs));
-% 
-% D = D(goodsubs);
+%only look at subjects that have both rp and tsdiff
+badsubs = [];
+fprintf('Only looking at subjects that have both rp* and timediff.mat files...\n');
+for s=1:length(S.subjects)
+    if isempty(D(s).rp) || isempty(D(s).td_scaled)
+        badsubs = [badsubs s];
+    end
+end
+
+goodsubs = setdiff(1:length(S.subjects), badsubs);
+
+fprintf('Using %i subjects (ignoring %i).\n', length(goodsubs), length(badsubs));
+
+D = D(goodsubs);
 
 
 % for holding all the scans
@@ -99,7 +100,9 @@ totalscans = zeros(1,length(S.subjects));
 totalbad = zeros(1,length(S.subjects));
 rpthresh = [cfg.trans_x cfg.trans_y cfg.trans_z cfg.rot_x cfg.rot_y cfg.rot_z];
 
-for s=1:length(S.subjects)
+for g=1:length(goodsubs)
+  
+  s = goodsubs(g);
   
   subjbad = [];
   rpdiff = D(s).rpdiff;

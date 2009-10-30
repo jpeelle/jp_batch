@@ -58,16 +58,16 @@ cfg.jp_spm8_realign.which_images     = 0;    % 0 = mean only, 2 = all
 % SPM8 get bad scans
 %-----------------------------------------------------------------------
 
-% (these values 4 standard deviations from the mean for ~160
+% (these values 3.5 standard deviations from the mean for ~160
 % subjects, so they seem like a good starting point)
 
-cfg.jp_spm8_getbadscans.trans_x = .096;
-cfg.jp_spm8_getbadscans.trans_y = .314;
-cfg.jp_spm8_getbadscans.trans_z = .438;
-cfg.jp_spm8_getbadscans.rot_x = .00751;
-cfg.jp_spm8_getbadscans.rot_y = .00269;
-cfg.jp_spm8_getbadscans.rot_z = .00223;
-cfg.jp_spm8_getbadscans.timediff = 7.804;
+cfg.jp_spm8_getbadscans.trans_x = .084;
+cfg.jp_spm8_getbadscans.trans_y = .275;
+cfg.jp_spm8_getbadscans.trans_z = .383;
+cfg.jp_spm8_getbadscans.rot_x = .00657;
+cfg.jp_spm8_getbadscans.rot_y = .00236;
+cfg.jp_spm8_getbadscans.rot_z = .00195;
+cfg.jp_spm8_getbadscans.timediff = 6.962;
 
 
 

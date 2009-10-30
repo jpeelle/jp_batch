@@ -99,7 +99,7 @@ for i=1:length(subjects)
     % functional directories and prefix
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
-    try
+    %try
       fundirs = jp_getinfo('sessions', S.subjdir, thissub);
       fprintf('Added functional directories:\n');
       for j=1:length(fundirs)
@@ -110,11 +110,11 @@ for i=1:length(subjects)
           error('%s specified (in info.sessions file) but does not exist.', fundirs{j});
         end
       end    
-    catch
-      fundirs = [];
-      S.subjects(n).sessions = [];
-      fprintf('No functional directories specified.\n');
-    end
+    %catch
+    %  fundirs = [];
+    %  S.subjects(n).sessions = [];
+    %  fprintf('No functional directories specified.\n');
+    %end
     S.subjects(n).fundirs = fundirs;
     
     

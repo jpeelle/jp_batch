@@ -8,19 +8,19 @@ function S = jp_spm8_getbadscans(S, subnum, sessionnum)
 % difference in  movement parameters or TSDIFFANA parameters (if present)
 % exceed pre-specified values, set as fields in S.cfg.jp_spm8_getbadscans:
 %
-%    trans_x  (mm)  default .096
-%    trans_y  (mm)  default .314
-%    trans_z  (mm)  default .438
-%    rot_x    (rad) default .00751
-%    rot_y    (rad) default .00269
-%    rot_z    (rad) default .00223
-%    timediff (au)  default 7.804
+%    trans_x  (mm)  default .084
+%    trans_y  (mm)  default .275
+%    trans_z  (mm)  default .383
+%    rot_x    (rad) default .00657
+%    rot_y    (rad) default .00236
+%    rot_z    (rad) default .00195
+%    timediff (au)  default 6.962
 %
-% The default values are taken from examining values over ~160 subjects;
-% the defaults are 4 standard deviations away form the mean in all cases
-% (collapsing across translations in all directions and rotations in all
-% directions). It's probably worth checking on each specific scanner
-% however...
+% The default values are taken from examining values over ~160 subjects; 
+% the defaults are 3.5 standard deviations away form the mean. It's
+% probably worth checking on each specific scanner. Also, these values are
+% from young adults scanned with a continuous protocol, and might need to
+% be adjusted for other populations or scanning protocols.
 %
 % Any scan exceeding any value gets added to the jp_badscans.txt file in
 % each session directory.
@@ -40,7 +40,6 @@ function S = jp_spm8_getbadscans(S, subnum, sessionnum)
 
 % Jonathan Peelle
 % MRC Cognition and Brain Sciences Unit
-
 
 
 subname = S.subjects(subnum).name;

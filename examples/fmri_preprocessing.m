@@ -1,16 +1,15 @@
-% Everything needed to run an analysis (or to see what has been run
-% in a previous analysis) for a given study is found in the S
-% structure, which is usually saved to S.mat in the main study
-% folder. This should easily let you add subjects or stages to a
-% study, or see what has been run, at any time. If you pass a
-% properly-formatted S structure to JP_RUN, all stages and subjects
-% will be run (unless they have been run previously, etc.).
+% Everything needed to run an analysis (or to see what has been run in a
+% previous analysis) for a given study is found in the S structure, which
+% is usually saved to S.mat in the main study folder. This should easily
+% let you add subjects or stages to a study, or see what has been run, at
+% any time. If you pass a properly-formatted S structure to JP_RUN, all
+% stages and subjects will be run (unless they have been run previously,
+% etc.).
 %
-% Because everything for your analysis is contained in the S
-% structure, so you need to keep track of it.  Note that many
-% functions will return an updated S structure; for example, S =
-% jp_init(S) is correct; simply running jp_init(S) with no output
-% won't work.
+% Because everything for your analysis is contained in the S structure, so
+% you need to keep track of it.  Note that many functions will return an
+% updated S structure; for example, S = jp_init(S) is correct; simply
+% running jp_init(S) with no output won't work.
 %
 % The minimal fields you need in S are the subject directory, some analysis
 % stages to run, and some subjects to run.
@@ -19,9 +18,8 @@
 % analysis is done, and all configurable options for any processing stage.
 % See JP_DEFAULTS for all available options.
 %
-% JP_INIT fills in subject-specific values for sessions,
-% directories, etc. based on info.* text files; see JP_BATCH and
-% JP_SPM_SETUP for more.
+% JP_INIT fills in subject-specific values for sessions, directories, etc.
+% based on info.* text files; see JP_BATCH and JP_SPM_SETUP for more.
 
 % Jonathan Peelle
 % MRC Cognition and Brain Sciences Unit
@@ -31,7 +29,8 @@
 %% add necessary paths (unless you add these somehwere else)
 %  Because the various functions live in subfolders, you need to either (a)
 %  add those to your Matlab path, or (b) run the following command, which
-%  adds all subfolders.
+%  adds all subfolders. This assumes the jp_batch directory is in your
+%  path.
 
 jp_batch('addpaths');
 

@@ -15,8 +15,7 @@ function jp_batch(task)
 % about re-doing any previously-completed stages.
 %
 % Instead of using JP_RUN it is also possible to use functions on
-% their own. For example scripts, look in the examplescripts
-% folder.
+% their own. For example scripts, look in the examples folder.
 %
 %
 % --------------------------------------------------------------
@@ -45,7 +44,9 @@ function jp_batch(task)
 % be read by other scripts. JP_SPM_SETUP will help create these files,
 % or you can make them in any text editor.
 %
-% Required info files in the top-level subject directory are:
+% For fMRI analysis, required info files in the top-level subject
+% directory are:
+%
 %  info.tr
 %  info.ta
 %  info.sessions
