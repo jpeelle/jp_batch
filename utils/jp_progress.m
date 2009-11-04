@@ -1,11 +1,15 @@
 function jp_progress(a, b, initialize)
 % JP_PROGRESS print a progress bar.
 %
-% jp_progress;
+% JP_PROGRESS(this, total) prints a bar showing percentage of this/total.
 %
-% for i=1:10000
-%   jp_progress(i,10000);
-% end
+% JP_PROGRESS() initializes a blank progress bar.  For example:
+%
+%    jp_progress;
+%
+%    for i=1:10000
+%      jp_progress(i,10000);
+%    end
 %
 
 

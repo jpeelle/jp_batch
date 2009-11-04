@@ -3,8 +3,6 @@ function jp_timage2z(imgs, df)
 %
 %
 
-
-
 % make sure required SPM function is in the path
 if ~exist('spm_t2z')
     error('The SPM function spm_t2z is required.');
@@ -12,7 +10,6 @@ end
 
 
 % check the other inputs
-
 if isempty(imgs)
     imgs = spm_select(Inf, 'image', 'Select T images to convert...', [], pwd, '^spmT.*');
 end
@@ -21,14 +18,17 @@ if nargin < 2 || isempty(df)
     error('Must supply degrees of freedom.');
 end
 
-clc
+
+
+% clearing screen makes the output a little cleaner
+clc  
+
 
 % Go through each image, convert to Z, and save
 
 for i=1:size(imgs,1)
    fprintf('Converting image %i/%i...\n', i, size(imgs,1));
    
-   %thisimg = fileparts(strtok(imgs(i,:), ','));
    thisimg = strtok(imgs(i,:));
    
    [pth, nm, ext] = fileparts(thisimg);
@@ -64,22 +64,6 @@ for i=1:size(imgs,1)
            Y(ww) = spm_t2z(Y(ww), df);
        end
    end
-
-
-   %    for x=1:size(Y,1)
-   %        for y=1:size(Y,2)
-   %            for z=1:size(Y,3)
-   %                %if mod(x*(y*z),1000)==0
-   %                    jp_progress(x*(y*z), prod(size(Y)));
-   %                %end
-   %
-   %                %if Y(x,y,z)~=0 && ~isnan(Y(x,y,z))
-   %                %    Y(x,y,z) = spm_t2z(Y(x,y,z), df);
-   %                %end
-   %            end
-   %        end
-   %    end
-
 
    % reshape back
    Y = reshape(Y, Ysize);
