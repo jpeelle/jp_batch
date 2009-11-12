@@ -176,6 +176,15 @@ cfg.jp_spm8_normalize.prefix = '';      % prefix for functional images to be sel
 
 
 
+% SPM8 Normalize structural
+%-----------------------------------------------------------------------
+
+
+cfg.jp_spm8_normalizestructural.prefix = '';
+cfg.jp_spm8_normalizestructural.write = cfg.jp_spm8_normalize.write;
+cfg.jp_spm8_normalizestructural.write.vox = [1 1 1]; % keep high resolution for overlay
+
+
 
 % SPM8 Smooth
 %-----------------------------------------------------------------------

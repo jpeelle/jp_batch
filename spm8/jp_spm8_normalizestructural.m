@@ -1,17 +1,12 @@
-function S = jp_spm8_normalize(S, subnum, sessionnum)
-%JP_SPM8_NORMALIZE Normalize images using SPM8.
+function S = jp_spm8_normalizestructural(S, subnum)
+%JP_SPM8_NORMALIZESTRUCTURAL Normalizes subject's structural image.
 %
-% S = JP_SPM8_NORMALIZE(S, SUBNUM, [SESSIONNUM]) normalizes images
-% for subject number SUBNUM from an S structure (see JP_INIT).
+% S = JP_SPM8_NORMALIZESTRUCTURAL(S, SUBNUM) normalizes the structural
+% image(s) for subject number SUBNUM from an S structure (see
+% JP_INIT).
 %
-% Options available in S.cfg.jp_spm8_normalize include:
-%    prefix   Might be 'r' if you resliced previously (default '')
-%
-% See JP_DEFAULTS for a full list and defaults.
-%
-% The assumption is that segmentation (JP_SPM8_SEGMENT) has been
-% done, resulting in a *seg_sn.mat file, the parameters of which
-% will then be applied to all functional images.
+% For now this assumes that a *seg_sn.mat file exists from running
+% segmentation.
 
 % Jonathan Peelle
 % MRC Cognition and Brain Sciences Unit
@@ -26,18 +21,6 @@ subname = S.subjects(subnum).name;
 subdir = fullfile(S.subjdir, subname);
 
 try
-  funprefix = S.subjects(subnum).funprefix;
-catch
-  funprefix = jp_getinfo('funprefix', S.subjdir, subname);
-end
-
-try
-  fundirs = jp_getsessions(S, subnum);
-catch
-  fundirs = jp_getinfo('sessions', S.subjdir, subname);
-end
-
-try
   structprefix = S.subjects(subnum).structprefix;
 catch
   structprefix = jp_getinfo('structprefix', S.subjdir, subname);
@@ -49,18 +32,10 @@ catch
   structdir = jp_getinfo('structdirs', S.subjdir, subname);
 end
 
-structdir = structdir{1};
-
-% If no session specified, run on all sessions
-if nargin < 3
-  sessionnum = 1:length(fundirs);
-end
-
+structdir = structdir{1}; % use the first one
 
 % log files
 [alllog, errorlog, normalizelog] = jp_createlogs(subname, S.subjdir, mfilename);
-
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -86,10 +61,10 @@ jp_log(normalizelog, sprintf('Normalization paramaters found in: %s\n', seg_norm
 % Get files to normallize
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-P = jp_getfunimages([cfg.prefix funprefix], S.subjdir, subname, fundirs(sessionnum));
+P = jp_getstructimages([cfg.prefix structprefix], S.subjdir, subname, structdir);
 
 if size(P,1)==1 && strcmp('/', P(1,:))
-  jp_log(errorlog, 'Did not find any images. Check to make sure your imagePrefix is correct.', 2);
+  jp_log(errorlog, 'Did not find any images. Check to make sure your prefix is correct.', 2);
 end
 
 
@@ -101,26 +76,16 @@ jp_log(normalizelog, 'done creating volumes.\n');
 
 
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Normalize
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
 
-% How many digits (for writing out)
-total_images = length(V);
-ndigits = length(sprintf('%i',total_images));
-nback = (2*ndigits)+1; % all the digits + a /
-
-str = sprintf('Writing images: %s/%s\n',sprintf('%%%ii',ndigits),sprintf('%%%ii',ndigits));
-fprintf(str,0,total_images)
-
-jp_log(normalizelog, 'Writing images...', 0);
+jp_log(normalizelog, 'Writing images...');
   
 for thisv=1:length(V)
   spm_write_sn(V(thisv),seg_norm_file,cfg.write);  
-  str = sprintf('%%s%s/%s',sprintf('%%%ii',ndigits),sprintf('%%%ii',ndigits));
-  fprintf(str,sprintf(repmat('\b',1,nback)),thisv,total_images); 
 end
 
-jp_log(normalizelog, 'Done writing images.\n');
+jp_log(normalizelog, 'done writing images.\n');
+
 
