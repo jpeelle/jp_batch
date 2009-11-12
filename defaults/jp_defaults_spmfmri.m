@@ -270,6 +270,7 @@ cfg.jp_spm5_realignunwarp = cfg.jp_spm8_realignunwarp;
 cfg.jp_spm5_coregister = cfg.jp_spm8_coregister;
 cfg.jp_spm5_segment = cfg.jp_spm8_segment;
 cfg.jp_spm5_normalize = cfg.jp_spm8_normalize;
+cfg.jp_spm5_normalizestructural = cfg.jp_spm8_normalizestructural;
 cfg.jp_spm5_smooth = cfg.jp_spm8_smooth;
 cfg.jp_spm5_model = cfg.jp_spm8_model;
 cfg.jp_spm5_contrasts = cfg.jp_spm8_contrasts;
