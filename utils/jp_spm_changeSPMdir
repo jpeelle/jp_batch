@@ -25,7 +25,7 @@ end
 for i=1:size(files,1)
   fprintf('Changing directory for file %i/%i...', i, size(files,1));
   
-  thisfile = files(i,:);
+  thisfile = strtok(files(i,:));
 
   % get the location/name of this file
   [pth, nm, ext] = fileparts(strtok(thisfile, ','));
