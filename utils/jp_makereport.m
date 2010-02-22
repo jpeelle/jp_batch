@@ -98,7 +98,8 @@ for s=1:length(S.analysis)
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   % coregistration
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  if findstr('coregister', stagename)
+  %if findstr('coregister', stagename)
+  if ~isempty(regexp(stagename, 'jp_spm._coregister'))
     fprintf(f, '\n<h2>Coregister</h2>\n\n');
     
     fprintf(f, '<p>Coregistration lines up your structural image with a mean functional image. To check that this has been done properly:</p>\n');
@@ -111,6 +112,14 @@ for s=1:length(S.analysis)
   
   
   
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % coregistration of structural to template
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  if findstr('coregisterstructural2template', stagename)
+    fprintf(f, '\n<h2>Coregister structural to template</h2>\n\n');
+    fprintf(f, '<p>The structural image has been coregistered to a structural template in MNI space in order to hopefully aid the starting estimates for segmentation and normalization.</p>\n\n');
+    fprintff(, '<p>You should check that the functional images, structural image, and structural template are approximately aligned.</p>\n\n');  
+  end
   
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   % segmentation
@@ -136,6 +145,82 @@ for s=1:length(S.analysis)
 end
 
 
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % model
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  if findstr('model', stagename)
+    fprintf(f, '\n<h2>Model Design</h2>\n\n');
+    
+    if isfield(S.cfg, 'jp_spm8_model')
+      cfg = S.cfg.jp_spm8_model;
+    elseif isfield(S.cfg, 'jp_spm5_model')
+      cfg = S.cfg.jp_spm5_model;
+    else
+      error('not found');
+    end
+    
+    if cfg.separatesessions == 0
+      for s=1:length(sessions)
+        fprintf(f, '<h3>%s</h3>\n', sessions{s});
+        
+        statpath = fullfile(cfg.statsdir, [subname '_' sessions{s}]);
+        img = fullfile(statpath, 'design_matrix.png');
+        %imgfp = fullfile(subdir,img);
+        
+        if exist(img)      
+          fprintf(f, '<div><a href="%s"><img src="%s"></a></div>\n', img, img);
+        else
+          fprintf(f, '<p>%s not found.</p>\n', img);
+        end
+      end 
+      
+    else
+      img = fullfile(cfg.statsdir, subname, 'design_matrix.png');
+      if exist(img)      
+        fprintf(f, '<div><a href="%s"><img src="%s"></a></div>\n', img, img);
+      else
+        fprintf(f, '<p>%s not found.</p>\n', img);
+      end
+    end    
+  end
+  
+
+  
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % estimate
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  if findstr('estimate', stagename)
+    fprintf(f, '\n<h2>Model Estimation</h2>\n\n');
+    if cfg.separatesessions == 0
+      for s=1:length(sessions)
+        fprintf(f, '<h3>%s</h3>\n', sessions{s});
+        
+        statpath = fullfile(cfg.statsdir, [subname '_' sessions{s}]);
+        img = fullfile(statpath, 'mask.png');
+        %imgfp = fullfile(subdir,img);
+        
+        if exist(img)      
+          fprintf(f, '<div><a href="%s"><img src="%s"></a></div>\n', img, img);
+        else
+          fprintf(f, '<p>%s not found.</p>\n', img);
+        end
+      end 
+      
+    else
+      img = fullfile(cfg.statsdir, subname, 'mask.png');
+      if exist(img)      
+        fprintf(f, '<div><a href="%s"><img src="%s"></a></div>\n', img, img);
+      else
+        fprintf(f, '<p>%s not found.</p>\n', img);
+      end
+    end
+  end
+
+
+end
+  
+  
+  
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

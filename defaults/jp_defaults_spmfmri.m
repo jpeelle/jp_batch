@@ -102,6 +102,18 @@ cfg.jp_spm8_coregister.prefix            = '';   % used for finding mean functio
 
 
 
+% SPM8 Coregister structural to template
+%-----------------------------------------------------------------------
+
+cfg.jp_spm8_coregisterstructural2template.move_functional = 1;
+cfg.jp_spm8_coregisterstructural2template.functional_prefix = '';
+cfg.jp_spm8_coregisterstructural2template.template = fullfile(spm('Dir'), 'canonical', 'avg152T1.nii');
+
+cfg.jp_spm8_coregisterstructural2template.estimate = cfg.jp_spm8_coregister.estimate;
+cfg.jp_spm8_coregisterstructural2template.write = cfg.jp_spm8_coregister.write;
+
+
+
 % SPM8 Segment [estimate options passed to spm_preproc]
 %-----------------------------------------------------------------------
 
@@ -117,7 +129,7 @@ cfg.jp_spm8_segment.estimate.biasreg  = 0.0001;
 cfg.jp_spm8_segment.estimate.biasfwhm = 75;
 cfg.jp_spm8_segment.estimate.regtype  = 'mni';
 cfg.jp_spm8_segment.estimate.fudge    = 5;
-cfg.jp_spm8_segment.estimate.samp     = 2;  % smaller should be more accurate (but take longer)
+cfg.jp_spm8_segment.estimate.samp     = 1;  % smaller should be more accurate (but take longer)
 cfg.jp_spm8_segment.estimate.msk      = '';
 
 cfg.jp_spm8_segment.write.biascor = 1;       % whether to biascorrect (turned off if biascorrectfirst)
@@ -220,6 +232,16 @@ cfg.jp_spm8_model.volterra = 1;
 cfg.jp_spm8_model.fixemptyconditions = 1;      % if condition doesn't exist, add onset corresponding to last scan to keep # columns consistent
 
 cfg.jp_spm8_model.evdir = 'ev_files';          % which directory to look in for EV files (event times), in each subject dir
+
+cfg.jp_spm8_model.savedesignmatrix = 1;        % print a copy in the stats directory
+
+
+% SPM8 Estimate
+%-----------------------------------------------------------------------
+
+cfg.jp_spm8_estimate.separatesessions = cfg.jp_spm8_model.separatesessions;
+cfg.jp_spm8_estimate.savemask = 1;                                           % print image of mask
+
 
 
 % SPM8 DARTEL Create Template

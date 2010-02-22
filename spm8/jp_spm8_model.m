@@ -317,8 +317,6 @@ if length(sub_conditions)==0
 end
 
 
-
-
 % Configure design matrix
 jp_log(modellog,'Configuring design matrix...\n');
 SPM = spm_fmri_spm_ui(SPM);
@@ -343,10 +341,23 @@ SPM.xM.I = cfg.xM.I;
 
 save SPM SPM
 
-% Estimate parameters.
-jp_log(modellog,'Estimating parameters...\n');
-spm_spm(SPM);
-jp_log(modellog,'Done estimating parameters.\n');
+
+% design reporting, saving?
+if cfg.savedesignmatrix > 0
+  fname = cat(1,{SPM.xY.VY.fname}');
+  spm_DesRep('DesMtx', SPM.xX, fname, SPM.xsDes)
+
+  % as a pdf
+  basename = fullfile(savepath, 'design_matrix');
+  job.fname = [basename '.pdf'];
+  job.opts.opt = {'-dpdf'};
+  spm_print(job);
+
+  % as a png
+  job.fname = [basename '.png'];
+  job.opts.opt = {'-dpng', '-r200'};
+  spm_print(job);
+end
 
 end % runmodel subfunction
 

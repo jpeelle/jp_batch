@@ -104,7 +104,7 @@ VF = spm_vol(structimage);
 
 jp_log(coregisterlog, 'Running coregistration...\n');
 
-x = spm_coreg(VG, VF);
+x = spm_coreg(VG, VF, cfg.estimate);
 M = inv(spm_matrix(x));
 MM = spm_get_space(structimage);
 spm_get_space(structimage,M*MM);
