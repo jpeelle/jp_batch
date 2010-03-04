@@ -252,7 +252,7 @@ cfg.jp_spm8_model.highpass_cutoff = 90;
 cfg.jp_spm8_model.autocorrelations = 'AR(1)';  % alternatively 'none'
 cfg.jp_spm8_model.include_movement = 0;        % 1 = automatically adds movement parameters as regressors
 cfg.jp_spm8_model.include_badscans = 0;        % 1 = add columns for bad scans (see jp_spm8_getbadscans)
-cfg.jp_spm8_model.badscansfilename = 'jp_badscans.txt'; % name of file containing bad scan numbers
+cfg.jp_spm8_model.badscansfilename = cfg.jp_spm8_getbadscans.fname; % name of file containing bad scan numbers
 
 cfg.jp_spm8_model.volterra = 1;
 cfg.jp_spm8_model.fixemptyconditions = 1;      % if condition doesn't exist, add onset corresponding to last scan to keep # columns consistent
@@ -307,7 +307,7 @@ cfg.jp_spm8_contrasts.which_contrasts = [];    % [] runs all
 cfg.jp_spm8_contrasts.confiledirname = '@con_files';       % the @ puts it at the top of SPM search path
 cfg.jp_spm8_contrasts.tandffiledirname = '@tandf_files';
 cfg.jp_spm8_contrasts.separatesessions = 0;
-
+cfg.jp_spm8_contrasts.badscanfilename = cfg.jp_spm8_getbadscans.fname;
 
 
 

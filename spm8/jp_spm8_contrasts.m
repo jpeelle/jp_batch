@@ -5,7 +5,7 @@ function S = jp_spm8_contrasts(S, subnum)
 % file contrasts.m residing in the stats dir to define and run
 % contrasts. Contrasts.m should be a function set up like so:
 %
-%   function c = contrasts()
+%   function c = contrasts(nbs)
 %
 %   c(1).name = 'CN: First presentation';
 %   c(1).con = [1 0 0 -1];
@@ -17,6 +17,11 @@ function S = jp_spm8_contrasts(S, subnum)
 %
 % Contrasts will be added to SPM.mat in the order that they are
 % entered, i.e., SPM.xCon(1) has the information from c{1}.
+%
+% The nbs argument is filled in by the number of bad scans identified
+% by JP_SPM8_GETBADSCANS.  If you're not using this, don't worry about
+% it; however, it still needs to appear in the contrasts.m file (as in
+% the above example.
 %
 % ANY EXISTING CONTRASTS (i.e., defaults, or other ones you have
 % done) in SPM.xCon will WIPED OUT!  CAREFUL!  Basically if you
@@ -34,7 +39,9 @@ function S = jp_spm8_contrasts(S, subnum)
 % Options in S.cfg.jp_spm8_contrasts include:
 %   which_contrasts     which contrasts to estimate (useful if you add more)
 %   separatesessions    to run on separate session analysses (rare)   
+%   badscanfilename     if you care about which scans were identified
 %
+% See JP_DEFAULTS_SPMFMRI for all options.
 %
 % The which_contrasts field will start estimate the
 % contrasts in the vector specified. (This is passed to
@@ -45,7 +52,7 @@ function S = jp_spm8_contrasts(S, subnum)
 % note that the first 10 contrasts will be re-defined in your
 % SPM.mat file, just not re-estimated, which is OK, since they
 % haven't changed.  The problem is if you add 2 contrasts and also
-% change contrast 3, you would then want WHICHCONTRASTS = [3 11
+% change contrast 3, you would then want cfg.which_contrasts = [3 11
 % 12], and you will probably have to manually click through
 % confirmation dialogs since you are overwriting previous files.
 % Just be careful.
@@ -70,7 +77,14 @@ elseif ~isdir(statsdir)
   jp_log(contrastslog, sprintf('Statsdir %s not found.', statsdir), 2);
 end
 
-  
+
+% get sessions
+
+try
+  sessions = jp_getsessions(S, subnum);
+catch
+  sessions = jp_getinfo('sessions', S.subjdir, subname);
+end
 
 
 
@@ -94,9 +108,24 @@ end
 cd(statsdir);
 
 
+% Get number of bad scans
+bsfname = cfg.badscanfilename;
+nbs = zeros(1,length(sessions));
+for s=1:length(sessions)
+  bsname = fullfile(S.subjdir, subname, sessions{s}, cfg.badscanfilename);
+  if exist(bsname);
+    badscans = dlmread(bsname);
+    nbs(s) = length(badscans);
+    jp_log(contrastslog, sprintf('Found %i bad scans for session %s.', length(badscans), sessions{s}));
+  end
+end
+
+
+
+
 % Load contrasts
 jp_log(contrastslog, 'Loading contrasts...');
-c = contrasts;  % the contrasts function
+c = contrasts(nbs);  % the contrasts function
 jp_log(contrastslog, sprintf('done. %i contrasts specified.\n', length(c)));
 
 

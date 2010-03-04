@@ -15,7 +15,7 @@ function jp_batch(task)
 % about re-doing any previously-completed stages.
 %
 % Instead of using JP_RUN it is also possible to use functions on
-% their own. For example scripts, look in the examples folder.
+% their own. For example scripts, look in the "examples" folder.
 %
 %
 % --------------------------------------------------------------
@@ -99,7 +99,7 @@ function jp_batch(task)
 % Default values are stored in JP_DEFAULTS; it is possible to
 % create a copy of this for each study with tweaked defaults,
 % See JP_DEFAULTS and JP_INIT for more, and example scripts in
-% the 'examples' directory.
+% the "examples" directory.
 %
 %
 % --------------------------------------------------------------
@@ -115,16 +115,16 @@ function jp_batch(task)
 
 
 if nargin==0
-    help('jp_batch')
+  help('jp_batch')
 elseif strcmp(lower(task), 'addpaths')
-    % make sure subdirectories are added
-    basedir = fileparts(which('jp_init'));
-    files = dir(basedir);
-    for f=1:length(files)
-        if files(f).isdir==1 && isempty(findstr('.',files(f).name)) && ~strcmp(files(f).name, 'external')
-            addpath(fullfile(basedir, files(f).name));
-        end
+  % make sure subdirectories are added
+  basedir = fileparts(which('jp_init'));
+  files = dir(basedir);
+  for f=1:length(files)
+    if files(f).isdir==1 && isempty(findstr('.',files(f).name)) && ~strcmp(files(f).name, 'external')
+      addpath(fullfile(basedir, files(f).name));
     end
+  end
 else
   error('Unknown option.');
 end
