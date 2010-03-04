@@ -91,7 +91,7 @@ cfg.jp_spm8_getbadscans.rot_x = .00657;
 cfg.jp_spm8_getbadscans.rot_y = .00236;
 cfg.jp_spm8_getbadscans.rot_z = .00195;
 cfg.jp_spm8_getbadscans.timediff = 6.962;
-
+cfg.jp_spm8_getbadscans.fname = 'jp_badscans.txt';
 
 
 % SPM8 view_bad_scans
@@ -251,6 +251,9 @@ cfg.jp_spm8_model.global_normalization = 'None';
 cfg.jp_spm8_model.highpass_cutoff = 90;
 cfg.jp_spm8_model.autocorrelations = 'AR(1)';  % alternatively 'none'
 cfg.jp_spm8_model.include_movement = 0;        % 1 = automatically adds movement parameters as regressors
+cfg.jp_spm8_model.include_badscans = 0;        % 1 = add columns for bad scans (see jp_spm8_getbadscans)
+cfg.jp_spm8_model.badscansfilename = 'jp_badscans.txt'; % name of file containing bad scan numbers
+
 cfg.jp_spm8_model.volterra = 1;
 cfg.jp_spm8_model.fixemptyconditions = 1;      % if condition doesn't exist, add onset corresponding to last scan to keep # columns consistent
 

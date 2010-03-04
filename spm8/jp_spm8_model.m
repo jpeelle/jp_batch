@@ -282,7 +282,7 @@ for s=1:length(sessionnum)
   S.subjects(subnum).sub_conditions = sub_conditions;
     
   % Optionally, automatically get rp_* files for movement parameters
-  if cfg.include_movement==1
+  if cfg.include_movement > 0
     jp_log(modellog, 'Adding movement parameters...');
     
     rpfile = spm_select('fplist', fullfile(subjdir, thissub, thissession),'^rp_');
@@ -298,6 +298,19 @@ for s=1:length(sessionnum)
 
       jp_log(modellog, 'done.\n');
   end % end including movement for this session
+  
+  
+  if cfg.include_badscans > 0
+    jp_log(modellog, 'Adding columns for bad scans...');
+    
+    badscans = dlmread(fullfile(subjdir, thissub, thissession, cfg.badscansfilename));
+    
+    for bs=1:length(badscans)
+      SPM.Sess(s).C.C = [SPM.Sess(s).C.C badscans(bs)];
+      SPM.Sess(s).C.name = cat(2,SPM.Sess(s).C.name, sprintf('badscan %i', bs));
+    end    
+    jp_log(modellog, 'done.\n');
+  end
     
 end % going through all sessions to be modeled right now
 

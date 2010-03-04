@@ -84,7 +84,7 @@ for s=1:length(sessionnum)
   ss = sessionnum(s);
   
   sessdir = fullfile(subdir, fundirs{ss});
-  fname = fullfile(sessdir, 'jp_badscans.txt');
+  fname = fullfile(sessdir, cfg.fname);
   bad = [];
   
   % get rp
