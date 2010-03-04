@@ -13,8 +13,6 @@ function S = jp_spm8_scalemeanfunctional(S, subnum)
 % MRC Cognition and Brain Sciences Unit
 
 
-
-
 % get any values not specified (if JP_INIT not run previously)
 S.cfg = jp_setcfg(S.cfg, mfilename);
 cfg = S.cfg.(mfilename);

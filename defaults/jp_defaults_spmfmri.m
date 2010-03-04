@@ -29,6 +29,14 @@ cfg.options.dartelname = 'dartel';
 % SPM 8
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
+% SPM8 movefirstscans
+%-----------------------------------------------------------------------
+
+cfg.jp_spm8_movefirstscans.numscans = 4; % move this many
+cfg.jp_spm8_movefirstscans.prefix = '';  % anything before funprefix
+
+
 % SPM8 tsdiffana
 %-----------------------------------------------------------------------
 
@@ -52,6 +60,21 @@ cfg.jp_spm8_realign.write.wrap       = [0 0 0];
 cfg.jp_spm8_realign.prefix = '';
 cfg.jp_spm8_realign.which_images     = 0;    % 0 = mean only, 2 = all
 
+
+
+% SPM8 first level mask
+%-----------------------------------------------------------------------
+
+cfg.jp_spm8_firstlevelmask.maskname = 'firstlevelmask.nii';  % mask saved in subject's directory with this name
+cfg.jp_spm8_firstlevelmask.prefix = 'r';                     % assuming images have to be resliced to be in alignment
+
+
+
+% SPM8 brain mask
+%-----------------------------------------------------------------------
+
+cfg.jp_spm8_brainmasksubject.thresh = .2; % (GM+WM)>thresh get included in mask
+cfg.jp_spm8_brainmasksubject.maskname = 'brainmask.nii';
 
 
 
@@ -151,7 +174,7 @@ cfg.jp_spm8_segment8.biasreg = .0001;
 cfg.jp_spm8_segment8.tpm = fullfile(spm('dir'), 'toolbox', 'Seg', 'TPM.nii');
 cfg.jp_spm8_segment8.lkp = [1,1,2,2,3,3,4,4,4,5,5,5,5,6,6];
 cfg.jp_spm8_segment8.reg = .001;
-cfg.jp_spm8_segment8.samp = 2;                   % smaller should be more accurate (but take longer)
+cfg.jp_spm8_segment8.samp = 1;                   % smaller should be more accurate (but take longer)
 cfg.jp_spm8_segment8.writebiascorrected = [1 1]; % save bias corrected and field
 cfg.jp_spm8_segment8.ngaus = [2 2 2 3 4 2];
 cfg.jp_spm8_segment8.native = [1 1];             % native and DARTEL imported
@@ -247,7 +270,7 @@ cfg.jp_spm8_estimate.savemask = 1;                                           % p
 % SPM8 DARTEL Create Template
 %-----------------------------------------------------------------------
 
-cfg.jp_spm8_dartelcreatetemplate.numtissues = 6;  % Generally 2 for 'standard'segmentation, 6 for segment8
+cfg.jp_spm8_dartelcreatetemplate.numtissues = 2;  % Generally 2
 cfg.jp_spm8_dartelcreatetemplate.rform = 0;    
 
   
@@ -267,8 +290,8 @@ cfg.jp_spm8_dartelnormmnistruct.preserve = 1;
 cfg.jp_spm8_dartelnormmnifun.vox = 2;
 cfg.jp_spm8_dartelnormmnifun.fwhm = 10;           % smoothing (automatically done)
 cfg.jp_spm8_dartelnormmnifun.preserve = 0;
-cfg.jp_spm8_dartelnormmnifun.prefix = '';         % might be u if
-                                                  % you've unwarped
+cfg.jp_spm8_dartelnormmnifun.prefix = '';         % might be u if you've unwarped
+cfg.jp_spm8_dartelnormmnifun.otherimages = '';    % if specified, these files (assumed to be in subject's directory) are normalized as well
 
 
 
@@ -281,6 +304,9 @@ cfg.jp_spm8_contrasts.which_contrasts = [];    % [] runs all
 cfg.jp_spm8_contrasts.confiledirname = '@con_files';       % the @ puts it at the top of SPM search path
 cfg.jp_spm8_contrasts.tandffiledirname = '@tandf_files';
 cfg.jp_spm8_contrasts.separatesessions = 0;
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SPM 5 (same as SPM8 unless changes required)

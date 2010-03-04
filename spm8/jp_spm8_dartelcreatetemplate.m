@@ -5,12 +5,16 @@ function S = jp_spm8_dartelcreatetemplate(S);
 % registered images (rc*) and creates a template for all subjects
 % in an S structure (see JP_INIT).
 %
+% When adding this, make sure to specify it is on the study level, i.e.:
+%
+%  S = jp_addanalysis(S, 'jp_spm8_dartelcreatetemplate', 'study')
+%
 % The default values are geared towards assuming you've segmented
 % images using JP_SPM8_SEGMENT8, and prepped for DARTEL using
 % JP_SPM8_COPYSEG8TODARTEL. Flow fields will be saved in the dartel
 % directory within the first structural directory for each
 % subject.  The name of this directory is set via
-% S.cfg.options.dartel.name.
+% S.cfg.options.dartelname.
 %
 % See JP_DEFAULTS for a full list of options.
 

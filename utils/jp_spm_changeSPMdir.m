@@ -1,19 +1,20 @@
-function jp_spm_changedirSPM(files)
-%JP_SPM_MOVESPM Change directory for SPM.mat files.
+function jp_spm_changeSPMdir(files)
+%JP_SPM_CHANGESPMDIR Change directory for SPM.mat files.
 %
-% JP_SPM_MOVESPM(SPM.mat_files) will change all of the paths in each
+% JP_SPM_CHANGESPMDIR(SPM.mat_files) will change all of the paths in each
 % SPM.mat file to the SPM.mat file's current location.
 %
-% JP_SPM_MOVESPM() will prompt you to select some SPM.mat files.
+% JP_SPM_CHANGESPMDIR() will prompt you to select some SPM.mat files.
 %
 % This is to get around the fact that if you move a directory
 % containing an SPM.mat file, viewing results gets complicated because
 % the paths to the directory and images are stored in the SPM.mat file.
 %
 % The original SPM.mat file is saved as SPM.mat~.
+%
+% This should be compatible with SPM5 onwards.
 
 % Jonathan Peelle
-% MRC CBU
 % November 2008
 
 

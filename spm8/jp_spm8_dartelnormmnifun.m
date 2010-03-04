@@ -23,6 +23,14 @@ function S = jp_spm8_dartelnormmnifun(S)
 S.cfg = jp_setcfg(S.cfg, mfilename);
 cfg = S.cfg.(mfilename);
 
+% Make sure other images are in a cell
+if ~isempty(cfg.otherimages)
+  if ~iscell(cfg.otherimages)
+    cfg.otherimages = cellstr(cfg.otherimages);
+  end  
+end
+
+
 jp_log(normlog, sprintf('Using %s.\n', which('spm_dartel_norm_fun')));
 
 % Where are the templates?
@@ -46,8 +54,24 @@ for s=1:length(S.subjects)
   
   % images
   prefix = [cfg.prefix S.subjects(s).funprefix];
-  imgs = jp_getfunimages(prefix, S.subjdir, S.subjects(s).name, jp_getsessions(S,s));
+  imgs = jp_getfunimages(prefix, S.subjdir, subname, jp_getsessions(S,s));
 
+  if ~isempty(cfg.otherimages)
+    for i=1:length(cfg.otherimages)
+      jp_log(normlog, sprintf('Looking for %s...', cfg.otherimages{i});
+      
+      tmpimg = spm_select('fplist', fullfile(S.subjdir, subname, sprintf('^%s', cfg.otherimages{i})));
+      
+      if isempty(tmpimg) || strcmp(tmpimg, '/')
+        jp_log(errorlog, sprintf('%s not found.', cfg.otherimages{i}));
+      end
+      
+      jp_log(normlog, 'found it.\n');
+      imgs = strvcat(imgs, tmpimg);
+    end
+  end
+    
+  
   if isempty(imgs) || strcmp(imgs, '/')
     jp_log(errorlog, sprintf('No images found for subject %s.', S.subjects(s).name), 2);
   end
@@ -72,3 +96,4 @@ jp_log(normlog, 'done.\n');
 jp_log(normlog, 'Registering to MNI, then normalizing each subject:\n\n');
 spm_dartel_norm_fun(job);
 
+jp_log(normlog, 'All done.\n');
