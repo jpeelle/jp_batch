@@ -255,13 +255,13 @@ if ~exist(cfile)
   fprintf(fid, '%% to have a name and a contrast vector. If the STAT is not specified\n');
   fprintf(fid, '%% it is assumed to be ''T'' (the other option is ''F''). The contrast\n');
   fprintf(fid, '%% vector should have as many numbers as there are columns in your design\n');
-  fprintf(fid, '%% matrix. See JP_SPM?_CONTRASTS for more information.\n %% \n');
+  fprintf(fid, '%% matrix. See JP_SPM?_CONTRASTS for more information.\n%% \n');
   fprintf(fid, '%% The nbs argument will provide the number of bad scans (nbs) for each\n');
   fprintf(fid, '%% session, which can be used in setting up your contrasts to facilitate\n');
   fprintf(fid, '%% having different number of columns in design matrices across subjects.\n\n\n\n');
   fprintf(fid, '%% ------- edit these to match your design -------\n\n');
   fprintf(fid, 'c(1).name = ''Name of my simple contras for one session''\n');
-  fprintf(fid, 'c(1).con = [1 0 0 0]; % if you had 4 columns in your design matrix (e.g. 3 conditions + overall mean)\n\n');  
+  fprintf(fid, 'c(1).con = [1 0 0 0]; %% if you had 4 columns in your design matrix (e.g. 3 conditions + overall mean)\n\n');  
   fprintf(fid, 'c(2).name = ''Name of another contrast including bad scans over 2 sessions''\n');
   fprintf(fid, 'c(2).con = [1 0 0 nbs(1) 1 0 0 nbs(2) 0]; %% 3 conditions + badscans per session, + 2 columns at the end for session effects\n\n');  
   fclose(fid);

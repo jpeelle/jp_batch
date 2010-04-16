@@ -22,11 +22,11 @@ subdir = fullfile(S.subjdir, subname);
 
 
 % log files
-[alllog, errorlog, modellog] = jp_createlogs(subname, S.subjdir, mfilename);
-
+[alllog, errorlog, estimatelog] = jp_createlogs(subname, S.subjdir, mfilename);
 
 % get any values not specified (if JP_INIT not run previously)
 S.cfg = jp_setcfg(S.cfg, mfilename);
+cfg = S.cfg.(mfilename);
 
 
 if isempty(S.cfg.jp_spm8_model.statsdir)
@@ -91,7 +91,8 @@ jp_log(estimatelog,'Done estimating parameters.\n');
 
 
 if cfg.savemask > 0
-  spm_orthviews('image', fullfile(savepath, 'mask'));
+  spm_figure('clear');
+  spm_orthviews('image', fullfile(savepath, 'mask.img'));
   job.fname = fullfile(savepath, 'mask.png');
   job.opts.opt = {'-dpng', '-r200'};
   spm_print(job);

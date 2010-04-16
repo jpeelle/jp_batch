@@ -7,6 +7,10 @@ function S = jp_spm8_dartelnormmnistruct(S)
 % Note that this function also does Gaussian smoothing (default 8
 % mm FWHM).
 %
+% This must be run on the study level; i.e.:
+%
+%  S = jp_addanalysis(S, 'jp_spm8_dartelnormmnistruct', 'study');
+%
 % See JP_DEFAULTS_SPMFMRI for a full list of defaults.
 
 % Jonathan Peelle
@@ -47,6 +51,18 @@ for s=1:length(S.subjects)
   
   for k=1:2
     imgs=strvcat(imgs, spm_select('fplist', darteldir, sprintf('^rc%d.*nii',k)));
+  end
+  
+  % include the original structural
+  if ~isempty(cfg.otherimages)
+    if ischar(cfg.otherimages); cfg.otherimages = cellstr(cfg.otherimages); end
+    
+    jp_log(normlog, sprintf('Adding %i other images...', length(cfg.otherimages)));
+    for k=1:length(cfg.otherimages)
+      [nm, pth, ext] = fileparts(cfg.otherimages{k});
+      imgs = strvcat(imgs, spm_select('fplist', fullfile(S.subjdir, S.subjects(s).name, pth), sprintf('%s%s', pth, ext)));
+    end
+    jp_log(normlog, 'done.\n');
   end
   
   job.data.subj(s).images = cellstr(imgs);

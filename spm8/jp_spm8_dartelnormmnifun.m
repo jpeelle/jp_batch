@@ -7,6 +7,10 @@ function S = jp_spm8_dartelnormmnifun(S)
 % Note that this function also does Gaussian smoothing (default 10
 % mm FWHM).
 %
+% This must be run on the study level; i.e.:
+%
+%  S = jp_addanalysis(S, 'jp_spm8_dartelnormmnifun', 'study');
+%
 % The default voxel size is 2 x 2 x 2.
 %
 % See JP_DEFAULTS_SPMFMRI for a full list of defaults.
@@ -29,6 +33,8 @@ if ~isempty(cfg.otherimages)
     cfg.otherimages = cellstr(cfg.otherimages);
   end  
 end
+
+subjdir = S.subjdir;
 
 
 jp_log(normlog, sprintf('Using %s.\n', which('spm_dartel_norm_fun')));
@@ -54,11 +60,11 @@ for s=1:length(S.subjects)
   
   % images
   prefix = [cfg.prefix S.subjects(s).funprefix];
-  imgs = jp_getfunimages(prefix, S.subjdir, subname, jp_getsessions(S,s));
+  imgs = jp_getfunimages(prefix, S.subjdir, S.subjects(s).name, jp_getsessions(S,s));
 
   if ~isempty(cfg.otherimages)
     for i=1:length(cfg.otherimages)
-      jp_log(normlog, sprintf('Looking for %s...', cfg.otherimages{i});
+      jp_log(normlog, sprintf('Looking for %s...', cfg.otherimages{i}));
       
       tmpimg = spm_select('fplist', fullfile(S.subjdir, subname, sprintf('^%s', cfg.otherimages{i})));
       

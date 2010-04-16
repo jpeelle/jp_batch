@@ -306,7 +306,9 @@ for s=1:length(sessionnum)
     badscans = dlmread(fullfile(subjdir, thissub, thissession, cfg.badscansfilename));
     
     for bs=1:length(badscans)
-      SPM.Sess(s).C.C = [SPM.Sess(s).C.C badscans(bs)];
+      bsregress = zeros(SPM.nscan(s),1);
+      bsregress(badscans(bs)) = 1;
+      SPM.Sess(s).C.C = [SPM.Sess(s).C.C bsregress];
       SPM.Sess(s).C.name = cat(2,SPM.Sess(s).C.name, sprintf('badscan %i', bs));
     end    
     jp_log(modellog, 'done.\n');

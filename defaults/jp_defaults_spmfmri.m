@@ -284,7 +284,7 @@ cfg.jp_spm8_dartelcreatetemplate.rform = 0;
 cfg.jp_spm8_dartelnormmnistruct.vox = 1.5;
 cfg.jp_spm8_dartelnormmnistruct.fwhm = 8;         % smoothing (automatically done)
 cfg.jp_spm8_dartelnormmnistruct.preserve = 1;
-
+cfg.jp_spm8_dartelnormmnifun.otherimages = '';    % if specified, these files (assumed to be in subject's directory) are normalized as well
 
 
 % SPM8 DARTEL Write MNI-normalized (functional)
