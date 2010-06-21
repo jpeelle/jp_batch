@@ -1,12 +1,12 @@
-function S = jp_spm8_model(S, subnum)
-%JP_SPM8_MODEL Run first-level model with SPM5.
+function S = jp_spm8_modeldesign(S, subnum)
+%JP_SPM8_MODELDESIGN Design first-level model with SPM8.
 %
-% S = JP_SPM8_MODEL(S, SUBNUM) runs a first level analysis on the
+% S = JP_SPM8_MODELDESIGN(S, SUBNUM) constructs a first level model on the
 % specified subject number SUBNUM from an S structure (see
 % JP_INIT).
 %
 % The analysis options are set in S.cfg.jp_spm8_model and include:
-%  conditions        names of your conditions
+%  conditions        names of your conditions (see below)
 %  prefix            prefix of images that are selected (maybe 'sw')
 %  separatesessions  analyze each session in a different model (see below)
 %
@@ -23,6 +23,19 @@ function S = jp_spm8_model(S, subnum)
 %  T0                     which regressors are sampled at, used for SPM.xBF.T0 (default 1)
 %
 %
+% Each condition you analyze has a name, and (optionally) a list of
+% parametric modulators.  E.g., for 2 conditions, where the second has
+% 2 parametric modulators:
+%
+%  jp_spm8_modeldesign.conditions(1).name = 'noise';
+%  jp_spm8_modeldesign.conditions(2).name = 'speech';
+%  jp_spm8_modeldesign.conditions(2).p(1).name = 'modulator1';
+%  jp_spm8_modeldesign.conditions(2).p(2).name = 'modulator2';
+%
+% The order of the parametric modulator can also be set (if not set, assumed 1):
+%
+%  jp_spm8_modeldesign.conditions(2).p(2).order = 2;
+%
 % See JP_DEFAULTS_SPMFMRI for a full list of defaults.
 %
 % Each subject needs an ev ("explanatory variable") file for each
@@ -33,9 +46,14 @@ function S = jp_spm8_model(S, subnum)
 % onset time (s), second column is event duration (s), and the third
 % column is the weighting of the event.  This corresponds with the
 % FSL custom file format. The EV files are in a subdirectory of the
-% main subject data directory called 'ev_files' and named:
+% each subject's directory called 'ev_files' and named:
 %
 % SUBJECT.ev.CONDITION.SESSION
+%
+% 
+% Parametric modulators are appended to the end of that name:
+%
+% SUBJECT.ev.CONDITION.SESSION-MODULATORNAME
 %
 %
 % Sometimes you might want to analyze your sessions separately, for
@@ -68,8 +86,9 @@ subdir = fullfile(S.subjdir, subname);
 
 % get any values not specified (if JP_INIT not run previously)
 S.cfg = jp_setcfg(S.cfg, mfilename);
+cfg = S.cfg.(mfilename);
 
-if isempty(S.cfg.jp_spm8_model.statsdir)
+if isempty(cfg.statsdir)
   jp_log(modellog, 'Must specify stats directory!', 2);
 end
 
@@ -78,21 +97,21 @@ end
 % options T and T0 can be set differently for each session; if just
 % specified once, copy that for all sessions
 
-if length(S.cfg.jp_spm8_model.T)==1
-  S.cfg.jp_spm8_model.T = ones(1,length(S.subjects(subnum).sessions)) * S.cfg.jp_spm8_model.T;
+if length(cfg.T)==1
+  cfg.T = ones(1,length(S.subjects(subnum).sessions)) * cfg.T;
 end
 
-if length(S.cfg.jp_spm8_model.T0)==1
-  S.cfg.jp_spm8_model.T0 = ones(1,length(S.subjects(subnum).sessions)) * S.cfg.jp_spm8_model.T0;
+if length(cfg.T0)==1
+  cfg.T0 = ones(1,length(S.subjects(subnum).sessions)) * cfg.T0;
 end
 
 
 % Make sure explicit masks exist (if specified)
-if ~isempty(S.cfg.jp_spm8_model.xM.VM)
-  if ischar(S.cfg.jp_spm8_model.xM.VM)
-    S.cfg.jp_spm8_model.xM.VM = cellstr(S.cfg.jp_spm8_model.xM.VM);
+if ~isempty(cfg.xM.VM)
+  if ischar(cfg.xM.VM)
+    cfg.xM.VM = cellstr(cfg.xM.VM);
   end
-  VM = S.cfg.jp_spm8_model.xM.VM;
+  VM = cfg.xM.VM;
   for v=1:length(VM)
     if ~exist(VM{v})
       error('Mask %s not found.', VM{v});
@@ -110,13 +129,13 @@ jp_log(modellog, 'Running JP_SPM8_MODEL...\n');
 
 
 % Make sure stats directory exists.
-if ~exist(S.cfg.jp_spm8_model.statsdir)
-  mkdir(S.cfg.jp_spm8_model.statsdir);
+if ~exist(cfg.statsdir)
+  mkdir(cfg.statsdir);
 end
 
 % Run the model for all sessions (normal) or for one session at a
 % time (rare)
-if S.cfg.jp_spm8_model.separatesessions==0
+if cfg.separatesessions==0
   runmodel(S, subnum, 1:length(S.subjects(subnum).sessions));  
 else
   for s=1:length(S.subjects(subnum).sessions)
@@ -145,7 +164,7 @@ SPM = struct();
 [alllog, errorlog, modellog] = jp_createlogs(S.subjects(subnum).name, S.subjdir, mfilename);
 
 
-cfg = S.cfg.jp_spm8_model;
+cfg = S.cfg.jp_spm8_modeldesign;
 
 subjdir = S.subjdir;
 thissub = S.subjects(subnum).name;
@@ -206,7 +225,6 @@ for s=1:length(sessionnum)
   ss = sessionnum(s);
   
   thissession = S.subjects(subnum).sessions(ss).name;
-
   
   % this can all be session specific
   SPM.xY.RT = S.subjects(subnum).sessions(ss).tr; 
@@ -242,7 +260,7 @@ for s=1:length(sessionnum)
   sub_conditions = {};  % the ones we actually use
   for c=1:length(cfg.conditions)
     
-    thiscond = cfg.conditions{c};
+    thiscond = cfg.conditions(c).name;
     
     evfile = fullfile(evpath, sprintf('%s.ev.%s.%s', thissub, thiscond, thissession));
 
@@ -261,12 +279,39 @@ for s=1:length(sessionnum)
       end
 
       SPM.Sess(s).U(sc).dt = SPM.xBF.dt;
-      SPM.Sess(s).U(sc).name = cfg.conditions(c);
+      SPM.Sess(s).U(sc).name = cellstr(cfg.conditions(c).name);
       SPM.Sess(s).U(sc).ons = onsets;
       SPM.Sess(s).U(sc).dur = durations;
-      SPM.Sess(s).U(sc).P(1).name = 'none';      
       SPM.Sess(s).C.C = [];
       SPM.Sess(s).C.name = {};
+      
+      % parametric modulators?
+      if ~isfield(cfg.conditions, 'p') || isempty(cfg.conditions(1).p)      
+        SPM.Sess(s).U(sc).P(1).name = 'none';
+      else
+        for p=1:length(cfg.conditions(c).p)
+          pname = cfg.conditions(c).p(p).name;
+          pfile = [evfile '-' pname];
+          
+          if exist(pfile)
+            jp_log(modellog, sprintf('Adding %s...', pfile));
+            pval = dlmread(pfile);
+          else
+            jp_log(errorlog, sprintf('Parametric modulator specified but %s not found.\n'));
+          end
+          
+          SPM.Sess(s).U(sc).P(p).name = cfg.conditions(c).p(p).name;
+          SPM.Sess(s).U(sc).P(p).P = pval;
+          
+          if ~isfield(cfg.conditions(c).p(p), 'order')
+            SPM.Sess(s).U(sc).P(p).h = 1;
+          else
+            SPM.Sess(s).U(sc).P(p).h = cfg.conditions(c).p(p).order;
+          end
+          
+          jp_log(modellog, 'done.\n');
+        end % going through modulators
+      end % checking for parametric modulators
       
       sub_conditions{sc} = thiscond;
       
@@ -321,7 +366,7 @@ SPM.xY.P = P;
 
 % make sure we actually found some images
 if size(P,1)==1 && strcmp('/', P(1,:))
-  jp_log(modellog, 'Did not find any images. Check to make sure your cfg.jp_spm8_model.prefix is correct.', 2);
+  jp_log(modellog, 'Did not find any images. Check to make sure your cfg.jp_spm8_modeldesign.prefix is correct.', 2);
 else
   jp_log(modellog, sprintf('%i total files found across all sessions.\n', size(P,1)));
 end
@@ -344,6 +389,11 @@ if ~isempty(cfg.xM.TH)
 end
 
 if ~isempty(cfg.xM.VM)
+  
+  if ischar(cfg.xM.VM)
+    cfg.xM.VM = cellstr(cfg.xM.VM);
+  end
+  
   SPM.xM.VM = spm_vol(cfg.xM.VM{1});
   
   for v=2:length(cfg.xM.VM)

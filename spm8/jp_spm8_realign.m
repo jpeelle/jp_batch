@@ -1,7 +1,7 @@
 function S = jp_spm8_realign(S, subnum)
 %JP_SPM8_REALIGN Realign images using SPM8.
 %
-% S = JP_SPM8_REALIGN(S ,SUBNUM)
+% S = JP_SPM8_REALIGN(S, SUBNUM)
 %
 % Options available in S.cfg.jp_spm8_realign include:
 %   which_images  for reslicing (default 0 = meanonly)

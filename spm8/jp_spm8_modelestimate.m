@@ -1,9 +1,9 @@
-function S = jp_spm8_estimate(S, subnum)
-%JP_SPM8_MODEL Run first-level model with SPM5.
+function S = jp_spm8_modelestimate(S, subnum)
+%JP_SPM8_MODELESTIMATE Run first-level model with SPM5.
 %
-% S = JP_SPM8_MODEL(S, SUBNUM) runs a first level analysis on the
+% S = JP_SPM8_MODELESTIMATE(S, SUBNUM) runs a first level analysis on the
 % specified subject number SUBNUM from an S structure (see
-% JP_INIT).
+% JP_INIT). The model is set up using JP_SPM8_MODELDESIGN.
 %
 % See JP_DEFAULTS_SPMFMRI for a full list of defaults.
 %
@@ -29,7 +29,7 @@ S.cfg = jp_setcfg(S.cfg, mfilename);
 cfg = S.cfg.(mfilename);
 
 
-if isempty(S.cfg.jp_spm8_model.statsdir)
+if isempty(cfg.statsdir)
   jp_log(estimatelog, 'Must specify stats directory!', 2);
 end
 
@@ -37,12 +37,12 @@ end
 originalDir = pwd;
 
 
-jp_log(estimatelog, 'Running JP_SPM8_ESTIMATE...\n');
+jp_log(estimatelog, 'Running JP_SPM8_MODELESTIMATE...\n');
 
 
 % Run the model for all sessions (normal) or for one session at a
 % time (rare)
-if S.cfg.jp_spm8_estimate.separatesessions==0
+if cfg.separatesessions==0
   estimatemodel(S, subnum, 1:length(S.subjects(subnum).sessions));  
 else
   for s=1:length(S.subjects(subnum).sessions)
@@ -66,7 +66,7 @@ function estimatemodel(S, subnum, sessionnum)
 % log files
 [alllog, errorlog, estimatelog] = jp_createlogs(S.subjects(subnum).name, S.subjdir, mfilename);
 
-cfg = S.cfg.jp_spm8_estimate;
+cfg = S.cfg.jp_spm8_modelestimate;
 
 subjdir = S.subjdir;
 thissub = S.subjects(subnum).name;
