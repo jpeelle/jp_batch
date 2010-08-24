@@ -18,6 +18,7 @@ function S = jp_spm8_modeldesign(S, subnum)
 %  highpass_cutoff        default 90
 %  autocorrelations       default 'AR(1)' (other option is 'none')
 %  include_movement       default 0 (1 to include rp_*.txt as covariate)
+%  include_badscans       default 0 (1 to include bad scans as additional columns)
 %  volterra               default 1
 %  T                      number of time bins, used for SPM.xBF.T (default 16)
 %  T0                     which regressors are sampled at, used for SPM.xBF.T0 (default 1)
@@ -119,6 +120,8 @@ if ~isempty(cfg.xM.VM)
   end
 end
 
+% put info back in S
+S.cfg.(mfilename) = cfg;
 
 
 % Keep track of original working directory so we can get back here.

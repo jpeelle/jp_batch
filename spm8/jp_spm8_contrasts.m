@@ -116,7 +116,7 @@ for s=1:length(sessions)
   if exist(bsname);
     badscans = dlmread(bsname);
     nbs(s) = length(badscans);
-    jp_log(contrastslog, sprintf('Found %i bad scans for session %s.', length(badscans), sessions{s}));
+    jp_log(contrastslog, sprintf('Found %i bad scans for session %s.\n', length(badscans), sessions{s}));
   end
 end
 
