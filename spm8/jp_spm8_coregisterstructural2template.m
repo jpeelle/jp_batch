@@ -99,7 +99,7 @@ if cfg.move_functional > 0
   % Get mean functional image
   jp_log(coregisterlog, 'Looking for mean functional image...\n')
 
-  meanfun = spm_select('fplist', fullfile(subdir, fundirs{1}), sprintf('^mean%s%s.*\\.nii', cfg.functional_prefix, funprefix));
+  meanfun = spm_select('fplist', fullfile(subdir, fundirs{1}), sprintf('^mean%s%s.*\\.%s', cfg.functional_prefix, funprefix, S.cfg.options.mriext));
 
   if isempty(meanfun) || strcmp(meanfun, '/') || size(meanfun,1) ~= 1
     jp_log(errorlog, sprintf('Error finding mean functional image (found %s)', meanfun), 2);

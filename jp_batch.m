@@ -106,8 +106,7 @@ function jp_batch(task)
 % JP_BATCH('addpaths')
 % --------------------------------------------------------------
 % 
-% Adds subdirectories (but not 'external') (if you don't do it
-% yourself).
+% Adds subdirectories (if you don't do it yourself).
 
 % Jonathan Peelle
 % MRC Cognition and Brain Sciences Unit
@@ -121,7 +120,8 @@ elseif strcmp(lower(task), 'addpaths')
   basedir = fileparts(which('jp_init'));
   files = dir(basedir);
   for f=1:length(files)
-    if files(f).isdir==1 && isempty(findstr('.',files(f).name)) && ~strcmp(files(f).name, 'external')
+    %if files(f).isdir==1 && isempty(findstr('.',files(f).name)) && ~strcmp(files(f).name, 'external')
+    if files(f).isdir==1 && isempty(findstr('.',files(f).name))
       addpath(fullfile(basedir, files(f).name));
     end
   end

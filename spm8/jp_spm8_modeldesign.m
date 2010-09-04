@@ -222,7 +222,7 @@ SPM.nscan = [];
 SPM.xY.P = [];
 P = [];
 
-imgfilter = sprintf('^%s%s.*\\.nii$', cfg.prefix, S.subjects(subnum).funprefix);
+imgfilter = sprintf('^%s%s.*\\.%s$', cfg.prefix, S.subjects(subnum).funprefix, S.cfg.options.mriext);
 
 for s=1:length(sessionnum)
   ss = sessionnum(s);

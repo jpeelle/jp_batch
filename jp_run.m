@@ -200,7 +200,8 @@ else
             end
             
             % if it worked (i.e. no error by here)  make a done file
-            system(sprintf('touch %s', donefile));
+            % system(sprintf('touch %s', donefile));
+            dlmwrite(donefile, round(now));
 
           catch
             % If there was a problem, make note of the error, and
@@ -274,11 +275,13 @@ else
               end
               
               % if it worked (i.e. no error by here)  make a done file
-              system(sprintf('touch %s', donefile));
+              %system(sprintf('touch %s', donefile));
+              dlmwrite(donefile, round(now));
               
               % make an aa-compatible subject-level flag
               if S.cfg.options.aadoneflags
-                system(sprintf('touch %s', fullfile(S.subjdir, subjname, sprintf('done_aamod_%s', nm))));
+                %system(sprintf('touch %s', fullfile(S.subjdir, subjname, sprintf('done_aamod_%s', nm))));                
+                dlmwrite(fullfile(S.subjdir, subjname, sprintf('done_aamod_%s', nm)), round(now));
               end
               
               jp_log(thislog, sprintf('Finished %s for subject %s.\n\n', upper(S.analysis(aa).name), subjname));

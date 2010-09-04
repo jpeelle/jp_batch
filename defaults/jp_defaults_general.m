@@ -15,7 +15,12 @@ cfg.options.checkforerrors = 1;         % don't run a stage if errors happened b
 cfg.options.checkfordone   = 1;         % don't run a stage if previously completed
 cfg.options.startspm       = 0;         % avoid GUI errors by starting SPM at outset (SPM8)
 cfg.options.analysisname   = '';        % appended to 'done' flags to allow multiple analyses
-cfg.options.chmodgrw       = 1;         % at the end try to make everything group read/writeable
+cfg.options.chmodgrw       = 0;         % at the end try to make everything group read/writeable (linux only)
+
+
+% filetype
+cfg.options.mriext = 'nii';             % 'nii' or 'img'
+
 
 % (these ones are less used)
 cfg.options.modality       = {'fMRI'};  % possibly used in the future
@@ -28,7 +33,7 @@ cfg.options.defsfunction = 'jp_defaults';
 
 % only if you use AA (don't do it)
 cfg.options.aapath         = '/imaging/jp01/software/aa/devel';
-cfg.options.aacmd          = 'aa_ver3_devel';
+cfg.options.aacmd          = 'aa_ver301';
 cfg.options.aadoneflags    = 0;         % make done flags aa will respect
 
 

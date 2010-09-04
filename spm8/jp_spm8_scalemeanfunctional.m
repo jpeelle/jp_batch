@@ -1,13 +1,8 @@
 function S = jp_spm8_scalemeanfunctional(S, subnum)
-%JP_SPM8_MASKMEANFUNCTIONAL Make binary mask based on the mean.
+%JP_SPM8_SCALEMEANFUNCTIONAL Make binary mask based on the mean.
 %
-% S = JP_SPM8_MASKMEANFUNCTIONAL(S, SUBNUM) uses the mean functional image created during realignment to create a binary mask based on proportional thresholding (of the mean signal over all voxels).  This is roughly comparable to the proportional masking implemented by spm_spm.
-%
-% This mask might be useful when normalizing using DARTEL, for example, in masking out non-brain voxels that get interpolated during the normalization process.
-%
-% The proportion used for masking is set in:
-%
-% S.cfg.jp_spm8_maskmeanfunctional.thresh (default .7).
+
+error('Not ready for use yet')
 
 % Jonathan Peelle
 % MRC Cognition and Brain Sciences Unit
@@ -62,7 +57,7 @@ end
 
 jp_log(masklog, 'Looking for mean functional image...\n')
 
-meanfun = spm_select('fplist', fullfile(subdir, fundirs{1}), sprintf('^mean%s%s.*\\.nii', cfg.prefix, funprefix));
+meanfun = spm_select('fplist', fullfile(subdir, fundirs{1}), sprintf('^mean%s%s.*\\.%s', cfg.prefix, funprefix, S.cfg.options.mriext));
 
 if isempty(meanfun) || strcmp(meanfun, '/') || size(meanfun,1) ~= 1
   jp_log(errorlog, sprintf('Error finding mean functional image (found %s)', meanfun), 2);

@@ -24,7 +24,7 @@ end
 images = [];
 
 for i=1:length(structdirs)
-  images = strvcat(images, spm_select('fplist', fullfile(subjdir, subname, structdirs{i}), sprintf('^%s.*\\.nii$',prefix)));
+  images = strvcat(images, spm_select('fplist', fullfile(subjdir, subname, structdirs{i}), sprintf('^%s.*\\.%s$',prefix, S.cfg.options.mriext)));
 end
 
 
