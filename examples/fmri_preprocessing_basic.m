@@ -59,6 +59,7 @@ S = jp_addanalysis(S, 'jp_spm8_movefirstscans');
 S = jp_addanalysis(S, 'jp_spm8_tsdiffana');
 S = jp_addanalysis(S, 'jp_spm8_realign');
 S = jp_addanalysis(S, 'jp_spm8_coregister');
+S = jp_addanalysis(S, 'jp_spm8_coregisterstructural2template');
 S = jp_addanalysis(S, 'jp_spm8_segment');
 S = jp_addanalysis(S, 'jp_spm8_normalize');
 S = jp_addanalysis(S, 'jp_spm8_normalizestructural');
@@ -67,11 +68,17 @@ S = jp_addanalysis(S, 'jp_makereport');      % makes the jp_report.html page
 
 
 
+% If you want to identify scans that exceed some threshold for movement
+% or intensity difference, use jp_spm8_viewbadscans to get a sense of 
+% parameters, and then:
+% S = jp_addanalysis(S, 'jp_spm8_getbadscans') % any time after tsdiffana
+
+
 %% This is required to be run to set defaults for all the analyses
 S = jp_init(S);
 
 
-%% Add any other options for this analysis
+%% Add any other options for this analysis (or override defaults...)
 S.cfg.jp_spm8_movefirstscans.numscans = 4;
 S.cfg.jp_spm8_normalize.prefix = '';
 S.cfg.jp_spm8_smooth.prefix = 'w';    % this tells smooth to only select the normalized (w*) images
@@ -81,89 +88,6 @@ S.cfg.jp_spm8_smooth.fwhm = 10;       % this is how much we are smoothing for
 %% Now, run the analysis!
 S = jp_run(S);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-%% Set up the stages for analysis.
-%  Stage names correspond to function names
-S.analysis(1).name = 'jp_spm8_realign';
-S.analysis(2).name = 'jp_spm8_coregister';
-S.analysis(3).name = 'jp_spm8_segment';
-S.analysis(4).name = 'jp_spm8_normalize';
-S.analysis(5).name = 'jp_spm8_smooth';
-
-
-
-%% Set options
-
-% required - the directory containing subject directories
-S.subjdir = '/imaging/jp01/jp_spm_exampledata/quick_test_data/subj';
-
-% the rest are only necessary where you want defaults changed
-
-% (general options)
-S.cfg.options.checkfordone = 1;  % only run stages that haven't been run before
-S.cfg.options.saveS = 1;         % save S before and after running things
-%S.cfg.options.startspm = 1;      % start SPM before runningi; needed to avoid GUI problems in SPM8 (at least for me)
-
-
-% (now defaults for SPM stages)
-S.cfg.jp_spm8_realign.prefix = '';
-S.cfg.jp_spm8_segment.biascorrectfirst = 1;
-S.cfg.jp_spm8_normalize.prefix = '';
-S.cfg.jp_spm8_smooth.prefix = 'w';
-S.cfg.jp_spm8_smooth.fwhm = 10;  % fwhm is always required for smoothing
-
-
-
-
-%% Initialize S structure
-%  Sometime after setting any options, run JP_INIT, which sets defaults for
-%  all the stages you want to run. Any options you've already
-%  specified are kept (i.e. not overwritten).
-
-S = jp_init(S);
-
-
-% At this point you could save the S structure (save S S), and then add
-% subjects as you run more people some time in the future:
-% load S
-% S = jp_addsubject(S, 'mysubject1');
-% S = jp_addsubject(S, 'mysubject2');
-% save S S % re-save with the new subjects
-% S = jp_run(S);
-
-
-
-%% Add some subjects to process
-S = jp_addsubject(S, 'subject1');
-
-
-
-
-%% Run the analysis
-S = jp_run(S);
 
 
 % (After running, you may want to save S again to keep a record of the

@@ -79,6 +79,6 @@ S = jp_spm8_viewbadscans(S);
 % S.cfg.jp_spm8_getbadscans, as above)
 
 %S = jp_addanalysis(S, 'jp_spm8_getbadscans');  % add this analysis to be run
-% S = jp_init(S);                                % this sets default values
-S = jp_run(S);                                 % run the function for all subjects
+%S = jp_init(S);                                % this sets default values
+%S = jp_run(S);                                 % run the function for all subjects
 

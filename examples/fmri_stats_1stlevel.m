@@ -54,6 +54,12 @@ S.cfg.jp_spm8_modeldesign.statsdir = '/imaging/jp01/experiments/attention_sylvia
 S.cfg.jp_spm8_modeldesign.include_movement = 1;  % include 6 movement parameters in the model
 S.cfg.jp_spm8_modeldesign.prefix = 'sw';         % look for s* files
 
+% other examples of things you could set:
+%S.cfg.jp_spm8_modeldesign.include_movement = 1; % movement parameters
+%S.cfg.jp_spm8_modeldesign.include_badscans = 1; % those identified using jp_spm8_getbadscans
+%S.cfg.jp_spm8_modeldesign.xM.VM = '/imaging/local/spm/spm8/apriori/brainmask.nii'; % explicit mask
+
+
 % Each condition gets added like this; this name must match the name of the
 % text files that contain the event onsets (ev_files).  See
 % JP_SPM8_MODELDESIGN for more on how to name these text files.

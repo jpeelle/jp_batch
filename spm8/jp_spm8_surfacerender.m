@@ -49,9 +49,14 @@ function jp_spm8_surfacerender(img, cmap, cfg)
 %            - mat - affine matrix mapping from XYZ voxels to MNI.
 %            - dim - dimensions of volume from which XYZ is drawn.
 
-if nargin < 1 || isempty(img) || ~exist(img)
+if nargin < 1
+  img = [];
+end
+  
+  
+if isempty(img) || ~exist(img)
   % If not an image, assume 'img' is a filter for the image
-  if ischar(img)
+  if ischar(img) && ~isempty(img)
     img = spm_select(1, 'image', 'Select file with data to render', [], [], img);
   else    
     img = spm_select(1, 'image', 'Select file with data to render');

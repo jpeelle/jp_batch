@@ -4,18 +4,38 @@ function jp_batch(task)
 % The general approach is that all of the information required for
 % running a study (or knowing what was done) is stored in a single
 % Matlab structure, S.  S has a list of all the stages of analysis
-% to be run (in S.analysis) and subjects (S.subjects).
+% to be run (in S.analysis) and subjects (S.subjects). All options are
+% stored in S.cfg.
 %
 % JP_INIT(S) initializes the S structure, getting defaults for
 % the stages that are to be run. JP_RUN(S) will then run through
 % all the stages for each subject. S can be saved and referred to
-% later to see what stages were run. In addition, JP_RUN can keep
+% later to see what stages were run. In addition, text files can keep
 % track of what stages have been run for each subject, so you can
 % simply add subjects to S and re-run the analysis, and not worry
 % about re-doing any previously-completed stages.
 %
-% Instead of using JP_RUN it is also possible to use functions on
-% their own. For example scripts, look in the "examples" folder.
+%
+% --------------------------------------------------------------
+% File/folder structure
+% --------------------------------------------------------------
+%
+% In general these scripts assume a folder which contains subfolders for
+% each subject; and within each subject folder, folders for functional and
+% structural images.  It may make sense to have this all within a top-level
+% study folder, so something like:
+%
+%  my_study/
+%     subjects/
+%         subject1/
+%             functional/
+%             structural/
+%         subject2/
+%             functional/
+%             structural/
+%
+% If multiple sessions (runs) of functional data are acquired, they should
+% each be put in their own folder.
 %
 %
 % --------------------------------------------------------------
@@ -23,8 +43,7 @@ function jp_batch(task)
 % --------------------------------------------------------------
 %
 % Most of the important functions are in subdirectories within the
-% main folder. If you run JP_INIT or JP_RUN these folders are
-% automatically added to your path. Otherwise, you can add them
+% main folder. You can add them
 % using ADDPATH or File > Set Path, or by running
 % JP_BATCH('addpaths').
 %

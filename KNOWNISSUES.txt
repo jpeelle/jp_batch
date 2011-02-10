@@ -1,7 +1,7 @@
 If you find any issues that should be on this list, please let me know:
-jonathan.peelle@mrc-cbu.cam.ac.uk
+peelle@gmail.com
 
-
+IMPORTANT: SUPPORT FOR SPM5 IS DODGY. RECOMMEND USING SPM8 for all analyses.
 
 To override the use of JP_DEFAULTS to set default values, users can
 set S.cfg.options.defsfunction to any matlab function. Currently this

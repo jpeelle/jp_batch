@@ -9,9 +9,6 @@ function jp_log(logfile, msg, verbose)
 % Jonathan Peelle
 % MRC Cognition and Brain Sciences Unit
 
-
-
-
 if nargin < 3
   verbose = 1;
 end

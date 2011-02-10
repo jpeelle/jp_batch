@@ -6,7 +6,7 @@ function images = jp_getfunimages(prefix, subjdir, subname, sessions)
 % Jonathan Peelle
 % MRC Cognition and Brain Sciences Unit
 
-
+mriext = 'nii';
 
 % If a session 
 if nargin < 4
@@ -21,6 +21,6 @@ images = [];
   
 for i=1:length(sessions)
   thisdir = sessions{i};
-  images = strvcat(images, spm_select('fplist', fullfile(subjdir, subname, thisdir), sprintf('^%s.*\\.%s$',prefix, S.cfg.options.mriext)));
+  images = strvcat(images, spm_select('fplist', fullfile(subjdir, subname, thisdir), sprintf('^%s.*\\.%s$',prefix, mriext)));
 end  
 

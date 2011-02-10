@@ -10,7 +10,7 @@ function images = jp_getstructimages(prefix, subjdir, subname, structdirs)
 % Jonathan Peelle
 % MRC Cognition and Brain Sciences Unit
 
-
+mriext = 'nii';
 
 if nargin < 4
   structdirs = jp_getinfo('structdirs', subjdir, subname);
@@ -24,7 +24,7 @@ end
 images = [];
 
 for i=1:length(structdirs)
-  images = strvcat(images, spm_select('fplist', fullfile(subjdir, subname, structdirs{i}), sprintf('^%s.*\\.%s$',prefix, S.cfg.options.mriext)));
+  images = strvcat(images, spm_select('fplist', fullfile(subjdir, subname, structdirs{i}), sprintf('^%s.*\\.%s$',prefix, mriext)));
 end
 
 
