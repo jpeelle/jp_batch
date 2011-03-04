@@ -35,6 +35,14 @@ cfg.jp_spm8_movefirstscans.numscans = 4; % move this many
 cfg.jp_spm8_movefirstscans.prefix = '';  % anything before funprefix
 
 
+
+% SPM8 meanfunctionalpersession
+%-----------------------------------------------------------------------
+cfg.jp_spm8_meanfunctionalpersession.prefix = '';   % maybe s10w?
+cfg.jp_spm8_meanfunctionalpersession.meanname = ''; % default [session]mean
+
+
+
 % SPM8 tsdiffana
 %-----------------------------------------------------------------------
 
@@ -269,9 +277,17 @@ cfg.jp_spm8_modeldesign.separatesessions = 0;        % if 1, separate GLM for ea
 
 
 
+% SPM8 Model design for ISSS
+%-----------------------------------------------------------------------
+cfg.jp_spm8_ISSSmodeldesign = cfg.jp_spm8_modeldesign; % the same
+cfg.jp_spm8_ISSSmodeldesign.pattern = [0 0 0 0 1 1 1 1 1 1 1]; % 0=dummy, 1=real
+cfg.jp_spm8_ISSSmodeldesign.fillwithmean = 1; % select mean images for all 0s above
+cfg.jp_spm8_ISSSmodeldesign.meanname = ''; % e.g., to match jp_spm8_meanfunctionalpersession
+
+
+
 % SPM8 Estimate
 %-----------------------------------------------------------------------
-
 cfg.jp_spm8_modelestimate.separatesessions = cfg.jp_spm8_modeldesign.separatesessions;
 cfg.jp_spm8_modelestimate.savemask = 1;                                           % print image of mask
 
@@ -279,7 +295,6 @@ cfg.jp_spm8_modelestimate.savemask = 1;                                         
 
 % SPM8 DARTEL Create Template
 %-----------------------------------------------------------------------
-
 cfg.jp_spm8_dartelcreatetemplate.numtissues = 2;  % Generally 2
 cfg.jp_spm8_dartelcreatetemplate.rform = 0;    
 
@@ -287,7 +302,6 @@ cfg.jp_spm8_dartelcreatetemplate.rform = 0;
 
 % SPM8 DARTEL Write MNI-normalized (structural)
 %-----------------------------------------------------------------------
-
 cfg.jp_spm8_dartelnormmnistruct.vox = 1.5;
 cfg.jp_spm8_dartelnormmnistruct.fwhm = 8;         % smoothing (automatically done)
 cfg.jp_spm8_dartelnormmnistruct.preserve = 1;
