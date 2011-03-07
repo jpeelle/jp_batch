@@ -48,14 +48,15 @@ S = jp_init(S);
 %% Configure options
 % Note the statsdir, where the output is saved, must be specified for each
 % of the stages.  If you want to run multiple analyses on the same
-% preprocessed data, just change this directory name.
+% preprocessed data, just change this directory name. This directory needs
+% to be created ahead of time, and contains the contrasts.m file needed for
+% contrasts.
 
 S.cfg.jp_spm8_modeldesign.statsdir = '/imaging/jp01/experiments/attention_sylvia/stats_removebadscans_andmotion';
 S.cfg.jp_spm8_modeldesign.include_movement = 1;  % include 6 movement parameters in the model
-S.cfg.jp_spm8_modeldesign.prefix = 'sw';         % look for s* files
+S.cfg.jp_spm8_modeldesign.prefix = 'sw';         % look for sw* files
 
 % other examples of things you could set:
-%S.cfg.jp_spm8_modeldesign.include_movement = 1; % movement parameters
 %S.cfg.jp_spm8_modeldesign.include_badscans = 1; % those identified using jp_spm8_getbadscans
 %S.cfg.jp_spm8_modeldesign.xM.VM = '/imaging/local/spm/spm8/apriori/brainmask.nii'; % explicit mask
 
@@ -70,6 +71,11 @@ S.cfg.jp_spm8_modeldesign.conditions(3).name = 'ambiguous';
 % (set the stats directory to what we specified above for estimating and contrasts)
 S.cfg.jp_spm8_modelestimate.statsdir = S.cfg.jp_spm8_modeldesign.statsdir;
 S.cfg.jp_spm8_contrasts.statsdir = S.cfg.jp_spm8_modeldesign.statsdir;
+
+% N.B. You will also need a contrasts.m file in the stats directory that will
+% specify what contrasts you want run. If you run jp_spm_setup, you will get a
+% blank contrasts.m file in the stats directory which you can modify.
+% For more, see JP_SPM8_CONTRASTS.
 
 
 %% Run the analysis
