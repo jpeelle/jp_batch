@@ -36,7 +36,7 @@ S = jp_addsubject(S, 'CBU090903');
 
 %% Add analysis stages
 
-S = jp_addanalysis(S, 'jp_spm8_modeldesign');
+S = jp_addanalysis(S, 'jp_spm8_specify1stlevel');
 S = jp_addanalysis(S, 'jp_spm8_modelestimate');
 S = jp_addanalysis(S, 'jp_spm8_contrasts');
 
@@ -52,25 +52,25 @@ S = jp_init(S);
 % to be created ahead of time, and contains the contrasts.m file needed for
 % contrasts.
 
-S.cfg.jp_spm8_modeldesign.statsdir = '/imaging/jp01/experiments/attention_sylvia/stats_removebadscans_andmotion';
-S.cfg.jp_spm8_modeldesign.include_movement = 1;  % include 6 movement parameters in the model
-S.cfg.jp_spm8_modeldesign.prefix = 'sw';         % look for sw* files
+S.cfg.jp_spm8_specify1stlevel.statsdir = '/imaging/jp01/experiments/attention_sylvia/stats_removebadscans_andmotion';
+S.cfg.jp_spm8_specify1stlevel.include_movement = 1;  % include 6 movement parameters in the model
+S.cfg.jp_spm8_specify1stlevel.prefix = 'sw';         % look for sw* files
 
 % other examples of things you could set:
-%S.cfg.jp_spm8_modeldesign.include_badscans = 1; % those identified using jp_spm8_getbadscans
-%S.cfg.jp_spm8_modeldesign.xM.VM = '/imaging/local/spm/spm8/apriori/brainmask.nii'; % explicit mask
+%S.cfg.jp_spm8_specify1stlevel.include_badscans = 1; % those identified using jp_spm8_getbadscans
+%S.cfg.jp_spm8_specify1stlevel.xM.VM = '/imaging/local/spm/spm8/apriori/brainmask.nii'; % explicit mask
 
 
 % Each condition gets added like this; this name must match the name of the
 % text files that contain the event onsets (ev_files).  See
-% JP_SPM8_MODELDESIGN for more on how to name these text files.
-S.cfg.jp_spm8_modeldesign.conditions(1).name = 'scn';
-S.cfg.jp_spm8_modeldesign.conditions(2).name = 'unambiguous';
-S.cfg.jp_spm8_modeldesign.conditions(3).name = 'ambiguous';
+% JP_SPM8_SPECIFY1STLEVEL for more on how to name these text files.
+S.cfg.jp_spm8_specify1stlevel.conditions(1).name = 'scn';
+S.cfg.jp_spm8_specify1stlevel.conditions(2).name = 'unambiguous';
+S.cfg.jp_spm8_specify1stlevel.conditions(3).name = 'ambiguous';
 
 % (set the stats directory to what we specified above for estimating and contrasts)
-S.cfg.jp_spm8_modelestimate.statsdir = S.cfg.jp_spm8_modeldesign.statsdir;
-S.cfg.jp_spm8_contrasts.statsdir = S.cfg.jp_spm8_modeldesign.statsdir;
+S.cfg.jp_spm8_modelestimate.statsdir = S.cfg.jp_spm8_specify1stlevel.statsdir;
+S.cfg.jp_spm8_contrasts.statsdir = S.cfg.jp_spm8_specify1stlevel.statsdir;
 
 % N.B. You will also need a contrasts.m file in the stats directory that will
 % specify what contrasts you want run. If you run jp_spm_setup, you will get a
