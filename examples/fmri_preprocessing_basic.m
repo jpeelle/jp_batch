@@ -21,7 +21,6 @@
 % See JP_BATCH and JP_SPM_SETUP for more.
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
 
 
 
@@ -67,6 +66,10 @@ S = jp_addanalysis(S, 'jp_spm8_smooth');
 S = jp_addanalysis(S, 'jp_makereport');      % makes the jp_report.html page
 
 
+% After you have collected all your subjects, you may want to add the following,
+% useful for displaying and localizing results:
+% S = jp_addanalysis(S, 'jp_spm8_createmeanstructural', 'study');
+
 
 % If you want to identify scans that exceed some threshold for movement
 % or intensity difference, use jp_spm8_viewbadscans to get a sense of 
@@ -83,6 +86,7 @@ S.cfg.jp_spm8_movefirstscans.numscans = 4;
 S.cfg.jp_spm8_normalize.prefix = '';
 S.cfg.jp_spm8_smooth.prefix = 'w';    % this tells smooth to only select the normalized (w*) images
 S.cfg.jp_spm8_smooth.fwhm = 10;       % this is how much we are smoothing for
+
 
 
 %% Now, run the analysis!

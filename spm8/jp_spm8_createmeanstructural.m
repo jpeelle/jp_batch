@@ -44,7 +44,10 @@ for i=1:length(S.subjects)
   prefix = sprintf('%s%s', cfg.prefix, S.subjects(i).structprefix);
   jp_log(meanlog, sprintf('Getting images for subject %i/%i %s...', i, length(S.subjects), subname));
   tmp = jp_getstructimages(prefix, S.subjdir, subname, S.subjects(i).structdirs);
-  jp_log(meanlog, sprintf('done. %i found.\n', size(tmp,1));
+  jp_log(meanlog, sprintf('done. %i found.\n', size(tmp,1)));
+  for j=1:size(tmp,1)
+    jp_log(meanlog, sprintf('\t%s\n', strtok(tmp(j,:))));
+  end
   P = strvcat(P, tmp);  % add these tmp images to the list  
 end
 

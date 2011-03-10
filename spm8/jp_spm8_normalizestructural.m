@@ -7,9 +7,14 @@ function S = jp_spm8_normalizestructural(S, subnum)
 %
 % For now this assumes that a *seg_sn.mat file exists from running
 % segmentation.
+%
+% By default this will normalize the bias-corrected image (m*)
+% created during segmentation. This can be changed in:
+%
+%  S.cfg.jp_spm8_normalizestructural.prefix
+
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
 
 
 % get any values not specified (if JP_INIT not run previously)

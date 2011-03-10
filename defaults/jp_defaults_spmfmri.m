@@ -230,7 +230,7 @@ cfg.jp_spm8_normalize.prefix = '';      % prefix for functional images to be sel
 %-----------------------------------------------------------------------
 
 
-cfg.jp_spm8_normalizestructural.prefix = '';
+cfg.jp_spm8_normalizestructural.prefix = 'm';        % by default do bias corrected
 cfg.jp_spm8_normalizestructural.write = cfg.jp_spm8_normalize.write;
 cfg.jp_spm8_normalizestructural.write.vox = [1 1 1]; % keep high resolution for overlay
 
@@ -290,6 +290,15 @@ cfg.jp_spm8_ISSSspecify1stlevel.meanname = ''; % e.g., to match jp_spm8_meanfunc
 %-----------------------------------------------------------------------
 cfg.jp_spm8_modelestimate.separatesessions = cfg.jp_spm8_specify1stlevel.separatesessions;
 cfg.jp_spm8_modelestimate.savemask = 1;                                           % print image of mask
+
+
+
+
+
+% SPM8 Create mean structural
+%-----------------------------------------------------------------------
+cfg.jp_spm8_createmeanstructural.prefix = 'w';
+cfg.jp_spm8_createmeanstructural.name = 'meanstructural';
 
 
 
