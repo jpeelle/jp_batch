@@ -134,7 +134,7 @@ function jp_batch(task)
 
 if nargin==0
   help('jp_batch')
-elseif strcmp(lower(task), 'addpaths')
+elseif strcmp(lower(task), 'addpaths') || strcmp(lower(task), 'add_paths')
   % make sure subdirectories are added
   basedir = fileparts(which('jp_init'));
   files = dir(basedir);

@@ -247,48 +247,48 @@ cfg.jp_spm8_smooth.prefix = 'w';
 % SPM8 Model design
 %-----------------------------------------------------------------------
 
-cfg.jp_spm8_modeldesign.conditions = {};             % <-- needs to be set! See jp_spm8_modeldesign
-cfg.jp_spm8_modeldesign.prefix = '';                 % <-- needs to be set!
-cfg.jp_spm8_modeldesign.statsdir = '';               % <-- needs to be set!
+cfg.jp_spm8_specify1stlevel.conditions = {};             % <-- needs to be set! See jp_spm8_specify1stlevel
+cfg.jp_spm8_specify1stlevel.prefix = '';                 % <-- needs to be set!
+cfg.jp_spm8_specify1stlevel.statsdir = '';               % <-- needs to be set!
 
-cfg.jp_spm8_modeldesign.xM.TH = [];                  % these all set after spm_fmri_spm_ui is run
-cfg.jp_spm8_modeldesign.xM.I = 0;
-cfg.jp_spm8_modeldesign.xM.VM = [];
+cfg.jp_spm8_specify1stlevel.xM.TH = [];                  % these all set after spm_fmri_spm_ui is run
+cfg.jp_spm8_specify1stlevel.xM.I = 0;
+cfg.jp_spm8_specify1stlevel.xM.VM = [];
 
-cfg.jp_spm8_modeldesign.T = 16;                      % (can be a vector, different for each session)
-cfg.jp_spm8_modeldesign.T0 = 1;                      % (can be a vector, different for each session)
-cfg.jp_spm8_modeldesign.event_units = 'secs';        % alternatively 'scans'
-cfg.jp_spm8_modeldesign.bf_name = 'hrf';             % basis function used for analysis
-cfg.jp_spm8_modeldesign.bf_length = 32;              % in seconds
-cfg.jp_spm8_modeldesign.bf_order = 1;                % if needed by the basis function you choose
-cfg.jp_spm8_modeldesign.global_normalization = 'None';
-cfg.jp_spm8_modeldesign.highpass_cutoff = 90;
-cfg.jp_spm8_modeldesign.autocorrelations = 'AR(1)';  % alternatively 'none'
-cfg.jp_spm8_modeldesign.include_movement = 0;        % 1 = automatically adds movement parameters as regressors
-cfg.jp_spm8_modeldesign.include_badscans = 0;        % 1 = add columns for bad scans (see jp_spm8_getbadscans)
-cfg.jp_spm8_modeldesign.badscansfilename = cfg.jp_spm8_getbadscans.fname; % name of file containing bad scan numbers
+cfg.jp_spm8_specify1stlevel.T = 16;                      % (can be a vector, different for each session)
+cfg.jp_spm8_specify1stlevel.T0 = 1;                      % (can be a vector, different for each session)
+cfg.jp_spm8_specify1stlevel.event_units = 'secs';        % alternatively 'scans'
+cfg.jp_spm8_specify1stlevel.bf_name = 'hrf';             % basis function used for analysis
+cfg.jp_spm8_specify1stlevel.bf_length = 32;              % in seconds
+cfg.jp_spm8_specify1stlevel.bf_order = 1;                % if needed by the basis function you choose
+cfg.jp_spm8_specify1stlevel.global_normalization = 'None';
+cfg.jp_spm8_specify1stlevel.highpass_cutoff = 90;
+cfg.jp_spm8_specify1stlevel.autocorrelations = 'AR(1)';  % alternatively 'none'
+cfg.jp_spm8_specify1stlevel.include_movement = 0;        % 1 = automatically adds movement parameters as regressors
+cfg.jp_spm8_specify1stlevel.include_badscans = 0;        % 1 = add columns for bad scans (see jp_spm8_getbadscans)
+cfg.jp_spm8_specify1stlevel.badscansfilename = cfg.jp_spm8_getbadscans.fname; % name of file containing bad scan numbers
 
-cfg.jp_spm8_modeldesign.volterra = 1;
-cfg.jp_spm8_modeldesign.fixemptyconditions = 1;      % if condition doesn't exist, add onset corresponding to last scan to keep # columns consistent
+cfg.jp_spm8_specify1stlevel.volterra = 1;
+cfg.jp_spm8_specify1stlevel.fixemptyconditions = 1;      % if condition doesn't exist, add onset corresponding to last scan to keep # columns consistent
 
-cfg.jp_spm8_modeldesign.evdir = 'ev_files';          % which directory to look in for EV files (event times), in each subject dir
-cfg.jp_spm8_modeldesign.savedesignmatrix = 1;        % print a copy in the stats directory
-cfg.jp_spm8_modeldesign.separatesessions = 0;        % if 1, separate GLM for each session (rare)
+cfg.jp_spm8_specify1stlevel.evdir = 'ev_files';          % which directory to look in for EV files (event times), in each subject dir
+cfg.jp_spm8_specify1stlevel.savedesignmatrix = 1;        % print a copy in the stats directory
+cfg.jp_spm8_specify1stlevel.separatesessions = 0;        % if 1, separate GLM for each session (rare)
 
 
 
 % SPM8 Model design for ISSS
 %-----------------------------------------------------------------------
-cfg.jp_spm8_ISSSmodeldesign = cfg.jp_spm8_modeldesign; % the same
-cfg.jp_spm8_ISSSmodeldesign.pattern = [0 0 0 0 1 1 1 1 1 1 1]; % 0=dummy, 1=real
-cfg.jp_spm8_ISSSmodeldesign.fillwithmean = 1; % select mean images for all 0s above
-cfg.jp_spm8_ISSSmodeldesign.meanname = ''; % e.g., to match jp_spm8_meanfunctionalpersession
+cfg.jp_spm8_ISSSspecify1stlevel = cfg.jp_spm8_specify1stlevel; % the same
+cfg.jp_spm8_ISSSspecify1stlevel.pattern = [0 0 0 0 1 1 1 1 1 1 1]; % 0=dummy, 1=real
+cfg.jp_spm8_ISSSspecify1stlevel.fillwithmean = 1; % select mean images for all 0s above
+cfg.jp_spm8_ISSSspecify1stlevel.meanname = ''; % e.g., to match jp_spm8_meanfunctionalpersession
 
 
 
 % SPM8 Estimate
 %-----------------------------------------------------------------------
-cfg.jp_spm8_modelestimate.separatesessions = cfg.jp_spm8_modeldesign.separatesessions;
+cfg.jp_spm8_modelestimate.separatesessions = cfg.jp_spm8_specify1stlevel.separatesessions;
 cfg.jp_spm8_modelestimate.savemask = 1;                                           % print image of mask
 
 
