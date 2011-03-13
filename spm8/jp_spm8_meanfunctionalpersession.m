@@ -38,6 +38,9 @@ if nargin < 3
 end
 
 
+
+
+
 for i=1:length(sessionnum)
   s = sessionnum(i);
   
@@ -50,7 +53,7 @@ for i=1:length(sessionnum)
   
   % where should we save the mean to?
   if isempty(cfg.meanname)
-    meanname = sprintf('%smean%s', sessions{s}, cfg.prefix);
+    meanname = sprintf('%smean%s.nii', sessions{s}, cfg.prefix);
   end
   outfile = fullfile(S.subjdir, subname, sessions{s}, meanname);
 
