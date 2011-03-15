@@ -280,9 +280,9 @@ cfg.jp_spm8_specify1stlevel.separatesessions = 0;        % if 1, separate GLM fo
 % SPM8 Model design for ISSS
 %-----------------------------------------------------------------------
 cfg.jp_spm8_ISSSspecify1stlevel = cfg.jp_spm8_specify1stlevel; % the same
-cfg.jp_spm8_ISSSspecify1stlevel.pattern = [0 0 0 0 1 1 1 1 1 1 1]; % 0=dummy, 1=real
+cfg.jp_spm8_ISSSspecify1stlevel.pattern = []; % 0=dummy, 1=real - must be set!
 cfg.jp_spm8_ISSSspecify1stlevel.fillwithmean = 1; % select mean images for all 0s above
-cfg.jp_spm8_ISSSspecify1stlevel.meanname = ''; % e.g., to match jp_spm8_meanfunctionalpersession
+cfg.jp_spm8_ISSSspecify1stlevel.meanname = ''; % e.g., to match jp_spm8_meanfunctionalpersession - must be set!
 
 
 

@@ -87,6 +87,14 @@ if S.cfg.options.saveS || ~isempty(aa_type)
   save(sfile, 'S');
 end
 
+
+% warning for SPM5
+if strcmp(S.spmversion, 'SPM5')
+  jp_log(logfile, 'WARNING: SPM5 only partially supported. Please make sure this is working, and consider moving to SPM8.\n');
+  pause(5); % just to make it obvious and slightly annoying...
+end
+
+
 if nargin < 3 || isempty(stages)
   stages = 1:length(S.analysis);
 end

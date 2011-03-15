@@ -91,11 +91,12 @@ jp_log(estimatelog,'Done estimating parameters.\n');
 
 
 if cfg.savemask > 0
-  spm_figure('clear');
-  spm_orthviews('image', fullfile(savepath, 'mask.img'));
-  job.fname = fullfile(savepath, 'mask.png');
-  job.opts.opt = {'-dpng', '-r200'};
-  spm_print(job);
+  jp_log(estimatelog, 'You requested the mask.img to be saved as an image file, but this is temporarily disabled.\n');
+  %   spm_figure('clear');
+  %   spm_orthviews('image', fullfile(savepath, 'mask.img'));
+  %   job.fname = fullfile(savepath, 'mask.png');
+  %   job.opts.opt = {'-dpng', '-r200'};
+  %   spm_print(job);
 end
 
 end % estimatemodel subfunction

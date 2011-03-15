@@ -106,6 +106,10 @@ if length(cfg.T0)==1
   cfg.T0 = ones(1,length(S.subjects(subnum).sessions)) * cfg.T0;
 end
 
+if isempty(cfg.conditions) || length(cfg.conditions)==0
+  jp_log(modellog, 'WARNING: No conditions specified.\n');
+  pause(2);
+end
 
 % Make sure explicit masks exist (if specified)
 if ~isempty(cfg.xM.VM)
@@ -261,6 +265,8 @@ for s=1:length(sessionnum)
   % sc = subject conditions, those actually used
   sc = 1;
   sub_conditions = {};  % the ones we actually use
+   
+  
   for c=1:length(cfg.conditions)
     
     thiscond = cfg.conditions(c).name;
@@ -325,6 +331,16 @@ for s=1:length(sessionnum)
     
   end % going through conditions
   
+  % If no conditons, make sure these fields are added
+  if ~isfield(SPM, 'Sess')
+    SPM.Sess = struct();
+  end
+  
+  if ~isfield(SPM.Sess, 'C')
+    SPM.Sess(s).C = struct();
+    SPM.Sess(s).C.C = [];
+    SPM.Sess(s).C.name = {''};
+  end
   
   % Keep track of which conditions we actually used
   S.subjects(subnum).sub_conditions = sub_conditions;

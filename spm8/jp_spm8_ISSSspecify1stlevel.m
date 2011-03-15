@@ -8,16 +8,28 @@ function S = jp_spm8_ISSSmodeldesign(S, subnum)
 % The analysis options are identical to JP_SPM8_MODELDESIGN, with
 % additional options intended for use with ISSS sequences:
 %
-%   pattern - indicates the pattern of the ISSS sequence, 0 for
-%             dummy scans and 1 for real scans.
+%   pattern -      indicates the pattern of the ISSS sequence, 0 for
+%                  dummy scans and 1 for real scans. Required.
 %
 %   fillwithmean - indicates whether to pad design matrix with mean
 %                  images for dummy images (assuming that no .nii
 %                  files exist for dummy images). Default 1.
 %
+%   meanname -     the prefix of the mean session images if fillwithmean is
+%                  used. Must be specified if fillwithmean = 1.
+%
+%
+% Remember, when setting the pattern, this should begin with the first scan
+% that SPM knows about. It may be that this is different than you thought
+% about programming the sequence.  For example, you may think about each
+% pattern as starting with silence (for sound presentation) and ending with
+% data collection, so dummry scans then real scans.  However, if the first
+% scan that SPM knows about is the first real scan, then specify the
+% pattern to start with real scans.
+%
 % You may want to use JP_SPM8_MEANFUNCTIONALPERSESSION to create
 % the mean image used above.
-%
+
 % Jonathan Peelle
 % http://jonathanpeelle.net/
 
@@ -39,6 +51,14 @@ if isempty(cfg.statsdir)
   jp_log(modellog, 'Must specify stats directory!', 2);
 end
 
+if cfg.fillwithmean==1 && isempty(cfg.meanname)
+  jp_log(modellog, 'Must specify meanname!', 2);
+end
+
+if isempty(cfg.pattern)
+  jp_log(modellog, 'Must specify ISSS pattern!', 2);
+end
+
 
 % Error checking
 % options T and T0 can be set differently for each session; if just
@@ -50,6 +70,11 @@ end
 
 if length(cfg.T0)==1
   cfg.T0 = ones(1,length(S.subjects(subnum).sessions)) * cfg.T0;
+end
+
+if isempty(cfg.conditions) || length(cfg.conditions)==0
+  jp_log(modellog, 'WARNING: No conditions specified.\n');
+  pause(2);
 end
 
 
@@ -113,7 +138,7 @@ SPM = struct();
 [alllog, errorlog, modellog] = jp_createlogs(S.subjects(subnum).name, S.subjdir, mfilename);
 
 
-cfg = S.cfg.jp_spm8_modeldesign;
+cfg = S.cfg.(mfilename);
 
 subjdir = S.subjdir;
 thissub = S.subjects(subnum).name;
@@ -156,6 +181,7 @@ end
 if ~ismember(SPM.xBF.UNITS, {'secs', 'scans'})
   error('event_units must be ''scans'' or ''seconds''.');
 end
+
     
 % Autocorrelations
 SPM.xVi.form = cfg.autocorrelations;
@@ -192,11 +218,63 @@ for s=1:length(sessionnum)
 
   tmpFiles = spm_select('fplist',tmp_dir, imgfilter);    
   
-  SPM.nscan(s) = size(tmpFiles,1);
   
-  jp_log(modellog, sprintf('\tFound %i files.\n', size(tmpFiles,1)));
+  % ----- this section edited to handle ISSS designs
   
-  P = strvcat(P,tmpFiles);
+  % get mean image
+  thismean = spm_select('fplist', tmp_dir, sprintf('^%s', cfg.meanname));
+  
+  if size(thismean,1)~=1
+    jp_log(modellog, sprintf('Mean session image not found in %s.\n', tmp_dir), 2);
+  else
+    jp_log(modellog, sprintf('Found mean image %s.\n', thismean(1,:)));
+  end
+  
+  % see whether images already found make sense given the ISSS setup-
+  % should have an equal number of patterns.
+  
+  nreal = sum(cfg.pattern); % sum all 1s, which are real scans
+  modscans =  mod(size(tmpFiles,1), nreal);
+  
+  if modscans==0
+    nrep = size(tmpFiles,1)/nreal;  % this should be the number of repetitions
+    jp_log(modellog, sprintf('%i real scans per pattern = %i repetitions of pattern for this session.\n', nreal, nrep));
+  else
+    jp_log(modellog, 'Have an uneven number of scans for this session.', 2);
+  end
+    
+  % Repeat the ISSS pattern the appropriate number of times. This should
+  % indicate all of the rows in the model (i.e., continuous in time), and
+  % for each scan, whether it is a real scan or a dummy scan. We can then
+  % go through and construct a new list of files (tmp2) that will use
+  % appropriate real and dummy scans.
+  allpattern = repmat(cfg.pattern, 1, nrep);
+  
+  jp_log(modellog, sprintf('Constructing design matrix with %i total scans (real+dummy).\n', length(allpattern)));
+  
+  tmp2 = [];
+  
+  rcount = 1; % which real scan should be used?
+  
+  for q=1:length(allpattern)
+    if allpattern(q)==1
+      tmp2 = strvcat(tmp2, tmpFiles(rcount,:));
+      rcount = rcount + 1; % (increment to next real)
+    else
+      tmp2 = strvcat(tmp2, thismean);
+    end
+  end
+  
+  
+  % ----- end ISSS code for image selection (regressors added later!)
+  
+  
+  
+  SPM.nscan(s) = size(tmp2,1);
+  
+  jp_log(modellog, sprintf('\tFound %i files (real + dummy).\n', size(tmp2,1)));
+  
+  P = strvcat(P,tmp2);
 
 
   % Get the condition onsets.  If a subject doesn't have a condition,
@@ -207,6 +285,8 @@ for s=1:length(sessionnum)
   % sc = subject conditions, those actually used
   sc = 1;
   sub_conditions = {};  % the ones we actually use
+  
+
   for c=1:length(cfg.conditions)
     
     thiscond = cfg.conditions(c).name;
@@ -271,6 +351,16 @@ for s=1:length(sessionnum)
     
   end % going through conditions
   
+  % If no conditons, make sure these fields are added
+  if ~isfield(SPM, 'Sess')
+    SPM.Sess = struct();
+  end
+  
+  if ~isfield(SPM.Sess, 'C')
+    SPM.Sess(s).C = struct();
+    SPM.Sess(s).C.C = [];
+    SPM.Sess(s).C.name = {};
+  end
   
   % Keep track of which conditions we actually used
   S.subjects(subnum).sub_conditions = sub_conditions;
@@ -286,8 +376,21 @@ for s=1:length(sessionnum)
     end
     
       [rp1 rp2 rp3 rp4 rp5 rp6] = textread(rpfile,'%f%f%f%f%f%f');
+     
+       
+      % adjust for ISSS: mean-center and deal with dummy scans      
+      rp1 = rp1 - mean(rp1);
+      rp2 = rp2 - mean(rp2);
+      rp3 = rp3 - mean(rp3);
+      rp4 = rp4 - mean(rp4);
+      rp5 = rp5 - mean(rp5);
+      rp6 = rp6 - mean(rp6);
       
-      SPM.Sess(s).C.C = [SPM.Sess(s).C.C rp1 rp2 rp3 rp4 rp5 rp6];
+      rpall = zeros(SPM.nscan(s),6);
+      rpall(find(allpattern),:) = [rp1 rp2 rp3 rp4 rp5 rp6];            
+  
+      
+      SPM.Sess(s).C.C = [SPM.Sess(s).C.C rpall];
       SPM.Sess(s).C.name = cat(2,SPM.Sess(s).C.name,{'X','Y','Z','Roll','Pitch','Yaw'});
 
       jp_log(modellog, 'done.\n');
@@ -299,15 +402,28 @@ for s=1:length(sessionnum)
     
     badscans = dlmread(fullfile(subjdir, thissub, thissession, cfg.badscansfilename));
     
+    
     for bs=1:length(badscans)
-      bsregress = zeros(SPM.nscan(s),1);
-      bsregress(badscans(bs)) = 1;
+      bsregress = zeros(SPM.nscan(s),1);      
+      realscans = find(allpattern==1);  % to deal with ISSS    
+      bsregress(badscans(realscans(bs))) = 1;
       SPM.Sess(s).C.C = [SPM.Sess(s).C.C bsregress];
       SPM.Sess(s).C.name = cat(2,SPM.Sess(s).C.name, sprintf('badscan %i', bs));
     end    
     jp_log(modellog, 'done.\n');
   end
-    
+  
+  
+  % Add regressors for ISSS: 1 for all dummy scans
+  if ~isfield(SPM.Sess, 'C')
+    SPM.Sess(s).C = struct();
+    SPM.Sess(s).C.C = [];
+  end
+  SPM.Sess(s).C.name = cat(2, SPM.Sess(s).C.name, [thissession ' dummies']);
+  
+  SPM.Sess(s).C.C = [SPM.Sess(s).C.C (allpattern==0)'];
+  
+  
 end % going through all sessions to be modeled right now
 
 

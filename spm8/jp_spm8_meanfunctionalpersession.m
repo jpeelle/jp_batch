@@ -53,7 +53,7 @@ for i=1:length(sessionnum)
   
   % where should we save the mean to?
   if isempty(cfg.meanname)
-    meanname = sprintf('%smean%s.nii', sessions{s}, cfg.prefix);
+    meanname = sprintf('mean%s%s.nii', cfg.prefix, sessions{s});
   end
   outfile = fullfile(S.subjdir, subname, sessions{s}, meanname);
 

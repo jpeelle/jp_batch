@@ -261,9 +261,9 @@ if ~exist(cfile)
   fprintf(fid, '%% having different number of columns in design matrices across subjects.\n\n\n\n');
   fprintf(fid, '%% ------- edit these to match your design -------\n\n');
   fprintf(fid, 'c(1).name = ''Name of my simple contrast for one session''\n');
-  fprintf(fid, 'c(1).con = [1 0 0 0]; %% if you had 4 columns in your design matrix (e.g. 3 conditions + overall mean)\n\n');  
+  fprintf(fid, 'c(1).con = [1 0 0 zeros(1,6) 0]; %% if columns in your design matrix are 3 conditions, 6 movement parameters, overall mean\n\n');
   fprintf(fid, 'c(2).name = ''Name of another contrast including bad scans over 2 sessions''\n');
-  fprintf(fid, 'c(2).con = [1 0 0 zeros(1,nbs(1)) 1 0 0 zeros(1,nbs(2)) 0 0]; %% 3 conditions + badscans per session, + 2 columns at the end for session effects\n\n');  
+  fprintf(fid, 'c(2).con = [1 0 0 zeros(1,6) zeros(1,nbs(1)) 1 0 0 zeros(1,6) zeros(1,nbs(2)) 0 0]; %% 3 conditions + 6 movement + badscans per session, + 2 columns at the end for session effects\n\n');  
   fclose(fid);
   fprintf('You will need to set up contrasts in %s (which has just been created).\n', cfile);
 end
