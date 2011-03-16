@@ -313,7 +313,7 @@ cfg.jp_spm8_dartelcreatetemplate.rform = 0;
 %-----------------------------------------------------------------------
 cfg.jp_spm8_dartelnormmnistruct.vox = 1.5;
 cfg.jp_spm8_dartelnormmnistruct.fwhm = 8;         % smoothing (automatically done)
-cfg.jp_spm8_dartelnormmnistruct.preserve = 1;
+cfg.jp_spm8_dartelnormmnistruct.preserve = 1;     % for modulation (1 = modulate)
 cfg.jp_spm8_dartelnormmnifun.otherimages = '';    % if specified, these files (assumed to be in subject's directory) are normalized as well
 
 
@@ -322,7 +322,7 @@ cfg.jp_spm8_dartelnormmnifun.otherimages = '';    % if specified, these files (a
 
 cfg.jp_spm8_dartelnormmnifun.vox = 2;
 cfg.jp_spm8_dartelnormmnifun.fwhm = 10;           % smoothing (automatically done)
-cfg.jp_spm8_dartelnormmnifun.preserve = 0;
+cfg.jp_spm8_dartelnormmnifun.preserve = 0;        % for modulation (0 = don't modulate)
 cfg.jp_spm8_dartelnormmnifun.prefix = '';         % might be u if you've unwarped
 cfg.jp_spm8_dartelnormmnifun.otherimages = '';    % if specified, these files (assumed to be in subject's directory) are normalized as well
 
@@ -334,7 +334,7 @@ cfg.jp_spm8_dartelnormmnifun.otherimages = '';    % if specified, these files (a
 cfg.jp_spm8_contrasts.statsdir = '';           % <-- needs to be set!
 cfg.jp_spm8_contrasts.which_contrasts = [];    % [] runs all
 
-cfg.jp_spm8_contrasts.confiledirname = '@con_files';       % the @ puts it at the top of SPM search path
+cfg.jp_spm8_contrasts.confiledirname = '@con_files';       % the @ (hopfully) puts it at the top of SPM search path
 cfg.jp_spm8_contrasts.tandffiledirname = '@tandf_files';
 cfg.jp_spm8_contrasts.separatesessions = 0;
 cfg.jp_spm8_contrasts.badscanfilename = cfg.jp_spm8_getbadscans.fname;
@@ -348,6 +348,21 @@ cfg.jp_spm8_dartelnormmnicontrasts.normmask = 1;         % 1 = norm mask also
 cfg.jp_spm8_dartelnormmnicontrasts.vox = 2;
 cfg.jp_spm8_dartelnormmnicontrasts.fwhm = 10;           % smoothing (automatically done)
 cfg.jp_spm8_dartelnormmnicontrasts.preserve = 0;
+
+
+% SPM8 Print results
+%-----------------------------------------------------------------------
+cfg.jp_spm8_printresults.which_contrasts = [];   % runs all
+cfg.jp_spm8_printresults.printopts = {'-dpsc2'}; % passed directly to print job
+cfg.jp_spm8_printresults.append = 1;             % append to previous instead of overwriting
+
+cfg.jp_spm8_printresults.k = [0 0 0];                        % cluster extent
+cfg.jp_spm8_printresults.Im = {'none' 'none' 'none'};        % masking
+cfg.jp_spm8_printresults.u = [.001 .01 .05];                 % voxel p value
+cfg.jp_spm8_printresults.thresDesc = {'none' 'none' 'none'}; % none | FDR | FWE
+
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
