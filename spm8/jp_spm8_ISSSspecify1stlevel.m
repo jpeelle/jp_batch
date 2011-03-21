@@ -1,7 +1,7 @@
-function S = jp_spm8_ISSSmodeldesign(S, subnum)
-%JP_SPM8_ISSSMODELDESIGN Design first-level model with SPM8.
+function S = jp_spm8_ISSSspecify1stlevel(S, subnum)
+%JP_SPM8_ISSSSPECIFY1STLEVEL Design first-level model with SPM8.
 %
-% S = JP_SPM8_ISSSMODELDESIGN(S, SUBNUM) constructs a first level
+% S = JP_SPM8_ISSSSPECIFY1STLEVEL(S, SUBNUM) constructs a first level
 % model on the specified subject number SUBNUM from an S structure
 % (see JP_INIT).
 %
@@ -31,7 +31,7 @@ function S = jp_spm8_ISSSmodeldesign(S, subnum)
 % the mean image used above.
 
 % Jonathan Peelle
-% http://jonathanpeelle.net/
+
 
 
 

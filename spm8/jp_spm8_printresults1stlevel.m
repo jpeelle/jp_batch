@@ -1,5 +1,5 @@
-function S = jp_spm8_printresults(S, subnum)
-%JP_SPM8_PRINTRESULTS Prints MIPs and tables for already-run contrasts.
+function S = jp_spm8_printresults1stlevel(S, subnum)
+%JP_SPM8_PRINTRESULTS1ST LEVEL Prints MIPs and tables for already-run contrasts.
 %
 
 % Jonathan Peelle
@@ -84,8 +84,7 @@ for c=1:length(which_contrasts)
   title = SPM.xCon(thisc).name;
   pdffile = fullfile(pdfd, fix_string(title));
   
-  for j=1:length(cfg.u)
-    
+  for j=1:length(cfg.u)    
     xs.k = cfg.k(j);
     xs.Im = cfg.Im{j};
     xs.u = cfg.u(j);
@@ -105,21 +104,19 @@ for c=1:length(which_contrasts)
     % save to ps file
     job = struct();
     job.fname = pdffile;
-    job.opts.append = 1;
     job.opts.opt = cfg.printopts; %{'-dpsc2'};
-    job.opts.append = true;
+    job.opts.append = false;
     jobs.opts.ext = '.ps';
     if cfg.append > 0
       job.opts.opt = {job.opts.opt{:} '-append'};
-    end
+      job.opts.append = true;
+    end    
     spm_print(job);            
   end
   
   system(sprintf('ps2pdf %s.ps %s.pdf', job.fname, job.fname));
   system(sprintf('rm %s.ps', job.fname));
 end % going through contrasts
-
-
 
 % after all contrasts, run ps2pdf on the files and remove .ps files
 

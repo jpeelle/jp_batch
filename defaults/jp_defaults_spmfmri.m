@@ -288,8 +288,8 @@ cfg.jp_spm8_ISSSspecify1stlevel.meanname = ''; % e.g., to match jp_spm8_meanfunc
 
 % SPM8 Estimate
 %-----------------------------------------------------------------------
-cfg.jp_spm8_modelestimate.separatesessions = cfg.jp_spm8_specify1stlevel.separatesessions;
-cfg.jp_spm8_modelestimate.savemask = 1;                                           % print image of mask
+cfg.jp_spm8_estimate1stlevel.separatesessions = cfg.jp_spm8_specify1stlevel.separatesessions;
+cfg.jp_spm8_estimate1stlevel.savemask = 1;                                           % print image of mask
 
 
 
@@ -350,18 +350,23 @@ cfg.jp_spm8_dartelnormmnicontrasts.fwhm = 10;           % smoothing (automatical
 cfg.jp_spm8_dartelnormmnicontrasts.preserve = 0;
 
 
-% SPM8 Print results
+% SPM8 Print results 1st level
 %-----------------------------------------------------------------------
-cfg.jp_spm8_printresults.which_contrasts = [];   % runs all
-cfg.jp_spm8_printresults.printopts = {'-dpsc2'}; % passed directly to print job
-cfg.jp_spm8_printresults.append = 1;             % append to previous instead of overwriting
+cfg.jp_spm8_printresults1stlevel.which_contrasts = [];   % runs all
+cfg.jp_spm8_printresults1stlevel.printopts = {'-dpsc2' '-noui'}; % passed directly to print job
+cfg.jp_spm8_printresults1stlevel.append = 1;             % append to previous instead of overwriting
 
-cfg.jp_spm8_printresults.k = [0 0 0];                        % cluster extent
-cfg.jp_spm8_printresults.Im = {'none' 'none' 'none'};        % masking
-cfg.jp_spm8_printresults.u = [.001 .01 .05];                 % voxel p value
-cfg.jp_spm8_printresults.thresDesc = {'none' 'none' 'none'}; % none | FDR | FWE
+cfg.jp_spm8_printresults1stlevel.k = [0 0 0];                        % cluster extent
+cfg.jp_spm8_printresults1stlevel.Im = {'none' 'none' 'none'};        % masking
+cfg.jp_spm8_printresults1stlevel.u = [.001 .01 .05];                 % voxel p value
+cfg.jp_spm8_printresults1stlevel.thresDesc = {'none' 'none' 'none'}; % none | FDR | FWE
 
 
+% SPM8 Print results 2nd level
+%-----------------------------------------------------------------------
+cfg.jp_spm8_printresults2ndlevel = cfg.jp_spm8_printresults1stlevel;
+cfg.jp_spm8_printresults2ndlevel.u = [.05 .001 .005];
+cfg.jp_spm8_printresults2ndlevel.thresDesc = {'FWE' 'none' 'none'};
 
 
 
