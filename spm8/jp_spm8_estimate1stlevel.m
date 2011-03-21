@@ -14,7 +14,7 @@ function S = jp_spm8_estimate1stlevel(S, subnum)
 % struct.
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
+% University of Pennsylvania
 
 
 subname = S.subjects(subnum).name;

@@ -4,9 +4,7 @@ function sess = jp_getsessions(S, subnum)
 % SESS = JP_GETSESSIONS(S, SUBNUM)
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
-
-
+% University of Pennsylvania
 
 sess = {};
 

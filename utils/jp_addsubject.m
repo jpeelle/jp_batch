@@ -20,7 +20,7 @@ function S = jp_addsubject(S, subjects, force);
 % information from a subject, set FORCE to 1.
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
+% University of Pennsylvania
 
 
 

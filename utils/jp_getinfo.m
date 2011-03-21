@@ -27,9 +27,7 @@ function A = jp_getinfo(name, baseDir, subject, session)
 % See JP_BATCH for a list of acceptable parameters to use.
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
-
-
+% University of Pennsylvania
 
 p = {}; % path for keeping track of where we looked
 

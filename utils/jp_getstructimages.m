@@ -8,9 +8,9 @@ function images = jp_getstructimages(prefix, subjdir, subname, structdirs)
 % might change someday.]
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
+% University of Pennsylvania
 
-mriext = 'nii';
+mriext = S.cfg.options.mriext;
 
 if nargin < 4
   structdirs = jp_getinfo('structdirs', subjdir, subname);

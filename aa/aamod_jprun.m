@@ -3,7 +3,7 @@ function [aap, resp] = aamod_jprun(aap, task, i)
 % structure.
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
+% University of Pennsylvania
 
 resp = '';
 

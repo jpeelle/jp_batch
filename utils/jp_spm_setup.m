@@ -5,7 +5,7 @@ function jp_spm_setup()
 % preprocessing or statistics.
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
+% University of Pennsylvania
 
 
 clc

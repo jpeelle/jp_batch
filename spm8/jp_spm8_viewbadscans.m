@@ -9,7 +9,8 @@ function S = jp_spm8_viewbadscans(S, subnum)
 % See JP_DEFAULTS_SPMFMRI for all defaults.
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
+% University of Pennsylvania
+
 
 
 % If not specified, loop through all subjects

@@ -26,7 +26,7 @@ function S = jp_run(S, subjects, stages, aa_type)
 % information on setting up an S structure.
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
+% University of Pennsylvania
 
 % undocumented option: aa_type: '' = no | 'aa' | 'aa_parallel'
 

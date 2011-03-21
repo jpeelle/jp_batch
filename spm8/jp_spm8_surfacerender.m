@@ -36,9 +36,7 @@ function jp_spm8_surfacerender(img, cmap, cfg)
 % the same folder as JP_SPM8_SURFACERENDER).
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
-% August 2010
-
+% University of Pennsylvania
 
 % (just to remind myself what we need in the dat structure)
 % dat      - a struct array of length 1 to 3

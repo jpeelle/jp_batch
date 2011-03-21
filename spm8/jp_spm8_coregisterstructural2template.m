@@ -14,7 +14,7 @@ function S = jp_spm8_coregisterstructural2template(S, subnum)
 % See JP_DEFAULTS for a full list and defaults.
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
+% University of Pennsylvania
 
 
 

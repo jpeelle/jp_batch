@@ -11,7 +11,7 @@ function jp_spm_viewmotion(directory, cfg)
 %  closefig  if 1, close the figure that is opened
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
+% University of Pennsylvania
 
 
 if nargin < 2 || isempty(cfg)

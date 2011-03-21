@@ -13,7 +13,7 @@ function S = jp_addanalysis(S, a, domain);
 % template for DARTEL).
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
+% University of Pennsylvania
 
 if nargin < 3
   domain = 'subject';

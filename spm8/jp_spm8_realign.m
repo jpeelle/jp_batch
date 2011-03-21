@@ -9,7 +9,8 @@ function S = jp_spm8_realign(S, subnum)
 % See JP_DEFAULTS for a full list and defaults.
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
+% University of Pennsylvania
+
 
 
 % get any values not specified (if JP_INIT not run previously)

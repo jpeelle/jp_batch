@@ -8,8 +8,7 @@ function S = jp_spm8_realignunwarp(S, subnum, sessionnum)
 % See JP_DEFAULTS for a full list and defaults.
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
-
+% University of Pennsylvanias
 
 if nargin < 3 || isempty(sessionnum)
   sessionnum = 1:length(S.subjects(subnum).sessions);

@@ -3,7 +3,7 @@ function S = jp_spm8_printresults1stlevel(S, subnum)
 %
 
 % Jonathan Peelle
-
+% University of Pennsylvania
 
 subname = S.subjects(subnum).name;
 statsdir = S.cfg.jp_spm8_printresults.statsdir;

@@ -7,7 +7,7 @@ function jp_log(logfile, msg, verbose)
 % VERBOSE = 2 indicates error
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
+% University of Pennsylvania
 
 if nargin < 3
   verbose = 1;

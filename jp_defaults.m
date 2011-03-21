@@ -13,7 +13,7 @@ function cfg = jp_defaults()
 % make your own.
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
+% University of Pennsylvania
 
 
 cfg = struct();

@@ -16,8 +16,7 @@ function S = jp_spm8_dartelnormmnifun(S)
 % See JP_DEFAULTS_SPMFMRI for a full list of defaults.
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
-
+% University of Pennsylvania
 
 
 % log files

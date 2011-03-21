@@ -39,7 +39,7 @@ function S = jp_spm8_getbadscans(S, subnum, sessionnum)
 % See also JP_SPM8_TSDIFFANA.
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
+% University of Pennsylvania
 
 
 subname = S.subjects(subnum).name;

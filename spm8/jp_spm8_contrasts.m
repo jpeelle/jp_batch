@@ -60,7 +60,7 @@ function S = jp_spm8_contrasts(S, subnum)
 % See also JP_BATCH and JP_SPM8_MODEL.
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
+% University of Pennsylvania
 
 
 subname = S.subjects(subnum).name;

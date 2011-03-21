@@ -8,7 +8,7 @@ function S = jp_spm8_movefirstscans(S, subnum, sessionnum)
 %
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
+% University of Pennsylvania
 
 subname = S.subjects(subnum).name;
 subdir = fullfile(S.subjdir, subname);

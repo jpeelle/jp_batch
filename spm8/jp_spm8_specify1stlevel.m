@@ -73,9 +73,7 @@ function S = jp_spm8_specify1stlevel(S, subnum)
 % struct.
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
-
-
+% University of Pennsylvania
 
 subname = S.subjects(subnum).name;
 subdir = fullfile(S.subjdir, subname);

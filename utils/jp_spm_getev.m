@@ -30,9 +30,7 @@ function [onsets, durations, weightings] = jp_spm_getev(filename)
 % See also JP_SPM?_MODEL and JP_BATCH.
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
-
-
+% University of Pennsylvania
 
 if ~exist(filename)
   error('EV file %s not found.',filename)

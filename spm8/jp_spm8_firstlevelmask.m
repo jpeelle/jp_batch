@@ -9,7 +9,7 @@ function S = jp_spm8_firstlevelmask(S, subnum)
 %
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
+% University of Pennsylvania
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 error('not working!!!');

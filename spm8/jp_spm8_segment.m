@@ -24,8 +24,7 @@ function S = jp_spm8_segment(S, subnum)
 % See JP_DEFAULTS for a full list and defaults.
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
-
+% University of Pennsylvania
 
 % get any values not specified (if JP_INIT not run previously)
 S.cfg = jp_setcfg(S.cfg, mfilename);

@@ -9,14 +9,14 @@ function jp_spm_mean(P, cfg)
 % SPM5/8. Modified to include thresholding and various options.
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
+% University of Pennsylvania
 
 if nargin < 2
   cfg = [];
 end
 
 if ~isfield(cfg, 'fname')
-  cfg.fname = 'mean.nii';
+  cfg.fname = sprintf('mean.%s', S.cfg.options.mriext);
 end
 
 if nargin < 1 || isempty(P)

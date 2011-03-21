@@ -128,7 +128,7 @@ function jp_batch(task)
 % Adds subdirectories (if you don't do it yourself).
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
+% University of Pennsylvania
 
 
 

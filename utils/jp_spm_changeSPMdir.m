@@ -15,7 +15,7 @@ function jp_spm_changeSPMdir(files)
 % This should be compatible with SPM5 onwards.
 
 % Jonathan Peelle
-% November 2008
+% University of Pennsylvania
 
 
 if nargin < 1

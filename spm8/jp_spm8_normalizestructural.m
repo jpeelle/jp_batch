@@ -15,7 +15,7 @@ function S = jp_spm8_normalizestructural(S, subnum)
 
 
 % Jonathan Peelle
-
+% University of Pennsylvania
 
 % get any values not specified (if JP_INIT not run previously)
 S.cfg = jp_setcfg(S.cfg, mfilename);

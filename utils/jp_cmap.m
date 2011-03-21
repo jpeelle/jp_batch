@@ -12,6 +12,7 @@ function cmap = jp_cmap(c, nsteps)
 %    red = jp_cmap([1 0 0]);
 
 % Jonathan Peelle
+% University of Pennsylvania
 
 if nargin < 2 || isempty(nsteps)
   nsteps = 64;

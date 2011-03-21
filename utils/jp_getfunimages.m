@@ -4,9 +4,9 @@ function images = jp_getfunimages(prefix, subjdir, subname, sessions)
 % JP_GETFUNIMAGES(PREFIX, SUBJDIR, SUBNAME, [SESSION])
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
+% University of Pennsylvania
 
-mriext = 'nii';
+mriext = S.cfg.options.mriext;
 
 % If a session 
 if nargin < 4

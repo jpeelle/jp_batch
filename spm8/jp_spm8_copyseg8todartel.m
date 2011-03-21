@@ -8,8 +8,7 @@ function S = jp_spm8_copyseg8todartel(S, subnum)
 % JP_SPM8_DARTELCREATETEMPLATE.
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
-
+% University of Pennsylvania
 
 subname = S.subjects(subnum).name;
 subdir = fullfile(S.subjdir, subname);
@@ -31,7 +30,7 @@ if ~isdir(darteldir)
 end
   
 % get all the rc* images from the seg8dir
-rcimages = spm_select('fplist', structdir, '^rc.*\.nii');
+rcimages = spm_select('fplist', structdir, sprintf('^rc.*\.%s', S.cfg.options.mriext));
 
 for i=1:size(rcimages,1)
   img = strtok(rcimages(i,:)); % get this image

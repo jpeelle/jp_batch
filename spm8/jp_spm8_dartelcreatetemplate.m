@@ -19,7 +19,7 @@ function S = jp_spm8_dartelcreatetemplate(S);
 % See JP_DEFAULTS for a full list of options.
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
+% University of Pennsylvania
 
 
 % log files

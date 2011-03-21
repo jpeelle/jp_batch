@@ -2,6 +2,9 @@ function S = jp_makereport(S, subnum)
 %JP_MAKEREPORT Make an html report for anlaysis stages.
 %
 
+% Jonathan Peelle
+% University of Pennsylvania
+
 subname = S.subjects(subnum).name;
 subdir = fullfile(S.subjdir, subname);
 fname = fullfile(subdir, sprintf('jp_report%s.html', S.cfg.options.analysisname));

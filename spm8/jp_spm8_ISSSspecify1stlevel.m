@@ -31,7 +31,7 @@ function S = jp_spm8_ISSSspecify1stlevel(S, subnum)
 % the mean image used above.
 
 % Jonathan Peelle
-
+% University of Pennsylvania
 
 
 

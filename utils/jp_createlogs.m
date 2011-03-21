@@ -5,9 +5,7 @@ function [alllog, errorlog, thislog] = jp_createlogs(thisSub, subjDir, logname, 
 % subjDir, logname)
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
-
-
+% University of Pennsylvania
 
 if nargin < 4
   analysisname = '';

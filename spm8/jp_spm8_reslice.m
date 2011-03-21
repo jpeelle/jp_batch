@@ -8,7 +8,7 @@ function S = jp_spm8_reslice(S, subnum)
 % subject.
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
+% University of Pennsylvania
 
 % get any values not specified (if JP_INIT not run previously)
 S.cfg = jp_setcfg(S.cfg, mfilename);

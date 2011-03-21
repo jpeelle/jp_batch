@@ -8,7 +8,7 @@ function S = jp_spm8_meanfunctionalpersession(S, subnum, sessionnum)
 %
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
+% University of Pennsylvania
 
 subname = S.subjects(subnum).name;
 subdir = fullfile(S.subjdir, subname);
@@ -37,10 +37,6 @@ if nargin < 3
   sessionnum = 1:length(sessions);
 end
 
-
-
-
-
 for i=1:length(sessionnum)
   s = sessionnum(i);
   
@@ -53,7 +49,7 @@ for i=1:length(sessionnum)
   
   % where should we save the mean to?
   if isempty(cfg.meanname)
-    meanname = sprintf('mean%s%s.nii', cfg.prefix, sessions{s});
+    meanname = sprintf('mean%s%s.%s', cfg.prefix, sessions{s}, S.cfg.options.mriext);
   end
   outfile = fullfile(S.subjdir, subname, sessions{s}, meanname);
 

@@ -11,7 +11,7 @@ function jp_convertimg_tal2icbm(imgs)
 % Use at your own risk! :)
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
+% University of Pennsylvania
 
 
 % If no images specified, prompt for some

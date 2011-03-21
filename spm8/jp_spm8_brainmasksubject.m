@@ -8,8 +8,7 @@ function S = jp_spm8_brainmasksubject(S, subnum)
 % S.cfg.jp_spm8_brainmasksubject.thresh (default .2)
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
-
+% University of Pennsylvania
 
 
 % get any values not specified (if JP_INIT not run previously)
@@ -55,7 +54,7 @@ tmpdir = fullfile(S.subjdir, subname, structdir{1}, S.cfg.options.dartelname);
 jp_log(masklog, 'Looking for smoothed segmented images...');
 imgs = [];
 for k=1:2
-  imgs = strvcat(imgs, spm_select('fplist', tmpdir, sprintf('smwrc%i.*nii', k)));  
+  imgs = strvcat(imgs, spm_select('fplist', tmpdir, sprintf('smwrc%i.*%s', k, S.cfg.options.mriext)));  
 end
 
 if size(imgs,1)~=2

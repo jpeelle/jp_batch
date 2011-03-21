@@ -12,8 +12,7 @@ function S = jp_spm8_smooth(S, subnum, sessionnum)
 % See JP_DEFAULTS for a full list of defaults.
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
-
+% University of Pennsylvania
 
 subname = S.subjects(subnum).name;
 subdir = fullfile(S.subjdir, subname);
@@ -81,7 +80,7 @@ fprintf(str,0,total_images)
 for thisp=1:size(P,1)
   thisFile = deblank(P(thisp,:));
   [pathstr,name,ext,versn] = fileparts(thisFile);
-  spm_smooth(thisFile,fullfile(pathstr,sprintf('s%i%s.nii',cfg.fwhm,name)),cfg.fwhm);
+  spm_smooth(thisFile,fullfile(pathstr,sprintf('s%i%s.%s',cfg.fwhm,name,S.cfg.options.mriext)),cfg.fwhm);
   
   % Print out how far along we are
   str = sprintf('%%s%s/%s',sprintf('%%%ii',ndigits),sprintf('%%%ii',ndigits));

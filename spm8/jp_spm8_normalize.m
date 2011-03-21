@@ -14,7 +14,7 @@ function S = jp_spm8_normalize(S, subnum, sessionnum)
 % will then be applied to all functional images.
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
+% University of Pennsylvania
 
 
 % get any values not specified (if JP_INIT not run previously)
