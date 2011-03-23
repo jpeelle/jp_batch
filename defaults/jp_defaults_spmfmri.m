@@ -14,7 +14,7 @@ cfg.options.max4d = 2000; % i.e. spm_select('ExtFpList', 'dir','^f', 1:cfg.optio
 
 cfg.options.spmdefaultsfunction = 'spm_defaults';
 cfg.options.dartelname = 'dartel';
-cfg.options.mriext = 'nii'; % nii | img  % ** not implemented yet! this doesn't do anything. **
+cfg.options.mriext = 'nii'; % nii | img  
 
 
 
