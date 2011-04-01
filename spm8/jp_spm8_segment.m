@@ -57,7 +57,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 jp_log(segmentlog, 'Looking for structural image...\n', 1);
-structimage = jp_getstructimages(structprefix, S.subjdir, subname, structdirs(1));
+structimage = jp_getstructimages(structprefix, S.subjdir, subname, structdirs(1), S.cfg.options.mriext);
 
 if size(structimage,1) > 1
   disp(structimage)

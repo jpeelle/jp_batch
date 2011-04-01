@@ -76,7 +76,7 @@ jp_log(coregisterlog, 'done.\n');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 jp_log(coregisterlog, 'Looking for structural image...\n');
-structimage = jp_getstructimages(structprefix, S.subjdir, subname, structdir(1));
+structimage = jp_getstructimages(structprefix, S.subjdir, subname, structdir(1), S.cfg.options.mriext);
 
 if size(structimage,1) > 1
   structimage = structimage(1,:);
@@ -110,7 +110,7 @@ if cfg.move_functional > 0
   jp_log(coregisterlog, sprintf('Found %s.\n', meanfun));
   
   jp_log(coregisterlog, 'Looking for functional images...\n')
-  funimages = jp_getfunimages([cfg.functional_prefix funprefix], S.subjdir, subname, jp_getsessions(S, subnum));
+  funimages = jp_getfunimages([cfg.functional_prefix funprefix], S.subjdir, subname, jp_getsessions(S, subnum), S.cfg.options.mriext);
   
   funimages = strvcat(funimages, meanfun);  
   jp_log(coregisterlog, sprintf('Added %i functional images.\n', size(funimages,1)));

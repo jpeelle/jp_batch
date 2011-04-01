@@ -42,7 +42,7 @@ end
 P = cell(1,length(fundirs));
 
 for d=1:length(fundirs)
-  P{d} = jp_getfunimages([cfg.prefix funprefix], S.subjdir, subname, fundirs{d});
+  P{d} = jp_getfunimages([cfg.prefix funprefix], S.subjdir, subname, fundirs{d}, S.cfg.options.mriext);
   jp_log(reslicelog, sprintf('Directory %s: %i images found.\n', fundirs{d}, size(P{d},1)), 1);
 end
 

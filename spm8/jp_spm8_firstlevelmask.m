@@ -43,7 +43,7 @@ maskfile = fullfile(S.subjdir, subname, cfg.maskname);
 
 
 jp_log(masklog, 'Getting functional images...');
-P = jp_getfunimages([cfg.prefix funprefix], S.subjdir, subname, fundirs);
+P = jp_getfunimages([cfg.prefix funprefix], S.subjdir, subname, fundirs, S.cfg.options.mriext);
 nScan = size(P,1);
 jp_log(masklog, sprintf('done. %i images found.\n', nScan));
 

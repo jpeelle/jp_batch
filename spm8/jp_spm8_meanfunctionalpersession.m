@@ -44,7 +44,7 @@ for i=1:length(sessionnum)
   
   % get the images
   jp_log(meanlog, 'Getting images...');
-  P = jp_getfunimages([cfg.prefix funprefix], S.subjdir, subname, sessions{s});
+  P = jp_getfunimages([cfg.prefix funprefix], S.subjdir, subname, sessions{s}, S.cfg.options.mriext);
   jp_log(meanlog, sprintf('%i total images found.\n', size(P,1)));
   
   % where should we save the mean to?

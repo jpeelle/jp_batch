@@ -53,7 +53,7 @@ for i=1:length(sessionnum)
   
   % get the images
   jp_log(movelog, 'Getting images...');
-  P = jp_getfunimages([cfg.prefix funprefix], S.subjdir, subname, sessions{s});
+  P = jp_getfunimages([cfg.prefix funprefix], S.subjdir, subname, sessions{s}, S.cfg.options.mriext);
   jp_log(movelog, sprintf('%i total images found.\n', size(P,1)));
   
   % assume that the images are sorted appropriately

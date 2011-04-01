@@ -84,7 +84,7 @@ jp_log(coregisterlog, sprintf('Found %s.\n', meanfun));
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 jp_log(coregisterlog, 'Looking for structural image...\n');
-structimage = jp_getstructimages(structprefix, S.subjdir, subname, structdir(1));
+structimage = jp_getstructimages(structprefix, S.subjdir, subname, structdir(1), S.cfg.options.mriext);
 
 if size(structimage,1) > 1
   structimage = structimage(1,:);

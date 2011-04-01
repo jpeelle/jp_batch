@@ -75,7 +75,7 @@ structdir = structdirs{1};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 jp_log(seg8log, sprintf('Looking for structural image in %s...\n', structdir));
-img = jp_getstructimages(structprefix, S.subjdir, subname, structdir);
+img = jp_getstructimages(structprefix, S.subjdir, subname, structdir, S.cfg.options.mriext);
 
 if isempty(img) || strcmp(img, '/')
   jp_log(seg8log, 'Did not find any images.', 2);

@@ -66,7 +66,7 @@ jp_log(normalizelog, sprintf('Normalization paramaters found in: %s\n', seg_norm
 % Get files to normallize
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-P = jp_getstructimages([cfg.prefix structprefix], S.subjdir, subname, structdir);
+P = jp_getstructimages([cfg.prefix structprefix], S.subjdir, subname, structdir, S.cfg.options.mriext);
 
 if size(P,1)==1 && strcmp('/', P(1,:))
   jp_log(errorlog, 'Did not find any images. Check to make sure your prefix is correct.', 2);

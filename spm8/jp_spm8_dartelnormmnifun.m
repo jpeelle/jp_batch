@@ -59,7 +59,7 @@ for s=1:length(S.subjects)
   
   % images
   prefix = [cfg.prefix S.subjects(s).funprefix];
-  imgs = jp_getfunimages(prefix, S.subjdir, S.subjects(s).name, jp_getsessions(S,s));
+  imgs = jp_getfunimages(prefix, S.subjdir, S.subjects(s).name, jp_getsessions(S,s), S.cfg.options.mriext);
 
   if ~isempty(cfg.otherimages)
     for i=1:length(cfg.otherimages)

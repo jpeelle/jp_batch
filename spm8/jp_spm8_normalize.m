@@ -86,7 +86,7 @@ jp_log(normalizelog, sprintf('Normalization paramaters found in: %s\n', seg_norm
 % Get files to normallize
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-P = jp_getfunimages([cfg.prefix funprefix], S.subjdir, subname, fundirs(sessionnum));
+P = jp_getfunimages([cfg.prefix funprefix], S.subjdir, subname, fundirs(sessionnum), S.cfg.options.mriext);
 
 if size(P,1)==1 && strcmp('/', P(1,:))
   jp_log(errorlog, 'Did not find any images. Check to make sure your imagePrefix is correct.', 2);

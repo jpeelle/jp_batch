@@ -46,7 +46,7 @@ for s=1:length(sessionnum)
   
   ss = sessionnum(s);
   
-  imgs = jp_getfunimages(funprefix, S.subjdir, subname, fundirs{ss});
+  imgs = jp_getfunimages(funprefix, S.subjdir, subname, fundirs{ss}, S.cfg.options.mriext);
   
   if isempty(imgs)
     error('No images found.');
