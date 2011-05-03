@@ -306,7 +306,7 @@ for s=1:length(sessionnum)
           onsets = onsets * S.subjects(subnum).sessions(ss).tr;
         end
       end
-
+      
       SPM.Sess(s).U(sc).dt = SPM.xBF.dt;
       SPM.Sess(s).U(sc).name = cellstr(cfg.conditions(c).name);
       SPM.Sess(s).U(sc).ons = onsets;
@@ -315,31 +315,35 @@ for s=1:length(sessionnum)
       SPM.Sess(s).C.name = {};
       
       % parametric modulators?
-      if ~isfield(cfg.conditions, 'p') || isempty(cfg.conditions(1).p)      
+      if ~isfield(cfg.conditions, 'p') || isempty(cfg.conditions(c).p)
         SPM.Sess(s).U(sc).P(1).name = 'none';
       else
         for p=1:length(cfg.conditions(c).p)
-          pname = cfg.conditions(c).p(p).name;
-          pfile = [evfile '-' pname];
-          
-          if exist(pfile)
-            jp_log(modellog, sprintf('Adding %s...', pfile));
-            pval = dlmread(pfile);
+          if strcmp(lower(cfg.conditions(c).p(p).name), 'none')
+            pname = 'none';
           else
-            jp_log(errorlog, sprintf('Parametric modulator specified but %s not found.\n'));
-          end
-          
-          SPM.Sess(s).U(sc).P(p).name = cfg.conditions(c).p(p).name;
-          SPM.Sess(s).U(sc).P(p).P = pval;
-          
-          if ~isfield(cfg.conditions(c).p(p), 'order')
-            SPM.Sess(s).U(sc).P(p).h = 1;
-          else
-            SPM.Sess(s).U(sc).P(p).h = cfg.conditions(c).p(p).order;
-          end
-          
-          jp_log(modellog, 'done.\n');
-        end % going through modulators
+            pname = cfg.conditions(c).p(p).name;
+            pfile = [evfile '-' pname];
+            
+            if exist(pfile)
+              jp_log(modellog, sprintf('Adding %s...', pfile));
+              pval = dlmread(pfile);
+            else
+              jp_log(errorlog, sprintf('Parametric modulator specified but %s not found.\n'));
+            end
+            
+            SPM.Sess(s).U(sc).P(p).name = cfg.conditions(c).p(p).name;
+            SPM.Sess(s).U(sc).P(p).P = pval;
+            
+            if ~isfield(cfg.conditions(c).p(p), 'order')
+              SPM.Sess(s).U(sc).P(p).h = 1;
+            else
+              SPM.Sess(s).U(sc).P(p).h = cfg.conditions(c).p(p).order;
+            end
+            
+            jp_log(modellog, 'done.\n');
+          end % going through modulators
+        end
       end % checking for parametric modulators
       
       sub_conditions{sc} = thiscond;

@@ -293,31 +293,35 @@ for s=1:length(sessionnum)
       SPM.Sess(s).C.name = {};
       
       % parametric modulators?
-      if ~isfield(cfg.conditions, 'p') || isempty(cfg.conditions(1).p)      
+      if ~isfield(cfg.conditions, 'p') || isempty(cfg.conditions(c).p)      
         SPM.Sess(s).U(sc).P(1).name = 'none';
       else
         for p=1:length(cfg.conditions(c).p)
-          pname = cfg.conditions(c).p(p).name;
-          pfile = [evfile '-' pname];
-          
-          if exist(pfile)
-            jp_log(modellog, sprintf('Adding %s...', pfile));
-            pval = dlmread(pfile);
+          if ~isfield(cfg.conditions, 'p') || isempty(cfg.conditions(c).p)
+            SPM.Sess(s).U(sc).P(1).name = 'none';
           else
-            jp_log(errorlog, sprintf('Parametric modulator specified but %s not found.\n'));
-          end
+            pname = cfg.conditions(c).p(p).name;
+            pfile = [evfile '-' pname];
           
-          SPM.Sess(s).U(sc).P(p).name = cfg.conditions(c).p(p).name;
-          SPM.Sess(s).U(sc).P(p).P = pval;
+            if exist(pfile)
+              jp_log(modellog, sprintf('Adding %s...', pfile));
+              pval = dlmread(pfile);
+            else
+              jp_log(errorlog, sprintf('Parametric modulator specified but %s not found.\n'));
+            end
           
-          if ~isfield(cfg.conditions(c).p(p), 'order')
-            SPM.Sess(s).U(sc).P(p).h = 1;
-          else
-            SPM.Sess(s).U(sc).P(p).h = cfg.conditions(c).p(p).order;
-          end
+            SPM.Sess(s).U(sc).P(p).name = cfg.conditions(c).p(p).name;
+            SPM.Sess(s).U(sc).P(p).P = pval;
           
-          jp_log(modellog, 'done.\n');
-        end % going through modulators
+            if ~isfield(cfg.conditions(c).p(p), 'order')
+              SPM.Sess(s).U(sc).P(p).h = 1;
+            else
+              SPM.Sess(s).U(sc).P(p).h = cfg.conditions(c).p(p).order;
+            end
+          
+            jp_log(modellog, 'done.\n');
+          end % going through modulators
+        end
       end % checking for parametric modulators
       
       sub_conditions{sc} = thiscond;
