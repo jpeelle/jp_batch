@@ -102,8 +102,9 @@ for c=1:length(which_contrasts)
     spm_list('list', xSPM, hReg);
     
     % save to ps file
-    job = struct();
+    job = [];
     job.fname = pdffile;
+    job.fig.figname = 'Graphics';
     job.opts.opt = cfg.printopts; %{'-dpsc2'};
     job.opts.append = false;
     jobs.opts.ext = '.ps';

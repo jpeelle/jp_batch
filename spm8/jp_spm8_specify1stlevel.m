@@ -420,12 +420,16 @@ end
 
 SPM.xM.I = cfg.xM.I;
 
-
 save SPM SPM
-
 
 % design reporting, saving?
 if cfg.savedesignmatrix > 0
+  job = [];
+  fig = spm_figure('FindWin', 'Graphics');
+  if fig==0
+    fig = spm_figure('Create', 'Graphics', 'Graphics');
+  end
+  job.fig.figname = 'Graphics';
   fname = cat(1,{SPM.xY.VY.fname}');
   spm_DesRep('DesMtx', SPM.xX, fname, SPM.xsDes)
 

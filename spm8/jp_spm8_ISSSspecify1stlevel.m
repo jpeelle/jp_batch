@@ -5,7 +5,7 @@ function S = jp_spm8_ISSSspecify1stlevel(S, subnum)
 % model on the specified subject number SUBNUM from an S structure
 % (see JP_INIT).
 %
-% The analysis options are identical to JP_SPM8_MODELDESIGN, with
+% The analysis options are identical to JP_SPM8_SPECIFY1STLEVEL, with
 % additional options intended for use with ISSS sequences:
 %
 %   pattern -      indicates the pattern of the ISSS sequence, 0 for
@@ -474,12 +474,19 @@ save SPM SPM
 
 % design reporting, saving?
 if cfg.savedesignmatrix > 0
+  job = [];
+  fig = spm_figure('FindWin', 'Graphics');
+  if fig==0
+    fig = spm_figure('Create', 'Graphics', 'Graphics');
+  end
+  job.fig.figname = 'Graphics';
   fname = cat(1,{SPM.xY.VY.fname}');
   spm_DesRep('DesMtx', SPM.xX, fname, SPM.xsDes)
 
   % as a pdf
   basename = fullfile(savepath, 'design_matrix');
   job.fname = [basename '.pdf'];
+  job.opts.append = 1;
   job.opts.opt = {'-dpdf'};
   spm_print(job);
 
