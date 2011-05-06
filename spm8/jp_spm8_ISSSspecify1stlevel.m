@@ -329,7 +329,7 @@ for s=1:length(sessionnum)
               jp_log(modellog, sprintf('Adding %s...', pfile));
               pval = dlmread(pfile);
             else
-              jp_log(errorlog, sprintf('Parametric modulator specified but %s not found.\n'));
+              jp_log(errorlog, sprintf('Parametric modulator specified but %s not found.\n', pfile));
             end
             
             SPM.Sess(s).U(sc).P(p).name = cfg.conditions(c).p(p).name;

@@ -286,6 +286,18 @@ cfg.jp_spm8_ISSSspecify1stlevel.meanname = ''; % e.g., to match jp_spm8_meanfunc
 
 
 
+% SPM8 2nd level t contrasts 
+%-----------------------------------------------------------------------
+
+cfg.jp_spm8_run2ndleveltcontrasts.which_contrasts = [];  % default = run all t contrasts
+
+
+
+
+
+
+
+
 % SPM8 Estimate
 %-----------------------------------------------------------------------
 cfg.jp_spm8_estimate1stlevel.separatesessions = cfg.jp_spm8_specify1stlevel.separatesessions;
