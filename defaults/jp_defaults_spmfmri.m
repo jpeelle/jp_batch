@@ -286,25 +286,10 @@ cfg.jp_spm8_ISSSspecify1stlevel.meanname = ''; % e.g., to match jp_spm8_meanfunc
 
 
 
-% SPM8 2nd level t contrasts 
-%-----------------------------------------------------------------------
-
-cfg.jp_spm8_run2ndleveltcontrasts.which_contrasts = [];  % default = run all t contrasts
-
-
-
-
-
-
-
-
 % SPM8 Estimate
 %-----------------------------------------------------------------------
 cfg.jp_spm8_estimate1stlevel.separatesessions = cfg.jp_spm8_specify1stlevel.separatesessions;
 cfg.jp_spm8_estimate1stlevel.savemask = 1;                                           % print image of mask
-
-
-
 
 
 % SPM8 Create mean structural
@@ -313,13 +298,11 @@ cfg.jp_spm8_createmeanstructural.prefix = 'w';
 cfg.jp_spm8_createmeanstructural.name = 'meanstructural';
 
 
-
 % SPM8 DARTEL Create Template
 %-----------------------------------------------------------------------
 cfg.jp_spm8_dartelcreatetemplate.numtissues = 2;  % Generally 2
 cfg.jp_spm8_dartelcreatetemplate.rform = 0;    
 
-  
 
 % SPM8 DARTEL Write MNI-normalized (structural)
 %-----------------------------------------------------------------------
@@ -358,20 +341,29 @@ cfg.jp_spm8_dartelnormmnicontrasts.statsdir = '';        % <-- needs to be set!
 cfg.jp_spm8_dartelnormmnicontrasts.which_contrasts = [];
 cfg.jp_spm8_dartelnormmnicontrasts.normmask = 1;         % 1 = norm mask also
 cfg.jp_spm8_dartelnormmnicontrasts.vox = 2;
-cfg.jp_spm8_dartelnormmnicontrasts.fwhm = 10;           % smoothing (automatically done)
+cfg.jp_spm8_dartelnormmnicontrasts.fwhm = 10;            % smoothing (automatically done)
 cfg.jp_spm8_dartelnormmnicontrasts.preserve = 0;
 
 
 % SPM8 Print results 1st level
 %-----------------------------------------------------------------------
-cfg.jp_spm8_printresults1stlevel.which_contrasts = [];   % runs all
+cfg.jp_spm8_printresults1stlevel.which_contrasts = [];           % [] runs all
 cfg.jp_spm8_printresults1stlevel.printopts = {'-dpsc2' '-noui'}; % passed directly to print job
-cfg.jp_spm8_printresults1stlevel.append = 1;             % append to previous instead of overwriting
+cfg.jp_spm8_printresults1stlevel.append = 1;                     % append to previous instead of overwriting
 
 cfg.jp_spm8_printresults1stlevel.k = [0 0 0];                        % cluster extent
 cfg.jp_spm8_printresults1stlevel.Im = {'none' 'none' 'none'};        % masking
 cfg.jp_spm8_printresults1stlevel.u = [.001 .01 .05];                 % voxel p value
 cfg.jp_spm8_printresults1stlevel.thresDesc = {'none' 'none' 'none'}; % none | FDR | FWE
+
+
+
+% SPM8 run 2nd level ttests
+%-----------------------------------------------------------------------
+cfg.jp_spm8_run2ndlevelttests.statsdir = '';         % <-- needs to be set!
+cfg.jp_spm8_run2ndlevelttests.which_contrasts = [];  % [] = run all t contrasts
+cfg.jp_spm8_run2ndlevelttests.rfxdir = 'RFX';        % which subdirectory
+%cfg.jp_spm8_run2ndlevelttests.covariates = [];       % (not used now)
 
 
 % SPM8 Print results 2nd level
@@ -384,6 +376,7 @@ cfg.jp_spm8_printresults2ndlevel.thresDesc = {'FWE' 'none' 'none'};
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SPM 5 (same as SPM8 unless changes required)
+% N.B. Deprecated as SPM5 scripts are no longer supported
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 cfg.jp_spm5_tsdiffana = cfg.jp_spm8_tsdiffana;
