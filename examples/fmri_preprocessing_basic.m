@@ -6,7 +6,7 @@
 % stages and subjects will be run (unless they have been run previously,
 % etc.).
 %
-% Because everything for your analysis is contained in the S structure, so
+% Because everything for your analysis is contained in the S structure,
 % you need to keep track of it.  Note that many functions will return an
 % updated S structure; for example, S = jp_init(S) is correct; simply
 % running jp_init(S) with no output won't work.
