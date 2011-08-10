@@ -435,7 +435,7 @@ SPM.xY.P = P;
 
 % make sure we actually found some images
 if size(P,1)==1 && strcmp('/', P(1,:))
-  jp_log(modellog, 'Did not find any images. Check to make sure your cfg.jp_spm8_modeldesign.prefix is correct.', 2);
+  jp_log(modellog, 'Did not find any images. Check to make sure your cfg.jp_spm8_ISSSspecify1stlevel.prefix is correct.', 2);
 else
   jp_log(modellog, sprintf('%i total files found across all sessions.\n', size(P,1)));
 end
