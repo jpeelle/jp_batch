@@ -108,11 +108,12 @@ end
 % Make sure SPM will run ok
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-if ismember('fMRI', S.cfg.options.modality)
+if ismember('fmri', S.cfg.options.modality)
   fprintf('Loading SPM defaults from %s...', S.cfg.options.spmdefaultsfunction);
-  eval(S.cfg.options.spmdefaultsfunction);
+  %eval(S.cfg.options.spmdefaultsfunction);
+  spm('Deafults', 'FMRI');
   global defaults  
-  defaults.modality = 'FMRI';
+  %defaults.modality = 'FMRI';
   defaults.stats.maxmem = 2^26;
   fprintf('done.\n');
 end

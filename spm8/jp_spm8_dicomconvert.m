@@ -9,7 +9,7 @@ function S = jp_spm8_dicomconvert(S, subnum)
 % output (Nifti) files are saved in the file where the DICOM images are
 % found.
 %
-% Options include:
+% Options (see JP_DEFAULTS_SPMFMRI) include:
 %
 %    filter = '^[0-9]{4}_[0-9]{8}_[0-9]{6}\.[0-9]{6}$'; 
 %    opts = 'all';
@@ -23,6 +23,9 @@ function S = jp_spm8_dicomconvert(S, subnum)
 % done with the DICOM files after conversion: either leaving them alone,
 % gzipping them, deleting them, or gzipping and moving to a 'DICOM'
 % subfolder (the default).
+%
+% If you find you need to re-convert any DICOM images, and have moved them,
+% you may find JP_SPM8_DICOMMOVEBACK helpful.
 
 % Jonathan Peelle
 % University of Pennsylvania

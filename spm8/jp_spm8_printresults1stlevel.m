@@ -6,7 +6,7 @@ function S = jp_spm8_printresults1stlevel(S, subnum)
 % University of Pennsylvania
 
 subname = S.subjects(subnum).name;
-statsdir = S.cfg.jp_spm8_printresults.statsdir;
+statsdir = S.cfg.jp_spm8_printresults1stlevel.statsdir;
 
 % log files
 [alllog, errorlog, resultslog] = jp_createlogs(subname, S.subjdir, mfilename);
