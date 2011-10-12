@@ -9,7 +9,8 @@ function jp_spm8_surfacerender(img, cmap, cfg)
 % easier to select T images.
 %
 % JP_SPM8_SURFACERENDER(IMG, COLORMAP) lets you specify the colormap used
-% (default 'hot').
+% (default 'hot').  You can also specify a single color as an RGB triplet
+% (e.g., [.5 .4 0]).
 %
 % JP_SPM8_SURFACERENDER(IMG, COLORMAP, CFG) lets you specify additional
 % options.
@@ -93,7 +94,12 @@ rend = export(gifti(cfg.rendfile),'patch');
 fprintf('Rendering %s\n', img);
 
 % set the colormap
-col = eval(sprintf('%s(256);', cmap));
+if ischar(cmap)
+    col = eval(sprintf('%s(256);', cmap));
+else    
+    col = jp_cmap(cmap, 256); % make a colormap that SPM is happy with
+end
+%col = eval(sprintf('%s(256);', cmap));
 
 % get the data from the image
 V = spm_vol(img);
@@ -183,9 +189,9 @@ if cfg.inflate > 0
 end
 
 fprintf('\n      ''\n     ''\n  ____''___\n  |      |_\n  |      |_|\n  |______|    All done!\n\n'); % coffee
-%fprintf('  /   \n\\o  /\n \\ /\n  |\n _|_   All done!\n');   % martini
- 
-  
+
+
+
 
 %-------------------------------------------------------------
 % (below here are hacked versions of what was here to begin with)

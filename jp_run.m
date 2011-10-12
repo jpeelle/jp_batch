@@ -1,6 +1,6 @@
 function S = jp_run(S, subjects, stages, aa_type)
 %JP_RUN Runs processing for a study.
-%
+
 % S = JP_RUN(S, [SUBJECTS], [STAGES]) uses the information stored in S
 % to process data for an imaging study. SUBJECTS let you specify which
 % subjects you want to run, if not all. STAGES lets you specify which
@@ -111,7 +111,7 @@ end
 if ismember('fmri', S.cfg.options.modality)
   fprintf('Loading SPM defaults from %s...', S.cfg.options.spmdefaultsfunction);
   %eval(S.cfg.options.spmdefaultsfunction);
-  spm('Deafults', 'FMRI');
+  spm('Defaults', 'FMRI');
   global defaults  
   %defaults.modality = 'FMRI';
   defaults.stats.maxmem = 2^26;
