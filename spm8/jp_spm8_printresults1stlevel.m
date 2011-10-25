@@ -6,6 +6,7 @@ function S = jp_spm8_printresults1stlevel(S, subnum)
 % University of Pennsylvania
 
 subname = S.subjects(subnum).name;
+<<<<<<< HEAD:spm8/jp_spm8_printresults1stlevel.m
 
 
 S.cfg = jp_setcfg(S.cfg, mfilename);
@@ -34,8 +35,6 @@ end
 
 % Keep track of original working directory so we can get back here.
 originalDir = pwd;
-
-
 
 
 % Run the model for all sessions (normal) or for one session at a

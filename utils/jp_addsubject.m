@@ -77,7 +77,7 @@ for i=1:length(subjects)
   % If the subject wasn't previously found, just append to end of
   % list
   if isempty(n)
-    n = length(S.subjects) + 1
+    n = length(S.subjects) + 1;
   end
   
   

@@ -23,7 +23,7 @@ cfg.options.mriext = 'nii';             % 'nii' or 'img'
 
 
 % (these ones are less used)
-cfg.options.modality       = {'fMRI'};  % possibly used in the future
+cfg.options.modality       = {'fmri'};  % possibly used in the future
 cfg.options.runstages      = 1;         % set to 0 to test out which stages would be run
 cfg.options.software       = {'SPM'};   % packages used in this analysis (not used)
 cfg.options.spmver         = [];        % if set (e.g. 'SPM5') jp_run tries to make sure correct version is being run

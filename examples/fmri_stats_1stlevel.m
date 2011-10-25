@@ -6,7 +6,6 @@
 % stats directory, an example contrasts file will be created for you.
 
 % Jonathan Peelle
-% MRC Cognition and Brain Sciences Unit
 
 
 

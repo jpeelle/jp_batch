@@ -27,6 +27,15 @@ cfg.options.mriext = 'nii'; % nii | img
 % SPM 8
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% SPM8 DICOM convert
+%-----------------------------------------------------------------------
+
+cfg.jp_spm8_dicomconvert.filter = '^[0-9]{4}_[0-9]{8}_[0-9]{6}\.[0-9]{6}$'; % regular expression
+cfg.jp_spm8_dicomconvert.opts = 'all';
+cfg.jp_spm8_dicomconvert.root_dir = 'flat';
+cfg.jp_spm8_dicomconvert.format = cfg.options.mriext; % img | nii 
+cfg.jp_spm8_dicomconvert.after = 'gzipmove'; % preserve | gzip | delete | gzipmove
+
 
 % SPM8 movefirstscans
 %-----------------------------------------------------------------------

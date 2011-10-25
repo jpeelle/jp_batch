@@ -70,10 +70,11 @@ function jp_batch(task)
 %  info.ta
 %  info.sessions
 %
-% These can be overwritten within each subject's directory by with:
+% These can be overwritten within each subject's directory by with
+% <subjectname>.info.<property>:
 %  subjectname.info.sessions
 %
-% And in some cases at the session level with
+% And in some cases at the session level with <sessionname>.<etc.>
 %  sessionname.subjectname.info.tr
 %
 %
@@ -81,7 +82,7 @@ function jp_batch(task)
 % about the study, and a list of analysis stages.  Each stage name
 % corresponds to a function, and allows the setting of options.
 %
-% For all functions, the help differs slightly from standard Matlab
+% For all functions, the help may differ slightly from standard Matlab
 % functions. Arguments in brackets are optional, others are
 % required.  For example, for the helper function JP_GETFUNIMAGES:
 %
