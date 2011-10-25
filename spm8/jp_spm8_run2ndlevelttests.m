@@ -27,6 +27,13 @@ S.cfg = jp_setcfg(S.cfg, mfilename);
 cfg = S.cfg.(mfilename);
 
 
+% make sure RFX dir exists
+rfxdir = fullfile(cfg.statsdir, cfg.rfxdir);
+if ~isdir(rfxdir)
+  mkdir(rfxdir);
+end
+
+
 % load in the SPM.mat from the first subject
 load(fullfile(cfg.statsdir, S.subjects(1).name, 'SPM.mat'));
 
@@ -37,11 +44,13 @@ end
 
 for w = 1:length(cfg.which_contrasts);
   thisc = cfg.which_contrasts(w);
-  jp_log(tlog, 'Running contrast %i...\n');
-  
+  cname = jp_fix_string(SPM.xCon(thisc).name);
+
   if ~strcmp(SPM.xCon(thisc).STAT, 'T')
-    jplog(tlog, 'WARNING: Contrast %i (%s) is not a T contrast.\n', thisc, SPM.xCon(thisc).name);
+    jplog(tlog, 'WARNING: Requested contrast %i (%s) is not a T contrast; skipping.\n', thisc, SPM.xCon(thisc).name);
   else
+    jp_log(tlog, sprintf('Running contrast %i...\n', thisc));
+
     % get images
     
     
@@ -57,7 +66,4 @@ for w = 1:length(cfg.which_contrasts);
 end % running through contrasts
 
 
-  
-  
-  
   

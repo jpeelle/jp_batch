@@ -6,7 +6,12 @@ function S = jp_spm8_printresults1stlevel(S, subnum)
 % University of Pennsylvania
 
 subname = S.subjects(subnum).name;
-statsdir = S.cfg.jp_spm8_printresults.statsdir;
+
+
+S.cfg = jp_setcfg(S.cfg, mfilename);
+cfg = S.cfg.(mfilename);
+
+statsdir = cfg.statsdir;
 
 % log files
 [alllog, errorlog, resultslog] = jp_createlogs(subname, S.subjdir, mfilename);
@@ -31,13 +36,11 @@ end
 originalDir = pwd;
 
 
-S.cfg = jp_setcfg(S.cfg, mfilename);
-cfg = S.cfg.(mfilename);
 
 
 % Run the model for all sessions (normal) or for one session at a
 % time (rare)
-if S.cfg.jp_spm8_contrasts.separatesessions==0
+if cfg.separatesessions==0
   runresults(S, subnum, fullfile(statsdir,subname));
 else
   for s=1:length(S.subjects(subnum).sessions)

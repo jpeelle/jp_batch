@@ -350,6 +350,7 @@ cfg.jp_spm8_dartelnormmnicontrasts.preserve = 0;
 cfg.jp_spm8_printresults1stlevel.which_contrasts = [];           % [] runs all
 cfg.jp_spm8_printresults1stlevel.printopts = {'-dpsc2' '-noui'}; % passed directly to print job
 cfg.jp_spm8_printresults1stlevel.append = 1;                     % append to previous instead of overwriting
+cfg.jp_spm8_printresults1stlevel.separatesessions = 0;           % (to match model specification and contrasts)
 
 cfg.jp_spm8_printresults1stlevel.k = [0 0 0];                        % cluster extent
 cfg.jp_spm8_printresults1stlevel.Im = {'none' 'none' 'none'};        % masking

@@ -210,7 +210,7 @@ jp_log(contrastslog, 'done.\n');
 % Fill in SPM.xCon
 for i = 1:length(which_contrasts)
   this_c = which_contrasts(i);
-  jp_log(contrastslog, '\tContrast %i: %s (%s contrast)...', this_c, c(this_c).name, c(this_c).STAT);
+  jp_log(contrastslog, sprintf('\tContrast %i: %s (%s contrast)...', this_c, c(this_c).name, c(this_c).STAT));
   
   if ~isfield(SPM,'xCon') || isempty(SPM.xCon)
     SPM.xCon = struct();
