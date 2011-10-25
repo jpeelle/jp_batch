@@ -6,7 +6,7 @@ function jp_spm_mean(P, cfg)
 %
 %
 % This is based largely of of spm_mean_ui and should work in
-% SPM5/8. Modified to include thresholding and various options.
+% SPM5/8.
 
 % Jonathan Peelle
 % University of Pennsylvania

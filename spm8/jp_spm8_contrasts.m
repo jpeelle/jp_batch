@@ -57,7 +57,7 @@ function S = jp_spm8_contrasts(S, subnum)
 % confirmation dialogs since you are overwriting previous files.
 % Just be careful.
 %
-% See also JP_BATCH and JP_SPM8_MODEL.
+% See also JP_BATCH, JP_SPM8_SPECIFY1STLEVEL, JP_SPM8_MODELESTIMATE.
 
 % Jonathan Peelle
 % University of Pennsylvania
@@ -69,7 +69,6 @@ statsdir = S.cfg.jp_spm8_contrasts.statsdir;
 % log files
 [alllog, errorlog, contrastslog] = jp_createlogs(subname, S.subjdir, mfilename);
 
-
 % make sure statsdir is specified
 if isempty(statsdir)
   jp_log(contrastslog, 'S.cfg.jp_spm8_contrasts.statsdir must be specified.', 2);
@@ -79,7 +78,6 @@ end
 
 
 % get sessions
-
 try
   sessions = jp_getsessions(S, subnum);
 catch
@@ -87,14 +85,11 @@ catch
 end
 
 
-
 % Keep track of original working directory so we can get back here.
 originalDir = pwd;
 
-
 S.cfg = jp_setcfg(S.cfg, mfilename);
 cfg = S.cfg.(mfilename);
-
 
 
 % Make sure the required contrasts.m file exists
@@ -103,10 +98,8 @@ if ~exist(confile, 'file')
   error('Required file %s is missing.  Type HELP JP_SPM8_CONTRASTS for more.', confile);
 end
 
-
 % Go to the stats dir
 cd(statsdir);
-
 
 % Get number of bad scans
 bsfname = cfg.badscanfilename;
@@ -120,14 +113,10 @@ for s=1:length(sessions)
   end
 end
 
-
-
-
 % Load contrasts
 jp_log(contrastslog, 'Loading contrasts...');
 c = contrasts(nbs);  % the contrasts function
 jp_log(contrastslog, sprintf('done. %i contrasts specified.\n', length(c)));
-
 
 which_contrasts = cfg.which_contrasts;
 
@@ -135,7 +124,6 @@ which_contrasts = cfg.which_contrasts;
 if isempty(which_contrasts)
   which_contrasts = 1:length(c);
 end
-
 
 
 % Error checking: make sure all of the contrast fields make sense
@@ -147,13 +135,11 @@ for w = 1:length(which_contrasts)
   
   jp_log(contrastslog, sprintf('Contrast %i...',which_contrasts(w)));
   
-  
   % If not specified, assume a T test.
   if ~isfield(c, 'STAT') || isempty(c(this_c).STAT)
     c(this_c).STAT = 'T';
   end
   
-
   if isempty(c(this_c).name)
     error('The name for contrast %i is empty.',this_c);
   elseif ~ischar(c(this_c).name)
@@ -189,15 +175,13 @@ if ~isdir(fullfile(statsdir,cfg.tandffiledirname))
   jp_log(contrastslog, 'done.\n');
 end
 
-
-
 % Run the model for all sessions (normal) or for one session at a
 % time (rare)
 if S.cfg.jp_spm8_contrasts.separatesessions==0
-  runcontrasts(S, fullfile(statsdir,subname), c, which_contrasts);
+  runcontrasts(S, fullfile(statsdir,subname), c, which_contrasts, contrastslog);
 else
   for s=1:length(S.subjects(subnum).sessions)
-    runcontrasts(S, fullfile(statsdir, [subname '_' S.subjects(subnum).sessions(s).name]), c, which_contrasts);
+    runcontrasts(S, fullfile(statsdir, [subname '_' S.subjects(subnum).sessions(s).name]), c, which_contrasts, contrastslog);
   end  
 end % separatesession check
 
@@ -210,29 +194,23 @@ end %main function
 
 
 
-
-
-function runcontrasts(S, condir, c, which_contrasts)
+function runcontrasts(S, condir, c, which_contrasts, contrastslog)
 % Go to this subject's stats dir and load their SPM.mat.
 % (c = contrasts)
 
 
 statsdir = S.cfg.jp_spm8_contrasts.statsdir;
 
-
 cd(condir);
-fprintf('Loading SPM.mat...');
+jp_log(contrastslog, 'Loading SPM.mat...');
 load SPM
-fprintf('done.\n');
-
+jp_log(contrastslog, 'done.\n');
 
 
 % Fill in SPM.xCon
-
-
 for i = 1:length(which_contrasts)
   this_c = which_contrasts(i);
-  fprintf('\tContrast %i: %s (%s contrast)...', this_c, c(this_c).name, c(this_c).STAT);
+  jp_log(contrastslog, sprintf('\tContrast %i: %s (%s contrast)...', this_c, c(this_c).name, c(this_c).STAT));
   
   if ~isfield(SPM,'xCon') || isempty(SPM.xCon)
     SPM.xCon = struct();
@@ -240,37 +218,36 @@ for i = 1:length(which_contrasts)
   else
     SPM.xCon(this_c) = spm_FcUtil('Set',c(this_c).name, c(this_c).STAT,'c', c(this_c).con', SPM.xX.xKXs);
   end
-  fprintf('done.\n');
+  jp_log(contrastslog, 'done.\n');
 end
 
+save('SPM.mat', 'SPM');
 
-fprintf('done.\n');
+jp_log(contrastslog, 'done.\n');
 
 
 
 % Run the contrasts.
-fprintf('Running contrasts...\n');
+jp_log(contrastslog, 'Running contrasts...\n');
 
 spm_contrasts(SPM, which_contrasts);  % also saves SPM.mat
 
-
 % Copy the contrasts to the directory in statsdir/contrasts
-fprintf('Making softlinks to contrast images...\n');
+jp_log(contrastslog, 'Making softlinks to contrast images...\n');
 
 try
-    
   for w = 1:length(which_contrasts)
     
     this_c = which_contrasts(w);      
-    cdir = fullfile(statsdir,fix_string(S.cfg.jp_spm8_contrasts.confiledirname),fix_string(c(this_c).name));
+    cdir = fullfile(statsdir,jp_fix_string(S.cfg.jp_spm8_contrasts.confiledirname),jp_fix_string(c(this_c).name));
     
     
-    % fix_string makes string suitable for passing to system because it
+    % jp_fix_string makes string suitable for passing to system because it
     % preprents a \ to each > sign, for example.  But this isn't good for
-    % Matlab functions like isdir and mkdir.  The goodfordir function
+    % Matlab functions like isdir and mkdir.  The jp_goodfordir function
     % removes backslashes from the string. 
     
-    if ~exist(goodfordir(cdir)); mkdir(goodfordir(cdir)); end
+    if ~exist(jp_goodfordir(cdir)); mkdir(jp_goodfordir(cdir)); end
     
     % Change what we copy depending on whether it's a T or F test
     
@@ -284,21 +261,21 @@ try
       system(sprintf('ln -sf %s %s', fullfile(condir,sprintf('ess_%04i.hdr',this_c)), fullfile(cdir,sprintf('%s_ess_%04i.hdr',condir_local,this_c))));
     end
   end
-  fprintf('done.\n');
+  jp_log(contrastslog, 'done.\n');
 catch
-  fprintf('ERROR: There was an error making the softlinks to the con* files.\n');
+  jp_log(contrastslog, 'ERROR: There was an error making the softlinks to the con* files.\n');
 end
 
 
 % Copy the spmT and spmF files to the directory in statsdir/contrasts
-fprintf('Making softlinks to spmT and spmF images...\n');
+jp_log(contrastslog, 'Making softlinks to spmT and spmF images...\n');
 try
   for w = 1:length(which_contrasts)
     
     this_c = which_contrasts(w);
-    tdir = fullfile(statsdir,fix_string(S.cfg.jp_spm8_contrasts.tandffiledirname),fix_string(c(this_c).name));
+    tdir = fullfile(statsdir,jp_fix_string(S.cfg.jp_spm8_contrasts.tandffiledirname),jp_fix_string(c(this_c).name));
     
-    if ~isdir(goodfordir(tdir)); mkdir(goodfordir(tdir)); end
+    if ~isdir(jp_goodfordir(tdir)); mkdir(jp_goodfordir(tdir)); end
     
     % Change what we copy depending on whether it's a T or F test
     if strcmp(c(this_c).STAT,'T')
@@ -309,25 +286,25 @@ try
       system(sprintf('ln -sf %s %s', fullfile(condir,sprintf('spmF_%04i.hdr',this_c)),fullfile(tdir,sprintf('%s_spmF_%04i.hdr',condir_local,this_c))));
     end
   end
-  fprintf('done.\n');
+  jp_log(contrastslog, 'done.\n');
 catch
-  fprintf('ERROR: There was an error making the softlinks to the spmT* files.\n');
+  jp_log(contrastslog, 'ERROR: There was an error making the softlinks to the spmT* files.\n');
 end
 
 end % runcontrasts
 
 
-function new_string = fix_string(s)
-new_string = strrep(s,' ','_');
-new_string = strrep(new_string,'>','\>');
-new_string = strrep(new_string,'<','\<');
-new_string = strrep(new_string,'(','_');
-new_string = strrep(new_string,')','_');
-new_string = strrep(new_string, '@', '\@');
-end % fix_string
-
-function new_string = goodfordir(s)
-new_string = strrep(s, '\', '');
-end
+% function new_string = fix_string(s)
+% new_string = strrep(s,' ','_');
+% new_string = strrep(new_string,'>','\>');
+% new_string = strrep(new_string,'<','\<');
+% new_string = strrep(new_string,'(','_');
+% new_string = strrep(new_string,')','_');
+% new_string = strrep(new_string, '@', '\@');
+% end % fix_string
+% 
+% function new_string = goodfordir(s)
+% new_string = strrep(s, '\', '');
+% end
 
 
