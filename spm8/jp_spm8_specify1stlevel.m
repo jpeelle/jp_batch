@@ -273,7 +273,9 @@ for s=1:length(sessionnum)
 
     if exist(evfile) || cfg.fixemptyconditions==1
       if exist(evfile)
+        jp_log(modellog, sprintf('Getting event information from %s...', evfile));
         [onsets, durations] = jp_spm_getev(evfile);
+	jp_log(modellog, 'done.\n');
       else
         jp_log(modellog, sprintf('EV file %s not found; adding dummy scan to ensure even number of columns.\n', evfile));
         onsets = SPM.nscan(ss) - 1;
