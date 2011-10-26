@@ -106,8 +106,12 @@ bsfname = cfg.badscanfilename;
 nbs = zeros(1,length(sessions));
 for s=1:length(sessions)
   bsname = fullfile(S.subjdir, subname, sessions{s}, cfg.badscanfilename);
-  if exist(bsname);
-    badscans = dlmread(bsname);
+  if exist(bsname)
+    try
+       	badscans = dlmread(bsname);
+    catch
+        badscans = [];
+    end
     nbs(s) = length(badscans);
     jp_log(contrastslog, sprintf('Found %i bad scans for session %s.\n', length(badscans), sessions{s}));
   end
