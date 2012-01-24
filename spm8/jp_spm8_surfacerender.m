@@ -31,6 +31,15 @@ function jp_spm8_surfacerender(img, cmap, cfg)
 %
 % cfg.inflate = 5;        % # bigger number=more inflated. 0=don't inflate
 %
+%
+%
+% There are also options relating to the figure size and placement of plots
+% which allow you to customize the output:
+%
+% cfg.plot1pos = [X Y width height;
+% cfg.plot2pos = [.42 .4 .35 .3] % if only using L and R later views
+%
+%
 % Finally, there is a modified version of spm_mesh_project, which just
 % displays the whole image, instead of > 0.  This is called
 % spm_mesh_project_jp, and just needs to be in your path somewhere (e.g.,
@@ -73,6 +82,23 @@ end
 if ~isfield(cfg, 'plots') || isempty(cfg.plots)
   cfg.plots = [1:4];
 end
+
+if ~isfield(cfg, 'plot1pos') || isempty(cfg.plot1pos)
+  cfg.plot1pos = [.05 .4 .35 .3];
+end
+
+if ~isfield(cfg, 'plot2pos') || isempty(cfg.plot2pos)
+  cfg.plot2pos = [.6 .4 .35 .3];
+end
+
+if ~isfield(cfg, 'plot3pos') || isempty(cfg.plot3pos)
+  cfg.plot3pos = [.37 .5 .25 .2];
+end
+
+if ~isfield(cfg, 'plot4pos') || isempty(cfg.plot4pos)
+  cfg.plot4pos = [.37 .25 .25 .2];
+end
+
 
 if ~isfield(cfg, 'inflate') || isempty(cfg.inflate)
   cfg.inflate = 5;
@@ -210,21 +236,49 @@ Fgraph = myfig; %spm_figure('GetWin','Graphics');
 rdr = get(Fgraph,'Renderer');
 set(Fgraph,'Renderer','OpenGL');
 
+% switch plotnum
+%   case 1
+%     ax = axes('position', [.05 .4 .35 .3], 'visible', 'off');
+%     myview = [-90 0]; % left
+%   case 2
+%     % if only doing L and R hemisphere, space differently
+%     if length(cfg.plots)==2 && sum(cfg.plots==[1 2])==2
+%       fprintf('hiiii!!!!!!\n\n\n\n;');
+%       ax = axes('position', [.42 .4 .35 .3], 'visible', 'off');
+%     else
+%       ax = axes('position', [.6 .4 .35 .3], 'visible', 'off');
+%     end
+%     myview = [90 0]; % right
+%   case 3
+%     ax = axes('position', [.37 .5 .25 .2], 'visible', 'off');
+%     myview = [0 90]; % top
+%   case 4
+%     ax = axes('position', [.37 .25 .25 .2], 'visible', 'off');
+%     myview = [-180 -90]; %bottom
+%   otherwise
+%     error('Only know about 4 types of plot positions.');
+% end
+
 switch plotnum
   case 1
-    ax = axes('position', [.05 .4 .35 .3], 'visible', 'off');
+    ax = axes('position', cfg.plot1pos, 'visible', 'off');
     myview = [-90 0]; % left
   case 2
-    ax = axes('position', [.6 .4 .35 .3], 'visible', 'off');
+    % if only doing L and R hemisphere, space differently
+    if length(cfg.plots)==2 && sum(cfg.plots==[1 2])==2
+      ax = axes('position', cfg.plot2pos, 'visible', 'off');
+    else
+      ax = axes('position', cfg.plot2pos, 'visible', 'off');
+    end
     myview = [90 0]; % right
   case 3
-    ax = axes('position', [.37 .5 .25 .2], 'visible', 'off');
+    ax = axes('position', cfg.plot3pos, 'visible', 'off');
     myview = [0 90]; % top
   case 4
-    ax = axes('position', [.37 .25 .25 .2], 'visible', 'off');
+    ax = axes('position', cfg.plot4pos, 'visible', 'off');
     myview = [-180 -90]; %bottom
   otherwise
-    error('Only know about 4 types of plot positions.');      
+    error('Only know about 4 types of plot positions.');
 end
 
 

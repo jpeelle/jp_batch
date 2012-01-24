@@ -4,7 +4,7 @@ function cmap = jp_cmap(c, nsteps)
 %  JP_CMAP(C) creates a custom colormap using C, which is an 1x3 vector
 %  indicating a Matlab color.
 %
-%  JP_CMAP(C,NSTEPS) creates the colormap with NSTEPS numbe rof steps.
+%  JP_CMAP(C,NSTEPS) creates the colormap with NSTEPS number of steps.
 %  If not specified, 64 steps are used.
 %
 %  Example:
