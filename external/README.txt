@@ -12,3 +12,7 @@ SOFTWARE/SCRIPTS INCLUDED:
 timediff.m
 tsdiffana.m
 tsdiffplot.m
+
+# For Donald McLaren's gPPI toolbox:
+Everything in the gPPI folder
+
