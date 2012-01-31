@@ -130,7 +130,7 @@ S.cfg.(mfilename) = cfg;
 originalDir = pwd;
 
 
-jp_log(modellog, 'Running JP_SPM8_MODEL...\n');
+jp_log(modellog, 'Running JP_SPM8_SPECIFY1STLEVEL...\n');
 
 
 % Make sure stats directory exists.
