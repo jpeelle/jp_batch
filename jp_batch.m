@@ -142,7 +142,7 @@ elseif strcmp(lower(task), 'addpaths') || strcmp(lower(task), 'add_paths')
   for f=1:length(files)
     %if files(f).isdir==1 && isempty(findstr('.',files(f).name)) && ~strcmp(files(f).name, 'external')
     if files(f).isdir==1 && isempty(findstr('.',files(f).name))
-      addpath(fullfile(basedir, files(f).name));
+      addpath(genpath(fullfile(basedir, files(f).name)));
     end
   end
 else

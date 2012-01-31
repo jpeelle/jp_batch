@@ -3,8 +3,10 @@ but may be useful for you, or used by some of the other scripts. All
 copyright and licensing is retained as distributed by the original
 authors.
 
-Anything in this folder is NOT added automatically by JP_BATCH to
-prevent conflicts with any existing installations.
+This folder (and subfolders) are automatically added if you run
+JP_BATCH('addpaths') - beware conflicts with existing software
+you have installed. When in doubt you can always add things by
+hand (rather than using jp_batch('addpaths').
 
 SOFTWARE/SCRIPTS INCLUDED:
 
