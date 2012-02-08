@@ -11,15 +11,27 @@ function com = jp_roicenterofmass(img)
 % Jonathan Peelle
 % University of Pennsylvania
 
+if nargin < 1 || isempty(img)
+  img = spm_select(1, 'Image');
+end
+
 V = spm_vol_nifti(img);
 [Y, XYZ] = spm_read_vols(V);
 Y = reshape(Y, 1, numel(Y));
 
-% Find the indices for all non-zero voxels
-x = find(Y>0);
+% Only look at indices for non-zero voxels
+x = Y>0;
 
-% Only look at those indices
-XYZx = XYZ(:,x);
+if sum(x)==0
+  fprintf('Warning: No voxels > 0 in image.');
+  com = nan(1,3);
+else
+  XYZx = XYZ(:,Y>0);
+  % Center of mass = mean across X, Y, Z directions.
+  com = round(mean(XYZx,2));
+end
 
-% Center of mass = mean across X, Y, Z directions.
-com = round(mean(XYZx,2)');
+% Ensure 1x3 coordinate
+if size(com,1)==3
+  com = com';
+end
