@@ -30,7 +30,7 @@ end
 if nargin < 1 || isempty(roi)
   roi = spm_select(1, 'Image', 'Select ROI to use for extraction');
 end
-  
+
 if nargin < 2 || isempty(imgs)
   imgs = spm_select(Inf, 'Image', 'Select images from which to get data');
 end
