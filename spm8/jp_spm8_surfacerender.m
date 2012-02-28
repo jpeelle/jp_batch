@@ -36,7 +36,7 @@ function jp_spm8_surfacerender(img, cmap, cfg)
 % There are also options relating to the figure size and placement of plots
 % which allow you to customize the output:
 %
-% cfg.plot1pos = [X Y width height;
+% cfg.plot1pos = [X Y width height];
 % cfg.plot2pos = [.42 .4 .35 .3] % if only using L and R later views
 %
 %
