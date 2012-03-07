@@ -284,6 +284,7 @@ cfg.jp_spm8_specify1stlevel.evdir = 'ev_files';          % which directory to lo
 cfg.jp_spm8_specify1stlevel.savedesignmatrix = 1;        % print a copy in the stats directory
 cfg.jp_spm8_specify1stlevel.separatesessions = 0;        % if 1, separate GLM for each session (rare)
 
+cfg.jp_spm8_specify1stlevel.onsetaddition = 0;           % added to all onset event times (e.g. if EV files are off)
 
 
 % SPM8 Model design for ISSS

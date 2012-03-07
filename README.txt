@@ -7,6 +7,9 @@ These scripts are distributed in the hope that they will be useful, but
 without any warranty; without even the implied warranty of merchantability
 or fitness for a particular purpose.  Use at your own risk!
 
+Also note that some of the scripts, particularly in the utils folder, are
+experimental, so take some care in using them.
+
 Jonathan Peelle
 http://jonathanpeelle.net/
 peelle@gmail.com

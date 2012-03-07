@@ -289,7 +289,7 @@ for s=1:length(sessionnum)
 
       SPM.Sess(s).U(sc).dt = SPM.xBF.dt;
       SPM.Sess(s).U(sc).name = cellstr(cfg.conditions(c).name);
-      SPM.Sess(s).U(sc).ons = onsets;
+      SPM.Sess(s).U(sc).ons = onsets + cfg.onsetaddition;
       SPM.Sess(s).U(sc).dur = durations;
       SPM.Sess(s).C.C = [];
       SPM.Sess(s).C.name = {};
