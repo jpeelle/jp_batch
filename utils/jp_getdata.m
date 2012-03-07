@@ -15,6 +15,7 @@ function Y = jp_getdata(roi, imgs, cfg)
 %   options.summarize   'raw'      - don't summarize data
 %                       'mean'     - mean across voxels for each image
 %                       'median'   - median across voxels for each image
+%                       'nanmean'  - mean, ignoring NaNs
 %
 % If not specified, data will be averaged across voxels (note that if
 % specifying XYZ coordinates directly, you will probably want to change
@@ -48,9 +49,9 @@ if ~isfield(cfg, 'summarize') || isempty(cfg.summarize)
   cfg.summarize = 'mean';
 end
 
-if ~ischar(cfg.summarize) || ~ismember(cfg.summarize, {'raw' 'mean' 'median'})
-  error('OPTIONS.SUMMARIZE must be one of ''raw'', ''mean'', or ''median''.');
-end
+%if ~ischar(cfg.summarize) || ~ismember(cfg.summarize, {'raw' 'mean' 'median'})
+%  error('OPTIONS.SUMMARIZE must be one of ''raw'', ''mean'', or ''median''.');
+%end
 
 if nargin < 1 || isempty(roi)
   roi = spm_select(Inf, 'Image', 'Select ROI(s) to use for extraction');
@@ -58,6 +59,10 @@ end
 
 if nargin < 2 || isempty(imgs)
   imgs = spm_select(Inf, 'Image', 'Select images from which to get data');
+end
+
+if iscell(imgs)
+  imgs = strvcat(imgs);
 end
 
 % Get the space of the first image, which we'll use for either the ROI or
@@ -74,6 +79,14 @@ if ischar(roi) || iscell(roi)
 
   % loop through ROI images
   for i=1:size(roi,1)
+
+    roifile = strtok(deblank(roi(i,:)), ',');
+
+    % make sure this image file exists
+    if ~exist(roifile, 'file')
+      error('ROI file %s not found.', roifile);
+    end
+
     % get the roi data
     Vroi = spm_vol(roi(i,:));
     [Yroi,XYZroi] = spm_read_vols(Vroi); % XYZ returned in mm
@@ -98,10 +111,8 @@ if ischar(roi) || iscell(roi)
     d = spm_get_data(Vimg, XYZvoxel, 1);
 
     % summarize if necessary
-    if strcmp(cfg.summarize, 'mean')
-      d = mean(d,2);
-    elseif strcmp(cfg.summarize, 'median')
-      d = median(d,2);
+    if ~strcmp(lower(cfg.summarize), 'raw')
+      d = eval(sprintf('%s(d,2);', cfg.summarize));
     end
 
     Y = [Y d];
@@ -125,10 +136,8 @@ else
   Y = spm_get_data(Vimg, XYZvoxel, 1);
 
   % summarize if necessary
-  if strcmp(cfg.summarize, 'mean')
-    Y = mean(Y,2);
-  elseif strcmp(cfg.summarize, 'median')
-    Y = median(Y,2);
+  if ~strcmp(lower(cfg.summarize), 'raw')
+    Y = eval(sprintf('%s(Y,2);', cfg.summarize));
   end
 
 end
