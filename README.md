@@ -3,6 +3,12 @@ neuroimaging data using Matlab wrappers. Currently they are focused on analyzing
 fMRI data using SPM. The best place to find documentation is to start with the
 jp_batch.m file.
 
+To get started, clone the git repository to your local drive:
+
+```
+$ git clone git://github.com/jpeelle/jp_batch.git
+```
+
 These scripts are distributed in the hope that they will be useful, but 
 without any warranty; without even the implied warranty of merchantability
 or fitness for a particular purpose.  Use at your own risk!
@@ -13,4 +19,11 @@ experimental, so take some care in using them.
 Jonathan Peelle
 http://jonathanpeelle.net/
 peelle@gmail.com
+
+
+# Future releases
+
+Future updates to these scripts are unlikely; consider using AA instead:
+
+https://github.com/rhodricusack/automaticanalysis
 
