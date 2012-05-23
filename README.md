@@ -16,10 +16,6 @@ or fitness for a particular purpose.  Use at your own risk!
 Also note that some of the scripts, particularly in the utils folder, are
 experimental, so take some care in using them.
 
-Jonathan Peelle
-http://jonathanpeelle.net/
-peelle@gmail.com
-
 
 # Future releases
 
