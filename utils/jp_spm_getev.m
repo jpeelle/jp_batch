@@ -36,9 +36,11 @@ if ~exist(filename)
   error('EV file %s not found.',filename)
 end
 
-
-d = dlmread(filename);
-
+try
+    d = dlmread(filename);
+catch
+    d = [];
+end
 
 onsets = d(:,1);
 
